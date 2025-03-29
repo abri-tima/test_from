@@ -40,18 +40,23 @@ input, select {
     margin: 0 auto;
 }
 
+.label-text {
+    font-family: Montserrat;
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 15px;
+    color: #4D4D4D;
+}
+
 
 /* new */
-
-#form-container {
-    /* margin-bottom: 10px; */
-    margin-left: 24px;
-}
 
 .input-group {
     display: flex;
     gap: 10px;
     align-items: center;
+    margin-bottom: 20px;
+    margin-left: 24px;
 }
 /* button {
     padding: 5px 10px;
@@ -114,13 +119,19 @@ input, select {
         flex-direction: row-reverse;
 }
 
+.button-save {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 .button-save-form {
     font-family: Montserrat, sans-serif;
-    font-size: 14px;
+    font-size: 24px;
     font-weight: 800;
     background-color: #ee6700;
     border-radius: 60px;
-    padding: 14px 17px;
+    padding: 5px 40px;
     color: #fff;
     outline: none;
     border: none;
@@ -177,7 +188,7 @@ input, select {
 .name-restaurant {
     margin-left: 24px;
     margin-top: 13px;
-    margin-bottom: 34px;
+    margin-bottom: 14px;
 }
 
 .rest-name-label {
@@ -205,12 +216,13 @@ input, select {
     background-color: #fff;
 }
 
-.gender-select {
+.select-info {
     -webkit-appearance: none;
     background: url(../Vectors/arrow.svg);
     background-position: right;
     background-repeat: no-repeat;
-    background-size: 20px;;
+    background-position-x: 90%;
+    background-size: 20px;
     font-family: Montserrat, sans-serif;
     font-size: 14px;
     font-weight: 700;
@@ -220,4 +232,79 @@ input, select {
     padding: 6px 25px;
     border: 1px solid rgb(67, 65, 66);
     border-radius: 55px;
+}
+
+.window-info {
+    background-color: #DCDCDC;
+    width: 329px;
+    height: 390px;
+    padding: 22px 14px;
+    margin-left: 10px;
+    border: 2px solid rgb(67, 65, 66);
+    border-radius: 23px;
+
+}
+
+.product-list {
+    -webkit-appearance: none;
+    background: #fff url(../Vectors/arrow.svg);
+    background-position: right;
+    background-repeat: no-repeat;
+    background-position-x: 90%;
+    background-size: 20px;
+    font-family: Montserrat, sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    color: #4D4D4D;
+    text-align: center;
+    padding: 7px 45px;
+    border: 1px solid rgb(67, 65, 66);
+    border-radius: 55px;
+}
+
+.product-list-article {
+    -webkit-appearance: none;
+    background: #fff url(../Vectors/arrow.svg);
+    background-position: right;
+    background-repeat: no-repeat;
+    background-position-x: 95%;
+    background-size: 20px;
+    font-family: Montserrat, sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    color: #4D4D4D;
+    text-align: center;
+    padding: 7px 30px;
+    border: 1px solid rgb(67, 65, 66);
+    border-radius: 55px;
+}
+
+.label-products-list {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.window-container-info {
+    display: flex;
+    flex-wrap: wrap;
+    row-gap: 12px;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.window-container-info:last-child {
+    margin-bottom: 18px;
+}
+
+.input-quality-product {
+    font-family: Montserrat, sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    text-align: center;
+    color: #4D4D4D;
+    background-color: #fff;
+    border: 1px solid rgb(67, 65, 66);
+    border-radius: 55px;
+    padding: 6px 0;
 }

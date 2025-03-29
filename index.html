@@ -25,25 +25,84 @@
     <div id="form-container">
         <div class="input-group">
             <div class="label-input">
-            <label for="name">Імʼя, Прізвище</label>
+            <label for="name" class="label-text">Прізвище, Імʼя</label>
             <div class="label-input-human">
             <input type="text" placeholder="" class="name input-name-human" id="name" value="Башинський Сергій">
             </div>
             </div>
             <div class="label-input">
-                <label for="gender">Стать</label>
-            <select name="gneder" id="gender" class="gender-select">
+                <label for="gender" class="label-text">Стать</label>
+            <select name="gender" id="gender" class="select-info">
+                <option value=""></option>
                 <option value="male">Чол</option>
                 <option value="female">Жін</option>
             </select>
             </div>
-            <button onclick="removeField(this)" class="button-all">Видалити</button>
+            <!-- <button onclick="removeField(this)" class="button-all">Видалити</button> -->
         </div>
+        <div class="window-info">
+            <div class="window-container-info">
+            <div class="label-products-list">
+            <label for="product" class="label-text">Виріб</label>
+            <select name="product" id="product-list" class="product-list">
+                <option value=""></option>
+                <option value="Tunic">Кітель</option>
+                <option value="Apron">Фартух</option>
+            </select>
+            </div>
+            <div class="label-products-list">
+                <label for="product" class="label-text">Назва виробу</label>
+                <select name="product" id="product-list" class="product-list-article">
+                    <option value=""></option>
+                    <option value="Tunic">BRATISLAVA</option>
+                    <option value="Apron">LOS ANGELES</option>
+                </select>
+            </div>
+            <div class="label-products-list">
+                <label for="product" class="label-text">Колір</label>
+                <select name="product" id="product-list" class="product-list" style="padding: 7px 20px 7px 12px; background-position-x: 98%;">
+                    <option value=""></option>
+                    <option value="Tunic">Помаранчевий</option>
+                    <option value="Apron">Синій</option>
+                </select>
+            </div>
+            <div class="label-input">
+                <label for="quality" class="label-text">Кількість виробів</label>
+                <input type="text" placeholder="" class="name input-quality-product" id="quality">
+            </div>
+        </div>
+        <div class="window-container-no-wrap">
+            <div class="window-container-info">
+                <div class="label-products-list">
+                    <label for="product" class="label-text">Розмір вироба, якщо точно його знаєте</label>
+                    <select name="product" id="product-list" class="product-list" style="padding: 7px 125px; background-position-x: 97%;">
+                        <option value=""></option>
+                        <option value="Tunic">Не знаємо</option>
+                        <option value="Apron">42</option>
+                    </select>
+                </div>
+                <div class="label-input">
+                    <label for="quality" class="label-text">Якщо розмір не знаєте, обхват грудей, см</label>
+                    <input type="text" placeholder="" class="name input-quality-product" id="quality" style="padding: 7px 85px; ">
+                </div>
+                <div class="label-input">
+                    <label for="quality" class="label-text">Кількість вишивок логотипу на виробі</label>
+                    <input type="text" placeholder="" class="name input-quality-product" id="quality" style="padding: 7px 85px; ">
+                </div>
+                <div class="label-input">
+                    <label for="quality" class="label-text">Кількість вишивки імені на виробі</label>
+                    <input type="text" placeholder="" class="name input-quality-product" id="quality" style="padding: 7px 85px; ">
+                </div>
+            </div>
+        </div>
+        <div class="button-save">
+    <button onclick="toggleEdit(false)" class="button-save-form">Зберегти</button>
+        </div>
+    </div>
     </div>
     <div class="buttons-container">
     <!-- <button onclick="toggleEdit(true)" class="button-all">Редагувати</button> -->
     <button type="submit" class="button-send-form">Відправити</button>
-    <!-- <button onclick="toggleEdit(false)" class="button-save-form">Зберегти</button> -->
     <button onclick="addField()" class="button-add-human">Додати людину</button>
     <!-- <button onclick="addField()" class="button-all">Додати виріб</button> -->
      </div>

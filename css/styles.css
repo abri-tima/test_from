@@ -30,7 +30,7 @@ button {
     color: currentColor;
 }
 
-input {
+input, select {
     outline: none;
     margin: 0 auto;
 }
@@ -43,10 +43,12 @@ input {
 
 /* new */
 
+#form-container {
+    /* margin-bottom: 10px; */
+    margin-left: 15px;
+}
 
 .input-group {
-    margin-bottom: 10px;
-    margin-left: 25px;
     display: flex;
     gap: 10px;
     align-items: center;
@@ -108,7 +110,7 @@ input {
         position: absolute;
         /* margin-bottom: 42px;
         margin-right: 64px; */
-        gap: 68px;
+        gap: 85px;
         flex-direction: row-reverse;
 }
 
@@ -139,17 +141,17 @@ input {
 }
 
 
-.button-send-form:hover,
+.button-save-form:hover,
 .button-add-human:hover {
     background-color: #BC5100;
 }
 
-.button-send-form:focus,
+.button-save-form:focus,
 .button-add-human:focus {
     background-color: #BC5100;
 }
 
-.button-send-form:active,
+.button-save-form:active,
 .button-add-human:active {
     background-color: #EE6700;
     transition: none;   
@@ -158,6 +160,7 @@ input {
 .name-restaurant {
     margin-left: 24px;
     margin-top: 13px;
+    margin-bottom: 34px;
 }
 
 .rest-name-label {
@@ -172,16 +175,26 @@ input {
 }
 
 .rest-name-input {
-    padding: 6px 0 6px 13px;
+    font-family: Montserrat, sans-serif;
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 1.5;
+    padding: 6px 13px;
+    color: #4D4D4D;
     width: 100%;
     font-size: 12px;
-    outline: none;
     border: 4px solid rgb(217, 217, 217);
     border-radius: 23px;
     background-color: #fff;
 }
 
 .gender-select {
+    font-family: Montserrat, sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 1.7;
+    color: #4D4D4D;
+    text-align: center;
     padding: 6px 18px;
     border: 1px solid rgb(67, 65, 66);
     border-radius: 55px;

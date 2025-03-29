@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Форма отправки</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link rel="stylesheet" href="./css/styles.css">
+</head>
+<body>
+    <div class="name-restaurant">
+        <label for="rest-name" class="rest-name-label">Введіть назву ресторана:</label>
+        <div class="rest-name-input-container">
+        <input type="text" class="rest-name-input" name="rest-name" minlength="3" id="rest-name" value="Веранда на Дніпрі">
+        </div>
+    </div>
+
+
+
+    <div id="form-container">
+        <div class="input-group">
+            <div class="label-input">
+            <label for="name">Імʼя, Прізвище</label>
+            <div class="label-input-human">
+            <input type="text" placeholder="" class="name input-name-human" id="name" value="Башинський Сергій">
+            </div>
+            </div>
+            <div class="label-input">
+                <label for="gender"></label>
+            <select name="gneder" id="gender" class="gender-select">
+                <option value="male">Чол</option>
+                <option value="female">Жін</option>
+            </select>
+            </div>
+            <button onclick="removeField(this)" class="button-all">Видалити</button>
+        </div>
+    </div>
+    <div class="buttons-container">
+    <!-- <button onclick="toggleEdit(true)" class="button-all">Редагувати</button> -->
+    <button onclick="toggleEdit(false)" class="button-save-form">Зберегти</button>
+    <button onclick="addField()" class="button-add-human">Додати людину</button>
+    <!-- <button onclick="addField()" class="button-all">Додати виріб</button> -->
+     </div>
+
+    <script src="./js/script.js"></script>
+</body>
+</html>

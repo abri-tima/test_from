@@ -20,13 +20,13 @@ function addField() {
     let container = document.getElementById("form-container");
     let newGroup = document.createElement("div");
     newGroup.className = "input-group";
-    newGroup.innerHTML = '<input type="text" placeholder="Имя" class="name"> <input type="text" placeholder="Фамилия" class="surname"> <button onclick="removeField(this)" class="button-all">Удалить</button>';
+    newGroup.innerHTML = '<input type="text" placeholder="" class="name input-name-human" value="Башинський Сергій"> <button onclick="removeField(this)" class="button-all">Видалити</button>';
     container.appendChild(newGroup);
 }
 
 function removeField(button) {
     let container = document.getElementById("form-container");
-    if (container.children.length > 1) {
+    if (container.children.length >= 1) {
         button.parentElement.remove();
     }
 }

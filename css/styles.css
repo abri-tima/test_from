@@ -105,13 +105,14 @@ input, select {
 .buttons-container {
         display: flex;
         bottom: 39px;
-        left: 13px;
+        /* left: 13px; */
         /* right: 20px; */ 
         position: absolute;
         /* margin-bottom: 42px;
         margin-right: 64px; */
         gap: 85px;
         flex-direction: row-reverse;
+        width: 100%;
 }
 
 .button-save-form {

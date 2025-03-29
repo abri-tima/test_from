@@ -140,19 +140,36 @@ input, select {
     transition: background-color 250ms ease-in-out;
 }
 
+.button-send-form {
+    font-family: Montserrat, sans-serif;
+    font-size: 14px;
+    font-weight: 800;
+    background-color: #ee6700;
+    border-radius: 60px;
+    padding: 14px 17px;
+    color: #fff;
+    outline: none;
+    border: none;
+    transition: background-color 250ms ease-in-out;
+}
+
+
 
 .button-save-form:hover,
-.button-add-human:hover {
+.button-add-human:hover,
+.button-send-form:hover {
     background-color: #BC5100;
 }
 
 .button-save-form:focus,
-.button-add-human:focus {
+.button-add-human:focus,
+.button-send-form:focus {
     background-color: #BC5100;
 }
 
 .button-save-form:active,
-.button-add-human:active {
+.button-add-human:active,
+.button-send-form:active {
     background-color: #EE6700;
     transition: none;   
 }

@@ -45,7 +45,7 @@ input, select {
 
 #form-container {
     /* margin-bottom: 10px; */
-    margin-left: 15px;
+    margin-left: 24px;
 }
 
 .input-group {
@@ -189,13 +189,18 @@ input, select {
 }
 
 .gender-select {
+    -webkit-appearance: none;
+    background: url(../Vectors/arrow.svg);
+    background-position: right;
+    background-repeat: no-repeat;
+    background-size: 20px;;
     font-family: Montserrat, sans-serif;
     font-size: 14px;
     font-weight: 700;
     line-height: 1.7;
     color: #4D4D4D;
-    text-align: center;
-    padding: 6px 18px;
+    text-align: left;
+    padding: 6px 25px;
     border: 1px solid rgb(67, 65, 66);
     border-radius: 55px;
 }

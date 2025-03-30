@@ -102,7 +102,7 @@ input, select {
 
 .buttons-container {
         display: flex;
-        bottom: 39px;
+        bottom: 25px;
         left: 10px;
         /* right: 20px; */ 
         position: absolute;

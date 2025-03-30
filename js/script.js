@@ -1,100 +1,34 @@
-
-// document.addEventListener("DOMContentLoaded", function () {
-//     const addHumanButton = document.querySelector(".button-add-human");
-//     const formContainer = document.querySelector("#form-container");
-//     const buttonSaveContainer = document.querySelector(".button-save");
-//     const saveButton = document.createElement("button");
-//     saveButton.textContent = "Зберегти";
-//     saveButton.classList.add("button-save-form");
-//     buttonSaveContainer.appendChild(saveButton);
-
-//     const infoBlock = document.createElement("div");
-//     infoBlock.classList.add("info-block", "hidden");
-//     document.body.appendChild(infoBlock);
-
-//     addHumanButton.addEventListener("click", function () {
-//         formContainer.classList.remove("hidden");
-//     });
-
-//     saveButton.addEventListener("click", function () {
-//         const name = document.querySelector(".input-name-human").value;
-//         const gender = document.querySelector("#gender").value;
-//         const product = document.querySelector("#product-list").value;
-//         const productName = document.querySelector(".product-list-article").value;
-//         const color = document.querySelectorAll(".product-list")[1].value;
-//         const quantity = document.querySelector("#quality").value;
-
-//         if (!name || !gender || !product || !productName || !color || !quantity) {
-//             alert("Будь ласка, заповніть всі поля!");
-//             return;
-//         }
-
-//         infoBlock.innerHTML = `
-//             <p>Ім'я: ${name}</p>
-//             <p>Стать: ${gender}</p>
-//             <p>Виріб: ${product}</p>
-//             <p>Назва виробу: ${productName}</p>
-//             <p>Колір: ${color}</p>
-//             <p>Кількість: ${quantity}</p>
-//             <button class="edit-button">Редагувати</button>
-//             <button class="delete-button">Видалити</button>
-//         `;
-
-//         formContainer.classList.add("hidden");
-//         infoBlock.classList.remove("hidden");
-
-//         document.querySelector(".edit-button").addEventListener("click", function () {
-//             formContainer.classList.remove("hidden");
-//             infoBlock.classList.add("hidden");
-//         });
-
-//         document.querySelector(".delete-button").addEventListener("click", function () {
-//             infoBlock.innerHTML = "";
-//             infoBlock.classList.add("hidden");
-//         });
-//     });
-//     document.querySelector(".edit-button").addEventListener("click", function () {
-//         document.querySelector(".info-block").style.display = "none";
-//         document.querySelector(".form-container").style.display = "block"; // Показываем форму
-//     });
-// });
-
-
 document.addEventListener("DOMContentLoaded", function () {
     const addHumanButton = document.querySelector(".button-add-human");
     const formContainer = document.querySelector("#form-container");
     const saveButton = document.querySelector(".button-save-form");
+    const infoContainer = document.createElement("div");
+    infoContainer.classList.add("info-container");
+    document.body.appendChild(infoContainer);
 
-    // Добавляем скрытый блок с информацией
-    const infoBlock = createInfoBlock();
-
-    // Слушатель для кнопки "Додати людину"
     addHumanButton.addEventListener("click", function () {
-        showForm(formContainer, infoBlock);
+        resetForm(formContainer);
+        showForm(formContainer, infoContainer);
     });
 
-    // Слушатель для кнопки "Зберегти"
     saveButton.addEventListener("click", function () {
-        handleSave(formContainer, infoBlock);
+        handleSave(formContainer, infoContainer);
+        showInfoBlock(formContainer, infoContainer)
     });
 });
 
-// Функция для создания скрытого блока с информацией
-function createInfoBlock() {
-    const infoBlock = document.createElement("div");
-    infoBlock.classList.add("info-block", "hidden");
-    document.body.appendChild(infoBlock);
-    return infoBlock;
-}
-
-// Функция для отображения формы
-function showForm(formContainer, infoBlock) {
+function showForm(formContainer, infoContainer) {
     formContainer.classList.remove("hidden");
-    infoBlock.classList.add("hidden");
+    infoContainer.querySelectorAll(".info-block").forEach(infoBlock => infoBlock.classList.add("hidden"));
+
 }
 
-// Функция для обработки сохранения данных
-function handleSave(formContainer, infoBlock) {
+function showInfoBlock(formContainer, infoContainer) {
+    formContainer.classList.add("hidden");
+    infoContainer.querySelectorAll(".info-block").forEach(infoBlock => infoBlock.classList.remove("hidden"));
+}
+
+function handleSave(formContainer, infoContainer) {
     const name = document.querySelector(".input-name-human").value;
     const gender = document.querySelector("#gender").value;
     const product = document.querySelector("#product-list").value;
@@ -106,62 +40,69 @@ function handleSave(formContainer, infoBlock) {
     const qualityLogo = document.querySelector("#quality-logo").value;
     const qualityEmbroideries = document.querySelector("#quality-embroideries").value;
 
-    // Проверка на пустые поля
     if (!name || !gender || !product || !productName || !color || !quantityItems || !productSize || !chestSize || !qualityLogo || !qualityEmbroideries) {
         alert("Будь ласка, заповніть всі поля!");
         return;
     }
 
-    // Отображаем информацию
+    const infoBlock = document.createElement("div");
+    infoBlock.classList.add("info-block");
     infoBlock.innerHTML = `
-        <p>Ім'я: ${name}</p>
-        <p>Стать: ${gender}</p>
-        <p>Виріб: ${product}</p>
-        <p>Назва виробу: ${productName}</p>
-        <p>Колір: ${color}</p>
-        <p>Кількість: ${quantityItems}</p>
-        <p>Розмір: ${productSize}</p>
-        <p>ОГ/ОС: ${chestSize}</p>
-        <p>Кілкість лого: ${qualityLogo}</p>
-        <p>Кількість вишивки: ${qualityEmbroideries}</p>
-
+        <p>Ім'я: <span class="info-name">${name}</span></p>
+        <p>Стать: <span class="info-gender">${gender}</span></p>
+        <p>Виріб: <span class="info-product">${product}</span></p>
+        <p>Назва виробу: <span class="info-productName">${productName}</span></p>
+        <p>Колір: <span class="info-color">${color}</span></p>
+        <p>Кількість: <span class="info-quantityItems">${quantityItems}</span></p>
+        <p>Розмір: <span class="info-productSize">${productSize}</span></p>
+        <p>ОГ/ОС: <span class="info-chestSize">${chestSize}</span></p>
+        <p>Кількість лого: <span class="info-qualityLogo">${qualityLogo}</span></p>
+        <p>Кількість вишивки: <span class="info-qualityEmbroideries">${qualityEmbroideries}</span></p>
         <button class="edit-button">Редагувати</button>
         <button class="delete-button">Видалити</button>
     `;
 
+    infoContainer.appendChild(infoBlock);
     formContainer.classList.add("hidden");
-    infoBlock.classList.remove("hidden");
-
-    // Слушатели для кнопок редактирования и удаления
+    resetForm(formContainer);
     setupEditAndDelete(infoBlock, formContainer);
 }
 
-// Функция для установки слушателей кнопок "Редагувати" и "Видалити"
 function setupEditAndDelete(infoBlock, formContainer) {
     const editButton = infoBlock.querySelector(".edit-button");
     const deleteButton = infoBlock.querySelector(".delete-button");
 
-    // Слушатель для кнопки "Редагувати"
     editButton.addEventListener("click", function () {
+        formContainer.querySelector(".input-name-human").value = infoBlock.querySelector(".info-name").textContent;
+        formContainer.querySelector("#gender").value = infoBlock.querySelector(".info-gender").textContent;
+        formContainer.querySelector("#product-list").value = infoBlock.querySelector(".info-product").textContent;
+        formContainer.querySelector("#product-list-article").value = infoBlock.querySelector(".info-productName").textContent;
+        formContainer.querySelector("#product-list-color").value = infoBlock.querySelector(".info-color").textContent;
+        formContainer.querySelector("#quality-items").value = infoBlock.querySelector(".info-quantityItems").textContent;
+        formContainer.querySelector("#product-list-size").value = infoBlock.querySelector(".info-productSize").textContent;
+        formContainer.querySelector("#chest-size").value = infoBlock.querySelector(".info-chestSize").textContent;
+        formContainer.querySelector("#quality-logo").value = infoBlock.querySelector(".info-qualityLogo").textContent;
+        formContainer.querySelector("#quality-embroideries").value = infoBlock.querySelector(".info-qualityEmbroideries").textContent;
+        
         formContainer.classList.remove("hidden");
-        infoBlock.classList.add("hidden"); // Скрываем infoBlock
+        infoBlock.remove();
     });
 
-    // Слушатель для кнопки "Видалити"
     deleteButton.addEventListener("click", function () {
-        infoBlock.innerHTML = "";
-        infoBlock.classList.add("hidden"); // Скрываем infoBlock
-    // Скрываем форму и очищаем поля
-        formContainer.classList.add("hidden");
-        formContainer.querySelector(".input-name-human").value = "";
-        formContainer.querySelector("#gender").value = "";
-        formContainer.querySelector("#product-list").value = "";
-        formContainer.querySelector("#product-list-article").value = "";
-        formContainer.querySelector("#product-list-color").value = "";
-        formContainer.querySelector("#quality-items").value = "";
-        formContainer.querySelector("#product-list-size").value = "";
-        formContainer.querySelector("#chest-size").value = "";
-        formContainer.querySelector("#quality-logo").value = "";
-        formContainer.querySelector("#quality-embroideries").value = "";
+        infoBlock.remove();
+    });
+}
+
+function resetForm(formContainer) {
+    if (!formContainer) return;
+    formContainer.classList.add("hidden");
+    const fields = [
+        ".input-name-human", "#gender", "#product-list", "#product-list-article", 
+        "#product-list-color", "#quality-items", "#product-list-size", 
+        "#chest-size", "#quality-logo", "#quality-embroideries"
+    ];
+    fields.forEach(selector => {
+        const field = formContainer.querySelector(selector);
+        if (field) field.value = "";
     });
 }

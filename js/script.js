@@ -12,8 +12,10 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     saveButton.addEventListener("click", function () {
-        handleSave(formContainer, infoContainer);
-        showInfoBlock(formContainer, infoContainer)
+        const success = handleSave(formContainer, infoContainer);
+        if (success) {
+            showInfoBlock(formContainer, infoContainer);
+        }
     });
 });
 
@@ -42,7 +44,7 @@ function handleSave(formContainer, infoContainer) {
 
     if (!name || !gender || !product || !productName || !color || !quantityItems || !productSize || !chestSize || !qualityLogo || !qualityEmbroideries) {
         alert("Будь ласка, заповніть всі поля!");
-        return;
+        return false;
     }
 
     const infoBlock = document.createElement("div");
@@ -66,6 +68,8 @@ function handleSave(formContainer, infoContainer) {
     formContainer.classList.add("hidden");
     resetForm(formContainer);
     setupEditAndDelete(infoBlock, formContainer);
+
+    return true;
 }
 
 function setupEditAndDelete(infoBlock, formContainer) {
@@ -73,6 +77,10 @@ function setupEditAndDelete(infoBlock, formContainer) {
     const deleteButton = infoBlock.querySelector(".delete-button");
 
     editButton.addEventListener("click", function () {
+        // Скрываем все infoBlock
+        document.querySelectorAll(".info-block").forEach(block => block.classList.add("hidden"));
+
+        // Заполняем форму данными из infoBlock
         formContainer.querySelector(".input-name-human").value = infoBlock.querySelector(".info-name").textContent;
         formContainer.querySelector("#gender").value = infoBlock.querySelector(".info-gender").textContent;
         formContainer.querySelector("#product-list").value = infoBlock.querySelector(".info-product").textContent;
@@ -83,8 +91,11 @@ function setupEditAndDelete(infoBlock, formContainer) {
         formContainer.querySelector("#chest-size").value = infoBlock.querySelector(".info-chestSize").textContent;
         formContainer.querySelector("#quality-logo").value = infoBlock.querySelector(".info-qualityLogo").textContent;
         formContainer.querySelector("#quality-embroideries").value = infoBlock.querySelector(".info-qualityEmbroideries").textContent;
-        
+
+        // Показываем форму
         formContainer.classList.remove("hidden");
+
+        // Удаляем текущий infoBlock
         infoBlock.remove();
     });
 

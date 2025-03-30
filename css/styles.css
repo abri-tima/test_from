@@ -103,7 +103,7 @@ input, select {
 .buttons-container {
         display: flex;
         bottom: 39px;
-        left: 20px;
+        left: 10px;
         /* right: 20px; */ 
         position: absolute;
         /* margin-bottom: 42px;
@@ -232,10 +232,9 @@ input, select {
 
 .window-info {
     background-color: #DCDCDC;
-    width: 329px;
-    height: 390px;
     padding: 22px 14px;
     margin-left: 10px;
+    margin-right: 10px;
     border: 2px solid rgb(67, 65, 66);
     border-radius: 23px;
 
@@ -312,10 +311,6 @@ input, select {
 
 /* down need */
 .saved {
-    /* opacity: 0;
-    visibility: hidden;
-    transition: opacity 250ms ease-in-out,
-                visibility 250ms ease-in-out; */
     display: none;
 }
 

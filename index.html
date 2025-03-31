@@ -114,64 +114,26 @@
     <script src="./js/script.js"></script>
     <script>
 const scriptURL = 'https://script.google.com/macros/s/AKfycbxXmjg4yv8WGZmaRKdZ0ukHt3QLZQrUeW8sXImzhwqfIKMWbHsgzDzM23kXnF38_wMy/exec';
-document.querySelector('.button-send-form').addEventListener('click', e => {
-  e.preventDefault();
 
-  const restNameInput = document.querySelector('#rest-name');
-  const restName = restNameInput.value.trim();
+const formData = new FormData();
+formData.append('rest-name', restName);
+formData.append('entries', JSON.stringify(entries));
 
-  if (!restName) {
-    alert("Введіть назву ресторану 🙏");
-    return;
-  }
-
-  const entries = [];
-  document.querySelectorAll('.info-block-product').forEach(block => {
-    const entry = {
-      name: block.querySelector('.info-name')?.textContent || '',
-      gender: block.querySelector('.info-gender')?.textContent || '',
-      product: block.querySelector('.info-product')?.textContent || '',
-      productName: block.querySelector('.info-productName')?.textContent || '',
-      color: block.querySelector('.info-color')?.textContent || '',
-      quantityItems: block.querySelector('.info-quantityItems')?.textContent || '',
-      productSize: block.querySelector('.info-productSize')?.textContent || '',
-      chestSize: block.querySelector('.info-chestSize')?.textContent.replace(' см', '') || '',
-      qualityLogo: block.querySelector('.info-qualityLogo')?.textContent || '',
-      qualityEmbroideries: block.querySelector('.info-qualityEmbroideries')?.textContent || ''
-    };
-    entries.push(entry);
+fetch(scriptURL, {
+  method: 'POST',
+  body: formData
+})
+  .then(res => res.text())
+  .then(data => {
+    showSuccessMessage("🎉 Успішно! Дякуємо за замовлення 😎");
+    document.querySelectorAll('.human-block').forEach(block => block.remove());
+    document.querySelector('#rest-name').value = '';
+  })
+  .catch(err => {
+    showSuccessMessage("❌ Помилка: " + err.message);
+    console.error("Error:", err);
   });
 
-  if (entries.length === 0) {
-    alert("Додайте хоча б одну людину з виробом 🙃");
-    return;
-  }
-
-  const payload = {
-    'rest-name': restName,
-    'entries': entries
-  };
-
-  fetch('https://script.google.com/macros/s/AKfycbxXmjg4yv8WGZmaRKdZ0ukHt3QLZQrUeW8sXImzhwqfIKMWbHsgzDzM23kXnF38_wMy/exec', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(payload)
-  })
-    .then(res => res.text())
-    .then(data => {
-      showSuccessMessage("🎉 Форма відправлена! Дякуємо 🧡");
-
-      // Очистити всі блоки людей
-      document.querySelectorAll('.human-block').forEach(block => block.remove());
-
-      // Очистити назву ресторану
-      restNameInput.value = '';
-    })
-    .catch(err => {
-      alert("Щось пішло не так 😢 Спробуйте ще раз");
-      console.error("Error:", err);
-    });
-});
     </script>
 </body>
 </html>

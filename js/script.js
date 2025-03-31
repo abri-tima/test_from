@@ -127,8 +127,8 @@ document.addEventListener("DOMContentLoaded", function () {
                 <p>Вишивка лого - <span class="info-qualityLogo">${data.qualityLogo}</span></p>
                 <p>Вишивка імені - <span class="info-qualityEmbroideries">${data.qualityEmbroideries}</span></p>
                 <div class="button-container">
-                    <button class="edit-button info-block-button">Редагувати</button>
-                    <button class="delete-button info-block-button">Видалити</button>
+                    <button class="edit-button info-block-button" type="button">Редагувати</button>
+                    <button class="delete-button info-block-button" type="button">Видалити</button>
                 </div>
             </div>
         `;

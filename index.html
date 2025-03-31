@@ -100,13 +100,13 @@
             </div>
         </div>
         <div class="button-save">
-    <button onclick="handleSave()" class="button-save-form" type="submit">Зберегти</button>
+    <button onclick="handleSave()" class="button-save-form" type="button">Зберегти</button>
     <!-- <button onclick="handleCancel()" class="button-cancel-form">Отмена</button> -->
     </div>
     </div>
     </div>
     <div class="buttons-container btn-container-fixed">
-    <button id="addHumanButton" class="button-add-human">Додати людину</button>
+    <button id="addHumanButton" class="button-add-human" type="button">Додати людину</button>
     <button type="submit" class="button-send-form">Відправити</button>
      </div>
 </form>
@@ -152,7 +152,7 @@ document.querySelector('.button-send-form').addEventListener('click', e => {
     'entries': entries
   };
 
-  fetch('https://script.google.com/macros/s/AKfycby8MrDELzbicnbrHGujToa11sK2ttZlIZYWiAsLdXCPHQZhhl1wCwdRFO5Wx1FXwNqm/exec', {
+  fetch('https://script.google.com/macros/s/AKfycbxXmjg4yv8WGZmaRKdZ0ukHt3QLZQrUeW8sXImzhwqfIKMWbHsgzDzM23kXnF38_wMy/exec', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(payload)

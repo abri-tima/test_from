@@ -355,6 +355,10 @@ input, select {
     margin-top: 20px;
 }
 
+.info-block-product {
+    margin-top: 6px;
+}
+
 .info-block-first {
     padding: 6px 13px 7px 15px;
     margin-bottom: 10px;

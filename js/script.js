@@ -19,6 +19,8 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 });
 
+
+
 function showForm(formContainer, infoContainer) {
     formContainer.classList.remove("hidden");
     infoContainer.querySelectorAll(".info-block").forEach(infoBlock => infoBlock.classList.add("hidden"));
@@ -98,12 +100,11 @@ function handleSave(formContainer, infoContainer) {
 function setupEditAndDelete(infoBlock, formContainer) {
     const editButton = infoBlock.querySelector(".edit-button");
     const deleteButton = infoBlock.querySelector(".delete-button");
+    const addProductButton = infoBlock.querySelector(".add-product");
 
     editButton.addEventListener("click", function () {
-        // Скрываем все infoBlock
         document.querySelectorAll(".info-block").forEach(block => block.classList.add("hidden"));
 
-        // Заполняем форму данными из infoBlock
         formContainer.querySelector(".input-name-human").value = infoBlock.querySelector(".info-name").textContent;
         formContainer.querySelector("#gender").value = infoBlock.querySelector(".info-gender").textContent;
         formContainer.querySelector("#product-list").value = infoBlock.querySelector(".info-product").textContent;
@@ -115,17 +116,103 @@ function setupEditAndDelete(infoBlock, formContainer) {
         formContainer.querySelector("#quality-logo").value = infoBlock.querySelector(".info-qualityLogo").textContent;
         formContainer.querySelector("#quality-embroideries").value = infoBlock.querySelector(".info-qualityEmbroideries").textContent;
 
-        // Показываем форму
         formContainer.classList.remove("hidden");
-
-        // Удаляем текущий infoBlock
         infoBlock.remove();
     });
 
     deleteButton.addEventListener("click", function () {
         infoBlock.remove();
     });
+
+    if (addProductButton) {
+        addProductButton.addEventListener("click", function () {
+            handleAddProduct(infoBlock, formContainer);
+        });
+    }
+    
 }
+
+
+
+function handleAddProduct(parentInfoBlock, formContainer) {
+    resetForm(formContainer);
+
+    // Заполняем имя и пол из родителя
+    const name = parentInfoBlock.querySelector(".info-name").textContent;
+    const gender = parentInfoBlock.querySelector(".info-gender").textContent;
+
+    formContainer.querySelector(".input-name-human").value = name;
+    formContainer.querySelector("#gender").value = gender;
+
+    // Скрываем текущий infoBlock
+    parentInfoBlock.classList.add("hidden");
+
+    formContainer.classList.remove("hidden");
+
+    // Удаляем старый обработчик, если есть
+    const oldSaveButton = formContainer.querySelector(".button-save-form");
+    const newSaveButton = oldSaveButton.cloneNode(true);
+    oldSaveButton.parentNode.replaceChild(newSaveButton, oldSaveButton);
+
+    newSaveButton.addEventListener("click", function () {
+        const name = document.querySelector(".input-name-human").value;
+        const gender = document.querySelector("#gender").value;
+        const product = document.querySelector("#product-list").value;
+        const productName = document.querySelector("#product-list-article").value;
+        const color = document.querySelector("#product-list-color").value;
+        const quantityItems = document.querySelector("#quality-items").value;
+        const productSize = document.querySelector("#product-list-size").value;
+        const chestSize = document.querySelector("#chest-size").value;
+        const qualityLogo = document.querySelector("#quality-logo").value;
+        const qualityEmbroideries = document.querySelector("#quality-embroideries").value;
+
+        if (!name || !gender || !product || !productName || !color || !quantityItems || !productSize || !chestSize || !qualityLogo || !qualityEmbroideries) {
+            alert("Будь ласка, заповніть всі поля!");
+            return false;
+        }
+
+        const newProductBlock = document.createElement("div");
+        newProductBlock.classList.add("info-block-product");
+        newProductBlock.innerHTML = `
+            <div class="info-block-second">
+                <p><span class="info-container-last">${product} ${productName} - ${color} - ${quantityItems} шт</span></p>
+                <p class="hidden">Ім'я: <span class="info-name">${name}</span></p>
+                <p class="hidden">Стать: <span class="info-gender">${gender}</span></p>
+                <p class="hidden">Виріб: <span class="info-product">${product}</span></p>
+                <p class="hidden">Назва виробу: <span class="info-productName">${productName}</span></p>
+                <p class="hidden">Колір: <span class="info-color">${color}</span></p>
+                <p class="hidden">Кількість: <span class="info-quantityItems">${quantityItems}</span></p>
+                <p class="info-productSize-cont">Розмір: <span class="info-productSize">${productSize}</span></p>
+                <p>ОГ/ОС: <span class="info-chestSize">${chestSize} см</span></p>
+                <p>Вишивка лого - <span class="info-qualityLogo">${qualityLogo}</span></p>
+                <p>Вишивка імені - <span class="info-qualityEmbroideries">${qualityEmbroideries}</span></p>
+                <div class="button-container">
+                    <button class="edit-button info-block-button">Редагувати</button>
+                    <button class="delete-button info-block-button">Видалити</button>
+                </div>
+            </div>
+        `;
+
+        const buttonContainer = Array.from(parentInfoBlock.children).find(child => 
+            child.classList.contains("button-container")
+        );
+        
+        if (buttonContainer) {
+            parentInfoBlock.insertBefore(newProductBlock, buttonContainer);
+        } else {
+            parentInfoBlock.appendChild(newProductBlock);
+        }
+        
+
+        setupEditAndDelete(newProductBlock, formContainer);
+        resetForm(formContainer);
+        formContainer.classList.add("hidden");
+
+        // Показываем родительский блок снова
+        parentInfoBlock.classList.remove("hidden");
+    });
+}
+
 
 function resetForm(formContainer) {
     if (!formContainer) return;

@@ -120,6 +120,7 @@ input, select {
     display: flex;
     justify-content: center;
     align-items: center;
+    gap: 25px;
 }
 
 .button-save-form {
@@ -128,7 +129,20 @@ input, select {
     font-weight: 800;
     background-color: #ee6700;
     border-radius: 60px;
-    padding: 5px 40px;
+    padding: 5px 20px;
+    color: #fff;
+    outline: none;
+    border: none;
+    transition: background-color 250ms ease-in-out;
+}
+
+.button-cancel-form {
+    font-family: Montserrat, sans-serif;
+    font-size: 24px;
+    font-weight: 800;
+    background-color: #ee6700;
+    border-radius: 60px;
+    padding: 5px 20px;
     color: #fff;
     outline: none;
     border: none;
@@ -160,6 +174,8 @@ input, select {
     border: none;
     transition: background-color 250ms ease-in-out;
 }
+
+
 
 
 

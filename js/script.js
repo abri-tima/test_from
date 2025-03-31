@@ -83,6 +83,18 @@ function handleSave(formContainer, infoContainer) {
     return true;
 }
 
+// function handleCancel() {
+//     const formContainer = document.querySelector("#form-container");
+//     formContainer.classList.add("hidden"); // Скрываем форму
+
+//     // Показываем все скрытые infoBlock
+//     document.querySelectorAll(".info-block").forEach(block => block.classList.remove("hidden"));
+// }
+
+// document.addEventListener("DOMContentLoaded", function () {
+//     document.querySelector(".button-cancel-form").addEventListener("click", handleCancel);
+// });
+
 function setupEditAndDelete(infoBlock, formContainer) {
     const editButton = infoBlock.querySelector(".edit-button");
     const deleteButton = infoBlock.querySelector(".delete-button");

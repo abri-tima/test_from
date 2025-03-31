@@ -50,16 +50,18 @@ function handleSave(formContainer, infoContainer) {
     const infoBlock = document.createElement("div");
     infoBlock.classList.add("info-block");
     infoBlock.innerHTML = `
-        <p>Ім'я: <span class="info-name">${name}</span></p>
-        <p>Стать: <span class="info-gender">${gender}</span></p>
-        <p>Виріб: <span class="info-product">${product}</span></p>
-        <p>Назва виробу: <span class="info-productName">${productName}</span></p>
-        <p>Колір: <span class="info-color">${color}</span></p>
-        <p>Кількість: <span class="info-quantityItems">${quantityItems}</span></p>
+        <p><span class="info-container-first">${name}_${gender}</span></p>
+        <p><span class="info-container-last">${product} ${productName} - ${color} - ${quantityItems} шт</span></p>
+        <p class="hidden">Ім'я: <span class="info-name">${name}</span></p>
+        <p class="hidden">Стать: <span class="info-gender">${gender}</span></p>
+        <p class="hidden">Виріб: <span class="info-product">${product}</span></p>
+        <p class="hidden">Назва виробу: <span class="info-productName">${productName}</span></p>
+        <p class="hidden">Колір: <span class="info-color">${color}</span></p>
+        <p class="hidden">Кількість: <span class="info-quantityItems">${quantityItems}</span></p>
         <p>Розмір: <span class="info-productSize">${productSize}</span></p>
         <p>ОГ/ОС: <span class="info-chestSize">${chestSize}</span></p>
-        <p>Кількість лого: <span class="info-qualityLogo">${qualityLogo}</span></p>
-        <p>Кількість вишивки: <span class="info-qualityEmbroideries">${qualityEmbroideries}</span></p>
+        <p>Вишивка лого: <span class="info-qualityLogo">${qualityLogo}</span></p>
+        <p>Вишивка імені: <span class="info-qualityEmbroideries">${qualityEmbroideries}</span></p>
         <button class="edit-button">Редагувати</button>
         <button class="delete-button">Видалити</button>
     `;

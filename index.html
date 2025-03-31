@@ -117,9 +117,15 @@ const scriptURL = 'https://script.google.com/macros/s/AKfycbxXmjg4yv8WGZmaRKdZ0u
 document.querySelector('.button-send-form').addEventListener('click', e => {
   e.preventDefault();
 
-  const restName = document.querySelector('#rest-name').value;
-  const entries = [];
+  const restNameInput = document.querySelector('#rest-name');
+  const restName = restNameInput.value.trim();
 
+  if (!restName) {
+    alert("Введіть назву ресторану 🙏");
+    return;
+  }
+
+  const entries = [];
   document.querySelectorAll('.info-block-product').forEach(block => {
     const entry = {
       name: block.querySelector('.info-name')?.textContent || '',
@@ -136,25 +142,35 @@ document.querySelector('.button-send-form').addEventListener('click', e => {
     entries.push(entry);
   });
 
+  if (entries.length === 0) {
+    alert("Додайте хоча б одну людину з виробом 🙃");
+    return;
+  }
+
   const payload = {
     'rest-name': restName,
     'entries': entries
   };
 
-  fetch('https://script.google.com/macros/s/AKfycbxXmjg4yv8WGZmaRKdZ0ukHt3QLZQrUeW8sXImzhwqfIKMWbHsgzDzM23kXnF38_wMy/exec', {
+  fetch('https://script.google.com/macros/s/AKfycby8MrDELzbicnbrHGujToa11sK2ttZlIZYWiAsLdXCPHQZhhl1wCwdRFO5Wx1FXwNqm/exec', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(payload)
   })
-  .then(res => res.text())
-  .then(data => {
-    alert("Успішно відправлено!");
-    console.log("Success:", data);
-  })
-  .catch(err => {
-    alert("Помилка при відправці 😢");
-    console.error("Error:", err);
-  });
+    .then(res => res.text())
+    .then(data => {
+      showSuccessMessage("🎉 Форма відправлена! Дякуємо 🧡");
+
+      // Очистити всі блоки людей
+      document.querySelectorAll('.human-block').forEach(block => block.remove());
+
+      // Очистити назву ресторану
+      restNameInput.value = '';
+    })
+    .catch(err => {
+      alert("Щось пішло не так 😢 Спробуйте ще раз");
+      console.error("Error:", err);
+    });
 });
     </script>
 </body>

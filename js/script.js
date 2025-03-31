@@ -187,4 +187,37 @@ document.addEventListener("DOMContentLoaded", function () {
     function resetForm(container) {
         container.querySelectorAll("input, select").forEach(el => el.value = "");
     }
+
+    function showSuccessMessage(text) {
+        const msg = document.createElement('div');
+        msg.textContent = text;
+        msg.style.position = 'fixed';
+        msg.style.bottom = '30px';
+        msg.style.left = '50%';
+        msg.style.transform = 'translateX(-50%)';
+        msg.style.background = '#EE6700';
+        msg.style.color = '#fff';
+        msg.style.padding = '12px 24px';
+        msg.style.borderRadius = '30px';
+        msg.style.fontSize = '18px';
+        msg.style.fontWeight = 'bold';
+        msg.style.boxShadow = '0 4px 20px rgba(0,0,0,0.2)';
+        msg.style.zIndex = 9999;
+        msg.style.opacity = 0;
+        msg.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+      
+        document.body.appendChild(msg);
+      
+        setTimeout(() => {
+          msg.style.opacity = 1;
+          msg.style.transform = 'translateX(-50%) translateY(-10px)';
+        }, 100);
+      
+        setTimeout(() => {
+          msg.style.opacity = 0;
+          msg.style.transform = 'translateX(-50%) translateY(0)';
+          setTimeout(() => msg.remove(), 500);
+        }, 3000);
+      }
+      
 });

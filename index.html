@@ -8,6 +8,9 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
     <!-- Google Fonts -->
     <link rel="stylesheet" href="./css/styles.css">
     <link rel="stylesheet" href="./css/normalize.css">
@@ -101,7 +104,7 @@
     </div>
     </div>
     <div class="buttons-container">
-    <button onclick="toggleEdit(true)" class="button-all edit-button">Редагувати</button>
+    <button class="button-all edit-button">Редагувати</button>
     <!-- <button type="submit" class="button-send-form">Відправити</button> -->
     <button id="addHumanButton" class="button-add-human">Додати людину</button>
     <!-- <button onclick="addField()" class="button-all">Додати виріб</button> -->
@@ -109,21 +112,27 @@
 
     <script src="./js/script.js"></script>
 
-    <!-- <div class="info-container">
+    <div class="info-container">
         <div class="info-block">
-            <p>Ім'я: <span class="info-name">${name}</span></p>
-            <p>Стать: <span class="info-gender">${gender}</span></p>
-            <p>Виріб: <span class="info-product">${product}</span></p>
-            <p>Назва виробу: <span class="info-productName">${productName}</span></p>
-            <p>Колір: <span class="info-color">${color}</span></p>
-            <p>Кількість: <span class="info-quantityItems">${quantityItems}</span></p>
-            <p>Розмір: <span class="info-productSize">${productSize}</span></p>
-            <p>ОГ/ОС: <span class="info-chestSize">${chestSize}</span></p>
-            <p>Кількість лого: <span class="info-qualityLogo">${qualityLogo}</span></p>
-            <p>Кількість вишивки: <span class="info-qualityEmbroideries">${qualityEmbroideries}</span></p>
-            <button class="edit-button">Редагувати</button>
-            <button class="delete-button">Видалити</button>
+            <div class="info-block-first">
+                <p><span class="info-container-first">Башинський Сергій_чол </span></p>
+                </div>
+                <div class="info-block-second">
+                <p><span class="info-container-last">Кітель BRATISLAVA - Чорний - 2 шт</span></p>
+                <p class="hidden">Ім'я: <span class="info-name">${name}</span></p>
+                <p class="hidden">Стать: <span class="info-gender">${gender}</span></p>
+                <p class="hidden">Виріб: <span class="info-product">${product}</span></p>
+                <p class="hidden">Назва виробу: <span class="info-productName">${productName}</span></p>
+                <p class="hidden">Колір: <span class="info-color">${color}</span></p>
+                <p class="hidden">Кількість: <span class="info-quantityItems">${quantityItems}</span></p>
+                <p class="info-productSize-cont">Розмір: <span class="info-productSize">Не знаємо</span></p>
+                <p>ОГ/ОС: <span class="info-chestSize">104 см</span></p>
+                <p>Вишивка лого - <span class="info-qualityLogo">1</span></p>
+                <p>Вишивка імені - <span class="info-qualityEmbroideries">0</span></p>
+                <button class="edit-button info-block-second-icon-edit"><svg width="24" height="24" fill="#656565"><use href="./Vectors/Symbol.svg#icon-edit"></use></svg></button>
+                <button class="delete-button info-block-second-icon-delete"><svg width="24" height="24" fill="#656565"><use href="./Vectors/Symbol.svg#icon-delete"></use></svg></button>
+            </div>
         </div>
-    </div> -->
+    </div>
 </body>
 </html>

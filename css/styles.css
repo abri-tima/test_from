@@ -1,5 +1,5 @@
 body {
-    font-family: "Montserrat", serif;
+    font-family: "Montserrat","Inter", sans-serif;
     margin: 0;
     background-color: #fff;
 }
@@ -28,6 +28,7 @@ ul, ol {
 button {
     cursor: pointer;
     color: currentColor;
+    padding: 0;
 }
 
 input, select {
@@ -314,20 +315,87 @@ input, select {
 
 
 
-
-
-
-/* down need */
 .saved {
     display: none;
 }
 
-.info-block {
-    display: block;
-    width: 360px;
-    background-color: orangered;
+/* info-block-styles */
+
+.info-container {
+    margin-top: 24px;
 }
 
-.hidden {
-display: none;
+.info-block {
+    display: block;
+    margin-left: 24px;
+    margin-right: 14px;
 }
+
+.info-block-first {
+    padding: 6px 13px 7px 15px;
+    margin-bottom: 10px;
+    font-family: "Inter", sans-serif;
+    font-size: 14px;
+    font-weight: 800;
+    color: #000;
+    border: 2px solid rgb(67, 65, 66);
+    border-radius: 4px;
+    background: url(../Vectors/edit.svg), url(../Vectors/delete.svg);
+    background-position: right; 
+    background-color: rgb(232, 230, 231);
+    background-repeat: no-repeat;
+    background-position-x: 86%, 97%;
+    background-size: 24px;
+    
+
+
+}
+
+.info-block-second {
+    padding: 8px 13px 10px 10px;
+    font-family: "Inter", sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    color: #414141;
+    border: 3px solid rgb(67, 65, 66);
+    border-radius: 13px;
+}
+
+.info-block-second-icon-edit {
+    outline: none;
+    border: none;
+    position: absolute;
+    background: none;
+    left: 320px;
+    top: 190px;
+}
+
+.info-block-second-icon-delete {
+    outline: none;
+    border: none;
+    position: absolute;
+    background: none;
+    left: 355px;
+    top: 190px;
+}
+
+.info-productSize-cont {
+    padding-top: 10px;
+}
+
+.info-block-button {
+    background-color: green;
+}
+
+
+
+
+
+
+/* info-block-styles */
+
+.hidden {
+    display: none;
+}
+
+

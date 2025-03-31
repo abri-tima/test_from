@@ -4,6 +4,12 @@ body {
     background-color: #fff;
 }
 
+.page-wrapper {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+  }
+
 a {
     text-decoration: none;
 }
@@ -105,15 +111,25 @@ input, select {
 }
 
 .buttons-container {
-        display: flex;
-        bottom: 10px;
-        left: 10px;
-        /* right: 20px; */ 
-        position: absolute;
-        /* margin-bottom: 42px;
-        margin-right: 64px; */
-        gap: 85px;
-        flex-direction: row-reverse;
+    margin-top: auto;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 16px;
+    padding: 16px 24px;
+}
+
+.btn-container-fixed {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: #fff;
+    display: flex;
+    justify-content: center;
+    gap: 51px;
+    padding: 12px 0;
+    z-index: 100;
 }
 
 .button-save {
@@ -348,15 +364,19 @@ input, select {
     overflow-y: auto;
 }
 
-.info-block {
-    display: block;
+.human-block {
+    display: flex;
+    flex-direction: column;
     margin-left: 24px;
     margin-right: 14px;
     margin-top: 20px;
 }
 
 .info-block-product {
-    margin-top: 6px;
+    /* margin-top: 6px; */
+    /* margin-left: 24px;
+    margin-right: 14px; */
+    margin-bottom: 10px;
 }
 
 .info-block-first {

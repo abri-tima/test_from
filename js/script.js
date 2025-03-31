@@ -2,159 +2,52 @@ document.addEventListener("DOMContentLoaded", function () {
     const addHumanButton = document.querySelector(".button-add-human");
     const formContainer = document.querySelector("#form-container");
     const saveButton = document.querySelector(".button-save-form");
-    const infoContainer = document.createElement("div");
-    infoContainer.classList.add("info-container");
-    document.body.appendChild(infoContainer);
+    const infoWrapper = document.createElement("div"); // общий контейнер
+    infoWrapper.classList.add("info-container");
+    document.body.appendChild(infoWrapper);
+
+    let editTarget = null; // если редактируем — тут ссылка
 
     addHumanButton.addEventListener("click", function () {
         resetForm(formContainer);
-        showForm(formContainer, infoContainer);
+        formContainer.classList.remove("hidden");
+    
+        // Сховати всі блоки
+        document.querySelectorAll(".human-block").forEach(h => h.classList.add("hidden"));
+        document.querySelectorAll(".add-product").forEach(btn => btn.classList.add("hidden"));
+    
+        editTarget = null;
     });
 
     saveButton.addEventListener("click", function () {
-        const success = handleSave(formContainer, infoContainer);
-        if (success) {
-            showInfoBlock(formContainer, infoContainer);
-        }
-    });
-});
-
-
-
-function showForm(formContainer, infoContainer) {
-    formContainer.classList.remove("hidden");
-    infoContainer.querySelectorAll(".info-block").forEach(infoBlock => infoBlock.classList.add("hidden"));
-
-}
-
-function showInfoBlock(formContainer, infoContainer) {
-    formContainer.classList.add("hidden");
-    infoContainer.querySelectorAll(".info-block").forEach(infoBlock => infoBlock.classList.remove("hidden"));
-}
-
-function handleSave(formContainer, infoContainer) {
-    const name = document.querySelector(".input-name-human").value;
-    const gender = document.querySelector("#gender").value;
-    const product = document.querySelector("#product-list").value;
-    const productName = document.querySelector("#product-list-article").value;
-    const color = document.querySelector("#product-list-color").value;
-    const quantityItems = document.querySelector("#quality-items").value;
-    const productSize = document.querySelector("#product-list-size").value;
-    const chestSize = document.querySelector("#chest-size").value;
-    const qualityLogo = document.querySelector("#quality-logo").value;
-    const qualityEmbroideries = document.querySelector("#quality-embroideries").value;
-
-    if (!name || !gender || !product || !productName || !color || !quantityItems || !productSize || !chestSize || !qualityLogo || !qualityEmbroideries) {
-        alert("Будь ласка, заповніть всі поля!");
-        return false;
-    }
-
-    const infoBlock = document.createElement("div");
-    infoBlock.classList.add("info-block");
-    infoBlock.innerHTML = `
-            <div class="info-block-first">
-                <p><span class="info-container-first">${name}_${gender}</span></p>
-                </div>
-                <div class="info-block-second">
-                <p><span class="info-container-last">${product} ${productName} - ${color} - ${quantityItems} шт</span></p>
-                <p class="hidden">Ім'я: <span class="info-name">${name}</span></p>
-                <p class="hidden">Стать: <span class="info-gender">${gender}</span></p>
-                <p class="hidden">Виріб: <span class="info-product">${product}</span></p>
-                <p class="hidden">Назва виробу: <span class="info-productName">${productName}</span></p>
-                <p class="hidden">Колір: <span class="info-color">${color}</span></p>
-                <p class="hidden">Кількість: <span class="info-quantityItems">${quantityItems}</span></p>
-                <p class="info-productSize-cont">Розмір: <span class="info-productSize">${productSize}</span></p>
-                <p>ОГ/ОС: <span class="info-chestSize">${chestSize} см</span></p>
-                <p>Вишивка лого - <span class="info-qualityLogo">${qualityLogo}</span></p>
-                <p>Вишивка імені - <span class="info-qualityEmbroideries">${qualityEmbroideries}</span></p>
-                <div class="button-container">
-                <button class="edit-button info-block-button">Редагувати</button>
-                <button class="delete-button info-block-button">Видалити</button>
-                </div>
-            </div>
-            <div class="button-container" style="padding-top: 8px;">
-                <button class="add-product info-block-button" style="font-size: 20px; font-weight: 800; padding: 3px 30px 4px 30px;">Додати виріб</button>
-            </div>
-    `;
-
-    infoContainer.appendChild(infoBlock);
-    formContainer.classList.add("hidden");
-    resetForm(formContainer);
-    setupEditAndDelete(infoBlock, formContainer);
-
-    return true;
-}
-
-// function handleCancel() {
-//     const formContainer = document.querySelector("#form-container");
-//     formContainer.classList.add("hidden"); // Скрываем форму
-
-//     // Показываем все скрытые infoBlock
-//     document.querySelectorAll(".info-block").forEach(block => block.classList.remove("hidden"));
-// }
-
-// document.addEventListener("DOMContentLoaded", function () {
-//     document.querySelector(".button-cancel-form").addEventListener("click", handleCancel);
-// });
-
-function setupEditAndDelete(infoBlock, formContainer) {
-    const editButton = infoBlock.querySelector(".edit-button");
-    const deleteButton = infoBlock.querySelector(".delete-button");
-    const addProductButton = infoBlock.querySelector(".add-product");
-
-    editButton.addEventListener("click", function () {
-        document.querySelectorAll(".info-block").forEach(block => block.classList.add("hidden"));
-
-        formContainer.querySelector(".input-name-human").value = infoBlock.querySelector(".info-name").textContent;
-        formContainer.querySelector("#gender").value = infoBlock.querySelector(".info-gender").textContent;
-        formContainer.querySelector("#product-list").value = infoBlock.querySelector(".info-product").textContent;
-        formContainer.querySelector("#product-list-article").value = infoBlock.querySelector(".info-productName").textContent;
-        formContainer.querySelector("#product-list-color").value = infoBlock.querySelector(".info-color").textContent;
-        formContainer.querySelector("#quality-items").value = infoBlock.querySelector(".info-quantityItems").textContent;
-        formContainer.querySelector("#product-list-size").value = infoBlock.querySelector(".info-productSize").textContent;
-        formContainer.querySelector("#chest-size").value = infoBlock.querySelector(".info-chestSize").textContent;
-        formContainer.querySelector("#quality-logo").value = infoBlock.querySelector(".info-qualityLogo").textContent;
-        formContainer.querySelector("#quality-embroideries").value = infoBlock.querySelector(".info-qualityEmbroideries").textContent;
-
-        formContainer.classList.remove("hidden");
-        infoBlock.remove();
-    });
-
-    deleteButton.addEventListener("click", function () {
-        infoBlock.remove();
-    });
-
-    if (addProductButton) {
-        addProductButton.addEventListener("click", function () {
-            handleAddProduct(infoBlock, formContainer);
-        });
-    }
+        const formData = getFormData();
+        if (!formData) return;
     
-}
+        if (editTarget && editTarget instanceof Element) {
+            // Редагування
+            updateProductBlock(editTarget, formData);
+        } else if (editTarget && editTarget.container) {
+            // Додавання виробу
+            const newProduct = createProductBlock(formData);
+            editTarget.container.appendChild(newProduct);
+        } else {
+            // Додавання нової людини
+            createHumanBlock(formData);
+        }
+    
+        // Сховати форму
+        formContainer.classList.add("hidden");
+        resetForm(formContainer);
+    
+        // Показати всі блоки назад
+        document.querySelectorAll(".human-block").forEach(h => h.classList.remove("hidden"));
+        document.querySelectorAll(".add-product").forEach(btn => btn.classList.remove("hidden"));
+    
+        editTarget = null;
+    });
+    
 
-
-
-function handleAddProduct(parentInfoBlock, formContainer) {
-    resetForm(formContainer);
-
-    // Заполняем имя и пол из родителя
-    const name = parentInfoBlock.querySelector(".info-name").textContent;
-    const gender = parentInfoBlock.querySelector(".info-gender").textContent;
-
-    formContainer.querySelector(".input-name-human").value = name;
-    formContainer.querySelector("#gender").value = gender;
-
-    // Скрываем текущий infoBlock
-    parentInfoBlock.classList.add("hidden");
-
-    formContainer.classList.remove("hidden");
-
-    // Удаляем старый обработчик, если есть
-    const oldSaveButton = formContainer.querySelector(".button-save-form");
-    const newSaveButton = oldSaveButton.cloneNode(true);
-    oldSaveButton.parentNode.replaceChild(newSaveButton, oldSaveButton);
-
-    newSaveButton.addEventListener("click", function () {
+    function getFormData() {
         const name = document.querySelector(".input-name-human").value;
         const gender = document.querySelector("#gender").value;
         const product = document.querySelector("#product-list").value;
@@ -168,24 +61,71 @@ function handleAddProduct(parentInfoBlock, formContainer) {
 
         if (!name || !gender || !product || !productName || !color || !quantityItems || !productSize || !chestSize || !qualityLogo || !qualityEmbroideries) {
             alert("Будь ласка, заповніть всі поля!");
-            return false;
+            return null;
         }
 
-        const newProductBlock = document.createElement("div");
-        newProductBlock.classList.add("info-block-product");
-        newProductBlock.innerHTML = `
+        return { name, gender, product, productName, color, quantityItems, productSize, chestSize, qualityLogo, qualityEmbroideries };
+    }
+
+    function createHumanBlock(data) {
+        const humanBlock = document.createElement("div");
+        humanBlock.classList.add("human-block");
+
+        const nameBlock = document.createElement("div");
+        nameBlock.classList.add("info-block-first");
+        nameBlock.innerHTML = `<p><span class="info-container-first">${data.name}_${data.gender}</span></p>`;
+
+        const productsContainer = document.createElement("div");
+        productsContainer.classList.add("products-container");
+
+        const productBlock = createProductBlock(data);
+
+        const addProductBtn = document.createElement("button");
+        addProductBtn.textContent = "Додати виріб";
+        addProductBtn.classList.add("add-product", "info-block-button");
+        addProductBtn.style = "font-size: 20px; font-weight: 800; padding: 3px 30px;";
+        addProductBtn.addEventListener("click", () => {
+            resetForm(formContainer);
+            formContainer.classList.remove("hidden");
+        
+            // Скрываем все human-блоки и кнопки "додати виріб"
+            document.querySelectorAll(".human-block").forEach(h => h.classList.add("hidden"));
+            document.querySelectorAll(".add-product").forEach(btn => btn.classList.add("hidden"));
+        
+            // Заполняем имя и стать
+            document.querySelector(".input-name-human").value = data.name;
+            document.querySelector("#gender").value = data.gender;
+        
+            // Устанавливаем цель добавления
+            editTarget = { container: productsContainer, name: data.name, gender: data.gender };
+        });
+        
+
+        productsContainer.appendChild(productBlock);
+        humanBlock.appendChild(nameBlock);
+        humanBlock.appendChild(productsContainer);
+        humanBlock.appendChild(addProductBtn);
+
+        infoWrapper.appendChild(humanBlock);
+    }
+
+    function createProductBlock(data) {
+        const block = document.createElement("div");
+        block.classList.add("info-block-product");
+
+        block.innerHTML = `
             <div class="info-block-second">
-                <p><span class="info-container-last">${product} ${productName} - ${color} - ${quantityItems} шт</span></p>
-                <p class="hidden">Ім'я: <span class="info-name">${name}</span></p>
-                <p class="hidden">Стать: <span class="info-gender">${gender}</span></p>
-                <p class="hidden">Виріб: <span class="info-product">${product}</span></p>
-                <p class="hidden">Назва виробу: <span class="info-productName">${productName}</span></p>
-                <p class="hidden">Колір: <span class="info-color">${color}</span></p>
-                <p class="hidden">Кількість: <span class="info-quantityItems">${quantityItems}</span></p>
-                <p class="info-productSize-cont">Розмір: <span class="info-productSize">${productSize}</span></p>
-                <p>ОГ/ОС: <span class="info-chestSize">${chestSize} см</span></p>
-                <p>Вишивка лого - <span class="info-qualityLogo">${qualityLogo}</span></p>
-                <p>Вишивка імені - <span class="info-qualityEmbroideries">${qualityEmbroideries}</span></p>
+                <p><span class="info-container-last">${data.product} ${data.productName} - ${data.color} - ${data.quantityItems} шт</span></p>
+                <p class="hidden">Ім'я: <span class="info-name">${data.name}</span></p>
+                <p class="hidden">Стать: <span class="info-gender">${data.gender}</span></p>
+                <p class="hidden">Виріб: <span class="info-product">${data.product}</span></p>
+                <p class="hidden">Назва виробу: <span class="info-productName">${data.productName}</span></p>
+                <p class="hidden">Колір: <span class="info-color">${data.color}</span></p>
+                <p class="hidden">Кількість: <span class="info-quantityItems">${data.quantityItems}</span></p>
+                <p class="info-productSize-cont">Розмір: <span class="info-productSize">${data.productSize}</span></p>
+                <p>ОГ/ОС: <span class="info-chestSize">${data.chestSize} см</span></p>
+                <p>Вишивка лого - <span class="info-qualityLogo">${data.qualityLogo}</span></p>
+                <p>Вишивка імені - <span class="info-qualityEmbroideries">${data.qualityEmbroideries}</span></p>
                 <div class="button-container">
                     <button class="edit-button info-block-button">Редагувати</button>
                     <button class="delete-button info-block-button">Видалити</button>
@@ -193,37 +133,58 @@ function handleAddProduct(parentInfoBlock, formContainer) {
             </div>
         `;
 
-        const buttonContainer = Array.from(parentInfoBlock.children).find(child => 
-            child.classList.contains("button-container")
-        );
+        const editButton = block.querySelector(".edit-button");
+        const deleteButton = block.querySelector(".delete-button");
+
+        editButton.addEventListener("click", () => {
+            formContainer.classList.remove("hidden");
         
-        if (buttonContainer) {
-            parentInfoBlock.insertBefore(newProductBlock, buttonContainer);
-        } else {
-            parentInfoBlock.appendChild(newProductBlock);
-        }
+            // Скрываем всех людей и кнопки добавления виробів
+            document.querySelectorAll(".human-block").forEach(h => h.classList.add("hidden"));
+            document.querySelectorAll(".add-product").forEach(btn => btn.classList.add("hidden"));
+        
+            fillFormWithData(block);
+            editTarget = block;
+        });
         
 
-        setupEditAndDelete(newProductBlock, formContainer);
-        resetForm(formContainer);
-        formContainer.classList.add("hidden");
+        deleteButton.addEventListener("click", () => {
+            const productsContainer = block.parentElement;
+            const humanBlock = productsContainer.closest(".human-block");
+        
+            block.remove();
+        
+            // Проверяем: остались ли ещё вироби?
+            const remainingProducts = productsContainer.querySelectorAll(".info-block-product");
+            if (remainingProducts.length === 0) {
+                humanBlock.remove();
+            }
+        });
 
-        // Показываем родительский блок снова
-        parentInfoBlock.classList.remove("hidden");
-    });
-}
+        return block;
+    }
 
+    function updateProductBlock(block, data) {
+        const newBlock = createProductBlock(data);
+        block.replaceWith(newBlock); // ← теперь сработает, т.к. block — DOM-элемент
+    }
+    
+    
 
-function resetForm(formContainer) {
-    if (!formContainer) return;
-    formContainer.classList.add("hidden");
-    const fields = [
-        ".input-name-human", "#gender", "#product-list", "#product-list-article", 
-        "#product-list-color", "#quality-items", "#product-list-size", 
-        "#chest-size", "#quality-logo", "#quality-embroideries"
-    ];
-    fields.forEach(selector => {
-        const field = formContainer.querySelector(selector);
-        if (field) field.value = "";
-    });
-}
+    function fillFormWithData(block) {
+        document.querySelector(".input-name-human").value = block.querySelector(".info-name").textContent;
+        document.querySelector("#gender").value = block.querySelector(".info-gender").textContent;
+        document.querySelector("#product-list").value = block.querySelector(".info-product").textContent;
+        document.querySelector("#product-list-article").value = block.querySelector(".info-productName").textContent;
+        document.querySelector("#product-list-color").value = block.querySelector(".info-color").textContent;
+        document.querySelector("#quality-items").value = block.querySelector(".info-quantityItems").textContent;
+        document.querySelector("#product-list-size").value = block.querySelector(".info-productSize").textContent;
+        document.querySelector("#chest-size").value = block.querySelector(".info-chestSize").textContent.replace(" см", "");
+        document.querySelector("#quality-logo").value = block.querySelector(".info-qualityLogo").textContent;
+        document.querySelector("#quality-embroideries").value = block.querySelector(".info-qualityEmbroideries").textContent;
+    }
+
+    function resetForm(container) {
+        container.querySelectorAll("input, select").forEach(el => el.value = "");
+    }
+});

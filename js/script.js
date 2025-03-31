@@ -50,26 +50,29 @@ function handleSave(formContainer, infoContainer) {
     const infoBlock = document.createElement("div");
     infoBlock.classList.add("info-block");
     infoBlock.innerHTML = `
-        <div class="info-block-first">
-        <p><span class="info-container-first">${name}_${gender}</span></p>
-        </div>
-        <div class="info-block-second">
-        <p><span class="info-container-last">${product} ${productName} - ${color} - ${quantityItems} шт</span></p>
-        <p class="hidden">Ім'я: <span class="info-name">${name}</span></p>
-        <p class="hidden">Стать: <span class="info-gender">${gender}</span></p>
-        <p class="hidden">Виріб: <span class="info-product">${product}</span></p>
-        <p class="hidden">Назва виробу: <span class="info-productName">${productName}</span></p>
-        <p class="hidden">Колір: <span class="info-color">${color}</span></p>
-        <p class="hidden">Кількість: <span class="info-quantityItems">${quantityItems}</span></p>
-        <p>Розмір: <span class="info-productSize">${productSize}</span></p>
-        <p>ОГ/ОС: <span class="info-chestSize">${chestSize} см</span></p>
-        <p>Вишивка лого: <span class="info-qualityLogo">${qualityLogo}</span></p>
-        <p>Вишивка імені: <span class="info-qualityEmbroideries">${qualityEmbroideries}</span></p>
-        </div>
-        <div class="info-block-button">
-        <button class="edit-button">Редагувати</button>
-        <button class="delete-button">Видалити</button>
-        </div>
+            <div class="info-block-first">
+                <p><span class="info-container-first">${name}_${gender}</span></p>
+                </div>
+                <div class="info-block-second">
+                <p><span class="info-container-last">${product} ${productName} - ${color} - ${quantityItems} шт</span></p>
+                <p class="hidden">Ім'я: <span class="info-name">${name}</span></p>
+                <p class="hidden">Стать: <span class="info-gender">${gender}</span></p>
+                <p class="hidden">Виріб: <span class="info-product">${product}</span></p>
+                <p class="hidden">Назва виробу: <span class="info-productName">${productName}</span></p>
+                <p class="hidden">Колір: <span class="info-color">${color}</span></p>
+                <p class="hidden">Кількість: <span class="info-quantityItems">${quantityItems}</span></p>
+                <p class="info-productSize-cont">Розмір: <span class="info-productSize">${productSize}</span></p>
+                <p>ОГ/ОС: <span class="info-chestSize">${chestSize} см</span></p>
+                <p>Вишивка лого - <span class="info-qualityLogo">${qualityLogo}</span></p>
+                <p>Вишивка імені - <span class="info-qualityEmbroideries">${qualityEmbroideries}</span></p>
+                <div class="button-container">
+                <button class="edit-button info-block-button">Редагувати</button>
+                <button class="delete-button info-block-button">Видалити</button>
+                </div>
+            </div>
+            <div class="button-container" style="padding-top: 8px;">
+                <button class="add-product info-block-button" style="font-size: 20px; font-weight: 800; padding: 3px 30px 4px 30px;">Додати виріб</button>
+            </div>
     `;
 
     infoContainer.appendChild(infoBlock);

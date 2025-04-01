@@ -196,7 +196,7 @@ sendButton.addEventListener("click", function () {
     const humanBlocks = document.querySelectorAll(".human-block");
 
     if (humanBlocks.length === 0) {
-        alert("Немає даних для відправки!");
+        alert("Немає інформації для надсилання ❌📤");
         return;
     }
 
@@ -227,7 +227,7 @@ sendButton.addEventListener("click", function () {
         });
     });
 
-    alert("Дані надіслано до Google Таблиці!");
+    alert("✨ Дякуємо! Ваші дані успішно надіслані✅");
 
     document.querySelectorAll(".human-block").forEach(block => block.remove());
     document.querySelector("#rest-name").value = "";

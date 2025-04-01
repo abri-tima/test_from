@@ -276,24 +276,11 @@ input, select {
 
 }
 
-.product-list {
-    -webkit-appearance: none;
-    background: #fff url(../Vectors/arrow.svg);
-    background-position: right;
-    background-repeat: no-repeat;
-    background-position-x: 90%;
-    background-size: 20px;
-    font-family: Montserrat, sans-serif;
-    font-size: 14px;
-    font-weight: 700;
-    color: #4D4D4D;
-    text-align: center;
-    padding: 7px 45px;
-    border: 1px solid rgb(67, 65, 66);
-    border-radius: 55px;
+.input-quality-product::placeholder {
+    font-size: 7px;
 }
 
-.product-list-article {
+.product-list {
     -webkit-appearance: none;
     background: #fff url(../Vectors/arrow.svg);
     background-position: right;
@@ -305,7 +292,24 @@ input, select {
     font-weight: 700;
     color: #4D4D4D;
     text-align: center;
-    padding: 7px 30px;
+    padding: 7px 20px 7px 15px;
+    border: 1px solid rgb(67, 65, 66);
+    border-radius: 55px;
+}
+
+.product-list-article {
+    -webkit-appearance: none;
+    background: #fff url(../Vectors/arrow.svg);
+    background-position: right;
+    background-repeat: no-repeat;
+    background-position-x: 101%;
+    background-size: 20px;
+    font-family: Montserrat, sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    color: #4D4D4D;
+    text-align: center;
+    padding: 7px 15px 7px 8px;
     border: 1px solid rgb(67, 65, 66);
     border-radius: 55px;
 }

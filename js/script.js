@@ -1,7 +1,244 @@
 document.addEventListener("DOMContentLoaded", function () {
+    const colorMapByProduct = {
+      "Китель": {
+        "ALICANTE": ["Білий", "Чорний"],
+        "CAPRI": ["Білий", "Чорний"],
+        "FRANKFURT": ["Білий", "Чорний"],
+        "MOROCCO": ["Білий", "Чорний"],
+        "NAPOLI": ["Білий", "Чорний"],
+        "SPARTA": ["Білий", "Чорний"],
+        "INDIANA": ["Білий", "Чорний"],
+        "SIDNEY": ["Білий", "Чорний"],
+        "LOS ANGELES": ["Білий", "Чорний"],
+        "NEBRASKA": ["Білий", "Чорний"],
+        "SANTORINI": ["Білий", "Чорний"],
+        "VENEZUELA": ["Білий", "Чорний"],
+        "PORTLAND": ["Чорний"],
+        "NORMAN": ["Чорний"],
+        "RIVERSIDE": ["Чорний"],
+        "CONCORD": ["Чорний"],
+        "DENVER": ["Сірий", "Бежевий"],
+        "MURANO": ["Сірий", "Бежевий"],
+        "CLOVIS": ["Білий", "Чорний", "Сірий", "Синій"],
+        "MILAN": ["Білий", "Чорний", "Синій"],
+        "BRATISLAVA": ["Білий", "Чорний", "Синій"],
+        "MEXICO": ["Білий", "Чорний", "Синій"],
+        "TORONTO": ["Білий", "Чорний", "Синій"],
+        "WASHINGTON": ["Білий", "Чорний", "Синій"],
+        "LAS VEGAS": ["Білий", "Чорний", "Синій", "Хакі", "Сірий"],
+        "TEXAS": ["Білий", "Чорний", "Синій", "Хакі", "Сірий"],
+        "EUROPE": ["Сірий", "Блакитний"]
+    },
+    "Брюки": {
+        "GENEVA": ["Чорний"],
+        "KANZAS": ["Чорний"],
+        "BREST": ["Чорний"],
+        "BAZEL": ["Чорний"],
+        "KENT": ["Чорний"],
+        "CHICO": ["Клітка"],
+        "LINCOLN": ["Клітка"],
+        "CARY": ["Сірий"],
+        "AMSTERDAM": ["Смужка"],
+        "BALTIMOR": ["Бежевий", "Чорний"],
+        "TURIN": ["Бежевий", "Чорний"],
+        "ARIZONA": ["Чорний", "Синій", "Сірий", "Меланж"],
+        "BOGOTA": ["Сірий", "Помаранчевий", "Клітка"]
+    },
+    "Фартух": {
+        "COLORADO": ["Смужка"],
+        "ASTANA": ["Чорний"],
+        "LONDON": ["Чорний"],
+        "MANILA": ["Чорний"],
+        "VILNIUS": ["Чорний"],
+        "COLOMBO": ["Чорний"],
+        "OTTAWA": ["Чорний"],
+        "MONACO": ["Чорний", "Синій"],
+        "ROME": ["Чорний", "Синій"],
+        "SIENA": ["Чорний", "Синій"],
+        "VIRGINIA": ["Білий"],
+        "TENERIFE": ["Бежевий", "Чорний"],
+        "SAVANNA": ["Блакитний", "Сірий"],
+        "SPARKS": ["Чорно-сірий", "Синє-сірий"],
+        "ALASKA": ["Синій", "Чорний", "Смужка", "Білий"],
+        "BEND": ["Чорний", "Сірий", "Синій"],
+        "VANCOUVER": ["Хакі", "Чорний", "Смужка"],
+        "OREGON": ["Чорний", "Синій", "Смужка"],
+        "BOSTON": ["Чорний", "Бежевий", "Смужка", "Сірий"],
+        "DETROIT": ["Чорний", "Бежевий", "Смужка", "Сірий"],
+        "MONTERREY": ["Чорний", "Смужка"],
+        "COPENHAGEN": ["Синій", "Хакі"]
+    },
+    "Головной убор": {
+        "Шапка ALABAMA": ["Білий", "Чорний", "Сірий", "Меланж", "Пудра"],
+        "Повʼязка SOFIA": ["Білий", "Чорний", "Сірий", "Бежевий", "Червоний", "Світло-сірий", "Жовтий"],
+        "Бондана DUBAI": ["Білий", "Чорний", "Сірий", "Червоний", "Жовтий", "Рожевий", "Блакитний", "Помаранчевий", "Зелений"],
+        "Кепка MADAGASKAR": ["Чорний", "Білий"],
+        "Кепка GRANADA": ["Хакі"],
+        "Кепка PALERMO": ["Чорний", "Сірий"],
+        "Кепка RIMINI": ["Білий", "Чорний", "Сірий", "Синій"],
+        "Панама HONG KONG": ["Темний-беж", "Сірий", "Помаранчевий"],
+        "Таблетка KABUL": ["Чорний", "Білий"],
+        "Гриб PARIS": ["Чорний", "Білий"]
+    },
+    "Поло, Футболки": {
+        "Футболка NEVADA": ["Білий", "Чорний", "Сірий", "Хакі"],
+        "Поло NEW-YORK": ["Білий", "Чорний", "Сірий"],
+        "Поло DUBLIN": ["Білий", "Чорний", "Сірий"]
+    },
+    "Обувь": {
+        "Сабо OSLO": ["Чорний", "Хакі"],
+        "Сабо TULSA": ["Білий"],
+        "Сабо IRVINE": ["Чорний"]
+    },
+    "Свитшот": {
+        "MICHIGAN": ["Чорний", "Світло-сірий", "Хакі"]
+    },
+    "Носки": {
+        "Набір LION": ["Набір"],
+        "Набір ABRIKOS": ["Набір"],
+        "Набір BLACK": ["Набір"],
+        "Набір GRAY": ["Набір"],
+        "Набір SPIDER": ["Набір"],
+        "Набір TATTO": ["Набір"],
+        "Набір DEMON": ["Набір"],
+        "Набір EGG": ["Набір"],
+        "Набір MUHOMOR": ["Набір"],
+        "Набір RACCON": ["Набір"]
+    }
+};
     const addHumanButton = document.querySelector(".button-add-human");
     const formContainer = document.querySelector("#form-container");
     const saveButton = document.querySelector(".button-save-form");
+    // списки с продуктами(список с названиеми продуктов)
+    const productSelect = document.querySelector("#product-list");
+    const productArticleSelect = document.querySelector("#product-list-article");
+    const productSizeSelect = document.querySelector("#product-list-size");
+    const genderSelect = document.querySelector("#gender");
+
+    const productArticlesMap = {
+    "Китель": [
+        "CLOVIS", "WASHINGTON", "ALICANTE", "LAS VEGAS", "MURANO", "PORTLAND", "MILAN", "NORMAN", "RIVERSIDE",
+        "FRANKFURT", "DENVER", "TEXAS", "VENEZUELA", "NAPOLI", "SEATTLE", "EUROPE", "CAPRI", "CONCORD",
+        "SPARTA", "BRATISLAVA", "MEXICO", "MOROCCO", "TORONTO", "INDIANA", "SIDNEY", "LOS ANGELES", "NEBRASKA",
+        "SANTORINI"
+    ],
+    "Брюки": [
+        "GENEVA", "KANZAS", "BREST", "CARY", "CHICO", "BALTIMOR", "BAZEL", "LINCOLN", "ARIZONA", "KENT",
+        "TURIN", "BOGOTA", "AMSTERDAM"
+    ],
+    "Фартух": [
+        "COLORADO", "MONACO", "TENERIFE", "SAVANNA", "SPARKS", "ALASKA", "BEND", "VANCOUVER", "ASTANA", "OREGON",
+        "BOSTON", "ROME", "VIRGINIA", "DETROIT", "LONDON", "MANILA", "MONTERREY", "VILNIUS", "COLOMBO", "OTTAWA", "SIENA",
+        "COPENHAGEN"
+    ],
+    "Головной убор": [
+        "Шапка ALABAMA", "Повʼязка SOFIA", "Бондана DUBAI", "Кепка MADAGASKAR", "Кепка GRANADA", "Кепка PALERMO", "Кепка RIMINI",
+        "Панама HONG KONG", "Таблетка KABUL", "Гриб PARIS"
+    ],
+    "Поло, Футболки": [
+        "Футболка NEVADA", "Поло NEW-YORK", "Поло DUBLIN"
+    ],
+    "Обувь": [
+        "Сабо OSLO", "Сабо TULSA", "Сабо IRVINE"
+    ],
+    "Свитшот": [
+        "MICHIGAN"
+    ],
+    "Носки": [
+        "Набір LION", "Набір ABRIKOS", "Набір BLACK", "Набір GRAY", "Набір SPIDER", "Набір TATTO", "Набір DEMON",
+        "Набір EGG", "Набір MUHOMOR", "Набір RACCON"
+    ]
+};
+
+
+productSelect.addEventListener("change", function () {
+    const selectedProduct = this.value;
+    const options = productArticlesMap[selectedProduct] || [];
+
+    productArticleSelect.innerHTML = `<option value=""></option>`;
+    options.forEach(article => {
+        const option = document.createElement("option");
+        option.value = article;
+        option.textContent = article;
+        productArticleSelect.appendChild(option);
+    });
+    productColor.innerHTML = `<option value=""></option>`;
+    productSizeSelect.innerHTML = `<option value=""></option>`;
+});
+
+productArticleSelect.addEventListener("change", function () {
+    const selectedProduct = productSelect.value;
+    const selectedArticle = productArticleSelect.value;
+    const gender = genderSelect.value;
+
+    // --- Колір ---
+    productColor.innerHTML = `<option value=""></option>`;
+    if (colorMapByProduct[selectedProduct] && colorMapByProduct[selectedProduct][selectedArticle]) {
+        colorMapByProduct[selectedProduct][selectedArticle].forEach(color => {
+            const option = document.createElement("option");
+            option.value = color;
+            option.textContent = color;
+            productColor.appendChild(option);
+        });
+    }
+
+    // --- Розмір ---
+    const sizesMap = {
+        "Китель": ["42", "44", "46", "48", "50", "52", "54", "56", "58", "60", "62"],
+        "Брюки": ["42", "44", "46", "48", "50", "52", "54", "56", "58", "60", "62"],
+        "Фартух": {
+            "BOSTON": ["M", "L"],
+            "DETROIT": ["M", "L"],
+            "SIENA": ["M", "L"]
+        },
+        "Головной убор": ["Немає"],
+        "Поло, Футболки": {
+            "Футболка NEVADA": ["XS", "S", "M", "L", "XL", "XXL"],
+            "Поло NEW-YORK": {
+                "Муж": ["XS", "S", "M", "L", "XL", "XXL", "3XL"],
+                "Жен": ["XS", "S", "M", "L", "XL", "XXL"]
+            },
+            "Поло DUBLIN": {
+                "Муж": ["XS", "S", "M", "L", "XL", "XXL", "3XL"],
+                "Жен": ["XS", "S", "M", "L", "XL", "XXL"]
+            }
+        },
+        "Обувь": {
+            "Сабо OSLO": ["39", "40", "41", "42", "43", "44", "45", "46"],
+            "Сабо TULSA": ["39", "40", "41", "42", "43", "44"],
+            "Сабо IRVINE": ["39", "40", "43", "44"]
+        },
+        "Свитшот": {
+            "MICHIGAN": ["XS", "S", "M", "L", "XL", "XXL"]
+        },
+        "Носки": ["36-40", "41-45"]
+    };
+
+    productSizeSelect.innerHTML = `<option value=""></option>`;
+    let sizes = [];
+    if (Array.isArray(sizesMap[selectedProduct])) {
+        sizes = sizesMap[selectedProduct];
+    } else if (sizesMap[selectedProduct] && typeof sizesMap[selectedProduct] === 'object') {
+        const productSizes = sizesMap[selectedProduct];
+        if (typeof productSizes[selectedArticle] === 'object') {
+            if (Array.isArray(productSizes[selectedArticle])) {
+                sizes = productSizes[selectedArticle];
+            } else if (productSizes[selectedArticle][gender]) {
+                sizes = productSizes[selectedArticle][gender];
+            }
+        }
+    }
+
+    sizes.forEach(size => {
+        const option = document.createElement("option");
+        option.value = size;
+        option.textContent = size;
+        productSizeSelect.appendChild(option);
+    });
+});
+
+
+    
     const infoWrapper = document.createElement("div"); // общий контейнер
     infoWrapper.classList.add("info-container");
     document.body.appendChild(infoWrapper);
@@ -255,5 +492,29 @@ function sendToGoogleSheet(data) {
     });
 }
 
+const productList = document.querySelector("#product-list");
+const productArticle = document.querySelector("#product-list-article");
+const productColor = document.querySelector("#product-list-color");
+
+// Универсальный обработчик выбора названия виробу
+productArticle.addEventListener("change", function () {
+    const selectedProduct = productList.value;
+    const selectedArticle = productArticle.value;
+
+    productColor.innerHTML = `<option value=""></option>`;
+
+    if (
+        colorMapByProduct[selectedProduct] &&
+        colorMapByProduct[selectedProduct][selectedArticle]
+    ) {
+        const colors = colorMapByProduct[selectedProduct][selectedArticle];
+        colors.forEach(color => {
+            const option = document.createElement("option");
+            option.value = color;
+            option.textContent = color;
+            productColor.appendChild(option);
+        });
+    }
+});
 
 });

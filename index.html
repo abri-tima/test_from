@@ -37,8 +37,8 @@
                 <label for="gender" class="label-text">Стать</label>
             <select name="gender" id="gender" class="select-info">
                 <option value=""></option>
-                <option value="Чол">Чол</option>
-                <option value="Жін">Жін</option>
+                <option value="Муж">Чол</option>
+                <option value="Жен">Жін</option>
             </select>
             </div>
             <!-- <button onclick="removeField(this)" class="button-all">Видалити</button> -->
@@ -50,7 +50,13 @@
             <select name="product" id="product-list" class="product-list">
                 <option value=""></option>
                 <option value="Китель">Кітель</option>
+                <option value="Брюки">Брюки</option>
                 <option value="Фартух">Фартух</option>
+                <option value="Головной убор">Головний убір</option>
+                <option value="Поло, Футболки">Поло, Футболки</option>
+                <option value="Обувь">Взуття</option>
+                <option value="Свитшот">Світшот</option>
+                <option value="Носки">Шкарпетки</option>
             </select>
             </div>
             <div class="label-products-list">
@@ -65,8 +71,8 @@
                 <label for="product-color" class="label-text">Колір</label>
                 <select name="product-color" id="product-list-color" class="product-list" style="padding: 7px 20px 7px 12px; background-position-x: 98%;">
                     <option value=""></option>
-                    <option value="Помаранчевий">Помаранчевий</option>
-                    <option value="Синій">Синій</option>
+                    <option value="Оранжевый">Помаранчевий</option>
+                    <option value="Синий">Синій</option>
                 </select>
             </div>
             <div class="label-input">
@@ -78,23 +84,23 @@
             <div class="window-container-info">
                 <div class="label-input">
                     <label for="product-size" class="label-text">Розмір вироба, якщо точно його знаєте</label>
-                    <select name="product-size" id="product-list-size" class="input-quality-product" style="padding: 7px 130px; background-position-x: 97%;">
+                    <select name="product-size" id="product-list-size" class="input-quality-product" style="padding: 7px 130px; background-position-x: 97%;" placeholder="Якщо у продукта немає розміру, ставте '-' ">
                         <option value=""></option>
-                        <option value="Не знаємо">Не знаємо</option>
+                        <option value="Не знаем">Не знаємо</option>
                         <option value="42">42</option>
                     </select>
                 </div>
                 <div class="label-input">
                     <label for="chest-size" class="label-text">Якщо розмір не знаєте, обхват грудей/стегон, см</label>
-                    <input type="tel" placeholder="" class="input-quality-product" name="chest-size" id="chest-size" style="padding: 7px 80px; background: none; background-color: #fff;">
+                    <input type="text" placeholder="Якщо у продукта немає ОГ/ОС, ставте '-' " class="input-quality-product" name="chest-size" id="chest-size" style="padding: 7px 80px; background: none; background-color: #fff;">
                 </div>
                 <div class="label-input">
                     <label for="quality-logo" class="label-text">Кількість вишивок логотипу на виробі</label>
-                    <input type="tel" placeholder="" class="input-quality-product" name="quality-logo" id="quality-logo" style="padding: 7px 80px; background: none; background-color: #fff;">
+                    <input type="tel" placeholder="Якщо у продукта немає вишивки, ставте '-' " class="input-quality-product" name="quality-logo" id="quality-logo" style="padding: 7px 80px; background: none; background-color: #fff;">
                 </div>
                 <div class="label-input">
                     <label for="quality-embroideries" class="label-text">Кількість вишивки імені на виробі</label>
-                    <input type="tel" placeholder="" class="input-quality-product" name="quality-embroideries" id="quality-embroideries" style="padding: 7px 80px; background: none; background-color: #fff;">
+                    <input type="tel" placeholder="Якщо у продукта немає вишивки, ставте '-' " class="input-quality-product" name="quality-embroideries" id="quality-embroideries" style="padding: 7px 80px; background: none; background-color: #fff;">
                 </div>
             </div>
         </div>

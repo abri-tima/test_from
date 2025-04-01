@@ -33,6 +33,7 @@ document.addEventListener("DOMContentLoaded", function () {
         } else {
             // Додавання нової людини
             createHumanBlock(formData);
+
         }
     
         // Сховати форму
@@ -127,8 +128,8 @@ document.addEventListener("DOMContentLoaded", function () {
                 <p>Вишивка лого - <span class="info-qualityLogo">${data.qualityLogo}</span></p>
                 <p>Вишивка імені - <span class="info-qualityEmbroideries">${data.qualityEmbroideries}</span></p>
                 <div class="button-container">
-                    <button class="edit-button info-block-button" type="button">Редагувати</button>
-                    <button class="delete-button info-block-button" type="button">Видалити</button>
+                    <button class="edit-button info-block-button">Редагувати</button>
+                    <button class="delete-button info-block-button">Видалити</button>
                 </div>
             </div>
         `;
@@ -188,36 +189,71 @@ document.addEventListener("DOMContentLoaded", function () {
         container.querySelectorAll("input, select").forEach(el => el.value = "");
     }
 
-    function showSuccessMessage(text) {
-        const msg = document.createElement('div');
-        msg.textContent = text;
-        msg.style.position = 'fixed';
-        msg.style.bottom = '30px';
-        msg.style.left = '50%';
-        msg.style.transform = 'translateX(-50%)';
-        msg.style.background = '#EE6700';
-        msg.style.color = '#fff';
-        msg.style.padding = '12px 24px';
-        msg.style.borderRadius = '30px';
-        msg.style.fontSize = '18px';
-        msg.style.fontWeight = 'bold';
-        msg.style.boxShadow = '0 4px 20px rgba(0,0,0,0.2)';
-        msg.style.zIndex = 9999;
-        msg.style.opacity = 0;
-        msg.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
-      
-        document.body.appendChild(msg);
-      
-        setTimeout(() => {
-          msg.style.opacity = 1;
-          msg.style.transform = 'translateX(-50%) translateY(-10px)';
-        }, 100);
-      
-        setTimeout(() => {
-          msg.style.opacity = 0;
-          msg.style.transform = 'translateX(-50%) translateY(0)';
-          setTimeout(() => msg.remove(), 500);
-        }, 3000);
-      }
-      
+    const sendButton = document.querySelector(".button-send-form");
+
+sendButton.addEventListener("click", function () {
+    const restaurantName = document.querySelector("#rest-name").value;
+    const humanBlocks = document.querySelectorAll(".human-block");
+
+    if (humanBlocks.length === 0) {
+        alert("Немає даних для відправки!");
+        return;
+    }
+
+    humanBlocks.forEach(human => {
+        const nameGender = human.querySelector(".info-container-first").textContent.split("_");
+        const name = nameGender[0];
+        const gender = nameGender[1];
+
+        const products = human.querySelectorAll(".info-block-product");
+
+        products.forEach(product => {
+            const data = {
+                restaurantName,
+                name,
+                gender,
+                product: product.querySelector(".info-product").textContent,
+                productName: product.querySelector(".info-productName").textContent,
+                color: product.querySelector(".info-color").textContent,
+                quantityItems: product.querySelector(".info-quantityItems").textContent,
+                productSize: product.querySelector(".info-productSize").textContent,
+                chestSize: product.querySelector(".info-chestSize").textContent.replace(" см", ""),
+                qualityLogo: product.querySelector(".info-qualityLogo").textContent,
+                qualityEmbroideries: product.querySelector(".info-qualityEmbroideries").textContent
+            };
+
+            // Викликаємо функцію надсилання:
+            sendToGoogleSheet(data);
+        });
+    });
+
+    alert("Дані надіслано до Google Таблиці!");
+
+    document.querySelectorAll(".human-block").forEach(block => block.remove());
+    document.querySelector("#rest-name").value = "";
+});
+
+const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyMT3nVI4zY6N3eiszlKgallOxEI_3qDwXD0QWIIZ-qQZX0O3OmV0Z7iIwrxIx47AVT/exec";
+
+function sendToGoogleSheet(data) {
+    const formData = new FormData();
+
+    for (const key in data) {
+        formData.append(key, data[key]);
+    }
+
+    fetch(GOOGLE_SCRIPT_URL, {
+        method: "POST",
+        body: formData,
+        mode: "no-cors" // <- ключова частина!
+    })
+    .then(() => {
+        console.log("✅ Дані надіслано (no-cors)");
+    })
+    .catch(error => {
+        console.error("❌ Помилка:", error);
+    });
+}
+
+
 });

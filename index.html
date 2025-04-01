@@ -16,7 +16,6 @@
     <link rel="stylesheet" href="./css/normalize.css">
 </head>
 <body>
-    <form name="submit-to-google-sheet">
     <div class="name-restaurant">
         <label for="rest-name" class="rest-name-label">Введіть назву ресторана:</label>
         <div class="rest-name-input-container">
@@ -29,14 +28,14 @@
     <div id="form-container"  class="hidden form-container">
         <div class="input-group">
             <div class="label-input">
-            <label for="Name-Surname" class="label-text">Прізвище, Імʼя</label>
+            <label for="name" class="label-text">Прізвище, Імʼя</label>
             <div class="label-input-human">
-            <input type="text" placeholder="" class="input-name-human" name="Name-Surname" id="name">
+            <input type="text" placeholder="" class="input-name-human" name="name" id="name">
             </div>
             </div>
             <div class="label-input">
-                <label for="Gender" class="label-text">Стать</label>
-            <select name="Gender" id="gender" class="select-info">
+                <label for="gender" class="label-text">Стать</label>
+            <select name="gender" id="gender" class="select-info">
                 <option value=""></option>
                 <option value="Чол">Чол</option>
                 <option value="Жін">Жін</option>
@@ -47,126 +46,71 @@
         <div class="window-info">
             <div class="window-container-info">
             <div class="label-products-list">
-            <label for="Product" class="label-text">Виріб</label>
-            <select name="Product" id="product-list" class="product-list">
+            <label for="product" class="label-text">Виріб</label>
+            <select name="product" id="product-list" class="product-list">
                 <option value=""></option>
                 <option value="Китель">Кітель</option>
                 <option value="Фартух">Фартух</option>
             </select>
             </div>
             <div class="label-products-list">
-                <label for="Product-name" class="label-text">Назва виробу</label>
-                <select name="Product-name" id="product-list-article" class="product-list-article">
+                <label for="product-arcticle" class="label-text">Назва виробу</label>
+                <select name="product-arcticle" id="product-list-article" class="product-list-article">
                     <option value=""></option>
                     <option value="BRATISLAVA">BRATISLAVA</option>
                     <option value="LOS ANGELES">LOS ANGELES</option>
                 </select>
             </div>
             <div class="label-products-list">
-                <label for="Product-color" class="label-text">Колір</label>
-                <select name="Product-color" id="product-list-color" class="product-list" style="padding: 7px 20px 7px 12px; background-position-x: 98%;">
+                <label for="product-color" class="label-text">Колір</label>
+                <select name="product-color" id="product-list-color" class="product-list" style="padding: 7px 20px 7px 12px; background-position-x: 98%;">
                     <option value=""></option>
                     <option value="Помаранчевий">Помаранчевий</option>
                     <option value="Синій">Синій</option>
                 </select>
             </div>
             <div class="label-input">
-                <label for="Quality-items" class="label-text">Кількість виробів</label>
-                <input type="tel" placeholder="" class="product-list-article" id="quality-items" name="Quality-items" style=" width: 105px; height: 18px; background: none; background-color: #fff;">
+                <label for="quality-items" class="label-text">Кількість виробів</label>
+                <input type="tel" placeholder="" class="product-list-article" id="quality-items" name="quality-items" style=" width: 105px; height: 18px; background: none; background-color: #fff;">
             </div>
         </div>
         <div class="window-container-no-wrap">
             <div class="window-container-info">
                 <div class="label-input">
-                    <label for="Product-size" class="label-text">Розмір вироба, якщо точно його знаєте</label>
-                    <select name="Product-size" id="product-list-size" class="input-quality-product" style="padding: 7px 130px; background-position-x: 97%;">
+                    <label for="product-size" class="label-text">Розмір вироба, якщо точно його знаєте</label>
+                    <select name="product-size" id="product-list-size" class="input-quality-product" style="padding: 7px 130px; background-position-x: 97%;">
                         <option value=""></option>
                         <option value="Не знаємо">Не знаємо</option>
                         <option value="42">42</option>
                     </select>
                 </div>
                 <div class="label-input">
-                    <label for="Chest-size" class="label-text">Якщо розмір не знаєте, обхват грудей/стегон, см</label>
-                    <input type="tel" placeholder="" class="input-quality-product" name="Chest-size" id="chest-size" style="padding: 7px 80px; background: none; background-color: #fff;">
+                    <label for="chest-size" class="label-text">Якщо розмір не знаєте, обхват грудей/стегон, см</label>
+                    <input type="tel" placeholder="" class="input-quality-product" name="chest-size" id="chest-size" style="padding: 7px 80px; background: none; background-color: #fff;">
                 </div>
                 <div class="label-input">
-                    <label for="Quality-logo" class="label-text">Кількість вишивок логотипу на виробі</label>
-                    <input type="tel" placeholder="" class="input-quality-product" name="Quality-logo" id="quality-logo" style="padding: 7px 80px; background: none; background-color: #fff;">
+                    <label for="quality-logo" class="label-text">Кількість вишивок логотипу на виробі</label>
+                    <input type="tel" placeholder="" class="input-quality-product" name="quality-logo" id="quality-logo" style="padding: 7px 80px; background: none; background-color: #fff;">
                 </div>
                 <div class="label-input">
-                    <label for="Quality-embroideries" class="label-text">Кількість вишивки імені на виробі</label>
-                    <input type="tel" placeholder="" class="input-quality-product" name="Quality-embroideries" id="quality-embroideries" style="padding: 7px 80px; background: none; background-color: #fff;">
+                    <label for="quality-embroideries" class="label-text">Кількість вишивки імені на виробі</label>
+                    <input type="tel" placeholder="" class="input-quality-product" name="quality-embroideries" id="quality-embroideries" style="padding: 7px 80px; background: none; background-color: #fff;">
                 </div>
             </div>
         </div>
         <div class="button-save">
-    <button onclick="handleSave()" class="button-save-form" type="button">Зберегти</button>
+    <button onclick="handleSave()" class="button-save-form">Зберегти</button>
     <!-- <button onclick="handleCancel()" class="button-cancel-form">Отмена</button> -->
     </div>
     </div>
     </div>
     <div class="buttons-container btn-container-fixed">
-    <button id="addHumanButton" class="button-add-human" type="button">Додати людину</button>
+    <button id="addHumanButton" class="button-add-human">Додати людину</button>
     <button type="submit" class="button-send-form">Відправити</button>
      </div>
-</form>
 
     <script src="./js/script.js"></script>
     <script>
-const scriptURL = 'https://script.google.com/macros/s/AKfycbxXmjg4yv8WGZmaRKdZ0ukHt3QLZQrUeW8sXImzhwqfIKMWbHsgzDzM23kXnF38_wMy/exec';
-
-document.querySelector('.button-send-form').addEventListener('click', (e) => {
-  e.preventDefault();
-
-  const restName = document.querySelector('#rest-name').value.trim();
-
-  if (!restName) {
-    showSuccessMessage("❗️ Введіть назву ресторану");
-    return;
-  }
-
-  const entries = [];
-  document.querySelectorAll('.info-block-product').forEach(block => {
-    const entry = {
-      name: block.querySelector('.info-name')?.textContent || '',
-      gender: block.querySelector('.info-gender')?.textContent || '',
-      product: block.querySelector('.info-product')?.textContent || '',
-      productName: block.querySelector('.info-productName')?.textContent || '',
-      color: block.querySelector('.info-color')?.textContent || '',
-      quantityItems: block.querySelector('.info-quantityItems')?.textContent || '',
-      productSize: block.querySelector('.info-productSize')?.textContent || '',
-      chestSize: block.querySelector('.info-chestSize')?.textContent.replace(' см', '') || '',
-      qualityLogo: block.querySelector('.info-qualityLogo')?.textContent || '',
-      qualityEmbroideries: block.querySelector('.info-qualityEmbroideries')?.textContent || ''
-    };
-    entries.push(entry);
-  });
-
-  if (entries.length === 0) {
-    showSuccessMessage("🙃 Додайте хоча б одну людину з виробом");
-    return;
-  }
-
-  const formData = new FormData();
-  formData.append('rest-name', restName);
-  formData.append('entries', JSON.stringify(entries));
-
-  fetch(scriptURL, {
-    method: 'POST',
-    body: formData
-  })
-    .then(res => res.text())
-    .then(data => {
-      showSuccessMessage("🎉 Успішно! Дякуємо за замовлення 😎");
-      document.querySelectorAll('.human-block').forEach(block => block.remove());
-      document.querySelector('#rest-name').value = '';
-    })
-    .catch(err => {
-      showSuccessMessage("❌ Помилка: " + err.message);
-      console.error("Error:", err);
-    });
-});
-
 
     </script>
 </body>

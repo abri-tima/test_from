@@ -23,6 +23,11 @@
         </div>
     </div>
 
+    <div id="start-message" class="start-message">
+       <span class="message-span">👋 🤖 Тут ще нікого немає...</span>
+        Додайте першого учасника за допомогою кнопки <strong>«Додати людину»</strong>
+      </div>
+
 
 
     <div id="form-container"  class="hidden form-container">
@@ -37,8 +42,8 @@
                 <label for="gender" class="label-text">Стать</label>
             <select name="gender" id="gender" class="select-info">
                 <option value=""></option>
-                <option value="Муж">Чол</option>
-                <option value="Жен">Жін</option>
+                <option value="Чол">Чол</option>
+                <option value="Жін">Жін</option>
             </select>
             </div>
             <!-- <button onclick="removeField(this)" class="button-all">Видалити</button> -->
@@ -49,14 +54,14 @@
             <label for="product" class="label-text">Виріб</label>
             <select name="product" id="product-list" class="product-list">
                 <option value=""></option>
-                <option value="Китель">Кітель</option>
+                <option value="Кітель">Кітель</option>
                 <option value="Брюки">Брюки</option>
                 <option value="Фартух">Фартух</option>
-                <option value="Головной убор">Головний убір</option>
+                <option value="Головний убір">Головний убір</option>
                 <option value="Поло, Футболки">Поло, Футболки</option>
-                <option value="Обувь">Взуття</option>
-                <option value="Свитшот">Світшот</option>
-                <option value="Носки">Шкарпетки</option>
+                <option value="Взуття">Взуття</option>
+                <option value="Світшот">Світшот</option>
+                <option value="Шкарпетки">Шкарпетки</option>
             </select>
             </div>
             <div class="label-products-list">
@@ -114,6 +119,14 @@
     <button id="addHumanButton" class="button-add-human">Додати людину</button>
     <button type="submit" class="button-send-form">Відправити</button>
      </div>
+
+     <div id="custom-message" class="custom-message">
+        <span class="message-span">✨ Дякуємо!</span>
+        Дані успішно надіслані ✅
+      </div>
+      <div id="custom-message-error" class="custom-message">
+        ❌ Немає інформації для надсилання 📤
+      </div>
 
     <script src="./js/script.js"></script>
 </body>

@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", function () {
     const colorMapByProduct = {
-      "Китель": {
+      "Кітель": {
         "ALICANTE": ["Білий", "Чорний"],
         "CAPRI": ["Білий", "Чорний"],
         "FRANKFURT": ["Білий", "Чорний"],
@@ -44,7 +44,7 @@ document.addEventListener("DOMContentLoaded", function () {
         "ARIZONA": ["Чорний", "Синій", "Сірий", "Меланж"],
         "BOGOTA": ["Сірий", "Помаранчевий", "Клітка"]
     },
-    "Фартух": {
+    "Фартук": {
         "COLORADO": ["Смужка"],
         "ASTANA": ["Чорний"],
         "LONDON": ["Чорний"],
@@ -68,7 +68,7 @@ document.addEventListener("DOMContentLoaded", function () {
         "MONTERREY": ["Чорний", "Смужка"],
         "COPENHAGEN": ["Синій", "Хакі"]
     },
-    "Головной убор": {
+    "Головний убір": {
         "Шапка ALABAMA": ["Білий", "Чорний", "Сірий", "Меланж", "Пудра"],
         "Повʼязка SOFIA": ["Білий", "Чорний", "Сірий", "Бежевий", "Червоний", "Світло-сірий", "Жовтий"],
         "Бондана DUBAI": ["Білий", "Чорний", "Сірий", "Червоний", "Жовтий", "Рожевий", "Блакитний", "Помаранчевий", "Зелений"],
@@ -85,15 +85,15 @@ document.addEventListener("DOMContentLoaded", function () {
         "Поло NEW-YORK": ["Білий", "Чорний", "Сірий"],
         "Поло DUBLIN": ["Білий", "Чорний", "Сірий"]
     },
-    "Обувь": {
+    "Взуття": {
         "Сабо OSLO": ["Чорний", "Хакі"],
         "Сабо TULSA": ["Білий"],
         "Сабо IRVINE": ["Чорний"]
     },
-    "Свитшот": {
+    "Світшот": {
         "MICHIGAN": ["Чорний", "Світло-сірий", "Хакі"]
     },
-    "Носки": {
+    "Шкарпетки": {
         "Набір LION": ["Набір"],
         "Набір ABRIKOS": ["Набір"],
         "Набір BLACK": ["Набір"],
@@ -116,7 +116,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const genderSelect = document.querySelector("#gender");
 
     const productArticlesMap = {
-    "Китель": [
+    "Кітель": [
         "CLOVIS", "WASHINGTON", "ALICANTE", "LAS VEGAS", "MURANO", "PORTLAND", "MILAN", "NORMAN", "RIVERSIDE",
         "FRANKFURT", "DENVER", "TEXAS", "VENEZUELA", "NAPOLI", "SEATTLE", "EUROPE", "CAPRI", "CONCORD",
         "SPARTA", "BRATISLAVA", "MEXICO", "MOROCCO", "TORONTO", "INDIANA", "SIDNEY", "LOS ANGELES", "NEBRASKA",
@@ -126,25 +126,25 @@ document.addEventListener("DOMContentLoaded", function () {
         "GENEVA", "KANZAS", "BREST", "CARY", "CHICO", "BALTIMOR", "BAZEL", "LINCOLN", "ARIZONA", "KENT",
         "TURIN", "BOGOTA", "AMSTERDAM"
     ],
-    "Фартух": [
+    "Фартук": [
         "COLORADO", "MONACO", "TENERIFE", "SAVANNA", "SPARKS", "ALASKA", "BEND", "VANCOUVER", "ASTANA", "OREGON",
         "BOSTON", "ROME", "VIRGINIA", "DETROIT", "LONDON", "MANILA", "MONTERREY", "VILNIUS", "COLOMBO", "OTTAWA", "SIENA",
         "COPENHAGEN"
     ],
-    "Головной убор": [
+    "Головний убір": [
         "Шапка ALABAMA", "Повʼязка SOFIA", "Бондана DUBAI", "Кепка MADAGASKAR", "Кепка GRANADA", "Кепка PALERMO", "Кепка RIMINI",
         "Панама HONG KONG", "Таблетка KABUL", "Гриб PARIS"
     ],
     "Поло, Футболки": [
         "Футболка NEVADA", "Поло NEW-YORK", "Поло DUBLIN"
     ],
-    "Обувь": [
+    "Взуття": [
         "Сабо OSLO", "Сабо TULSA", "Сабо IRVINE"
     ],
-    "Свитшот": [
+    "Світшот": [
         "MICHIGAN"
     ],
-    "Носки": [
+    "Шкарпетки": [
         "Набір LION", "Набір ABRIKOS", "Набір BLACK", "Набір GRAY", "Набір SPIDER", "Набір TATTO", "Набір DEMON",
         "Набір EGG", "Набір MUHOMOR", "Набір RACCON"
     ]
@@ -184,34 +184,34 @@ productArticleSelect.addEventListener("change", function () {
 
     // --- Розмір ---
     const sizesMap = {
-        "Китель": ["42", "44", "46", "48", "50", "52", "54", "56", "58", "60", "62"],
+        "Кітель": ["42", "44", "46", "48", "50", "52", "54", "56", "58", "60", "62"],
         "Брюки": ["42", "44", "46", "48", "50", "52", "54", "56", "58", "60", "62"],
-        "Фартух": {
+        "Фартук": {
             "BOSTON": ["M", "L"],
             "DETROIT": ["M", "L"],
             "SIENA": ["M", "L"]
         },
-        "Головной убор": ["Немає"],
+        "Головний убір": ["Немає"],
         "Поло, Футболки": {
             "Футболка NEVADA": ["XS", "S", "M", "L", "XL", "XXL"],
             "Поло NEW-YORK": {
-                "Муж": ["XS", "S", "M", "L", "XL", "XXL", "3XL"],
-                "Жен": ["XS", "S", "M", "L", "XL", "XXL"]
+                "Чол": ["XS", "S", "M", "L", "XL", "XXL", "3XL"],
+                "Жін": ["XS", "S", "M", "L", "XL", "XXL"]
             },
             "Поло DUBLIN": {
-                "Муж": ["XS", "S", "M", "L", "XL", "XXL", "3XL"],
-                "Жен": ["XS", "S", "M", "L", "XL", "XXL"]
+                "Чол": ["XS", "S", "M", "L", "XL", "XXL", "3XL"],
+                "Жін": ["XS", "S", "M", "L", "XL", "XXL"]
             }
         },
-        "Обувь": {
+        "Взуття": {
             "Сабо OSLO": ["39", "40", "41", "42", "43", "44", "45", "46"],
             "Сабо TULSA": ["39", "40", "41", "42", "43", "44"],
             "Сабо IRVINE": ["39", "40", "43", "44"]
         },
-        "Свитшот": {
+        "Світшот": {
             "MICHIGAN": ["XS", "S", "M", "L", "XL", "XXL"]
         },
-        "Носки": ["36-40", "41-45"]
+        "Шкарпетки": ["36-40", "41-45"]
     };
 
     productSizeSelect.innerHTML = `<option value=""></option>`;
@@ -433,7 +433,11 @@ sendButton.addEventListener("click", function () {
     const humanBlocks = document.querySelectorAll(".human-block");
 
     if (humanBlocks.length === 0) {
-        alert("Немає інформації для надсилання ❌📤");
+        const successMessage = document.querySelector("#custom-message-error");
+        successMessage.classList.add("show");
+            setTimeout(() => {
+                successMessage.classList.remove("show");
+            }, 3000);
         return;
     }
 
@@ -464,7 +468,15 @@ sendButton.addEventListener("click", function () {
         });
     });
 
-    alert("✨ Дякуємо! Ваші дані успішно надіслані✅");
+    const startMessage = document.querySelector("#start-message");
+
+    addHumanButton.addEventListener("click", function () {
+        startMessage.classList.add("hidden");
+    });
+    
+    sendButton.addEventListener("click", function () {
+        startMessage.classList.remove("hidden");
+    });
 
     document.querySelectorAll(".human-block").forEach(block => block.remove());
     document.querySelector("#rest-name").value = "";

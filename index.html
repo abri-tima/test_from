@@ -8,6 +8,9 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
     <!-- Google Fonts -->
     <link rel="stylesheet" href="./css/styles.css">
     <link rel="stylesheet" href="./css/normalize.css">
@@ -16,9 +19,14 @@
     <div class="name-restaurant">
         <label for="rest-name" class="rest-name-label">Введіть назву ресторана:</label>
         <div class="rest-name-input-container">
-        <input type="text" class="rest-name-input" name="rest-name" minlength="3" id="rest-name" value="Веранда на Дніпрі">
+        <input type="text" class="rest-name-input" name="rest-name" minlength="3" id="rest-name">
         </div>
     </div>
+
+    <div id="start-message" class="start-message">
+       <span class="message-span">👋 🤖 Тут ще нікого немає...</span>
+        Додайте першого учасника за допомогою кнопки <strong>«Додати людину»</strong>
+      </div>
 
 
 
@@ -27,7 +35,7 @@
             <div class="label-input">
             <label for="name" class="label-text">Прізвище, Імʼя</label>
             <div class="label-input-human">
-            <input type="text" placeholder="" class="input-name-human" name="name" id="name" value="Башинський Сергій">
+            <input type="text" placeholder="" class="input-name-human" name="name" id="name">
             </div>
             </div>
             <div class="label-input">
@@ -46,8 +54,14 @@
             <label for="product" class="label-text">Виріб</label>
             <select name="product" id="product-list" class="product-list">
                 <option value=""></option>
-                <option value="Китель">Кітель</option>
-                <option value="Фартух">Фартух</option>
+                <option value="Кітель">Кітель</option>
+                <option value="Брюки">Брюки</option>
+                <option value="Фартук">Фартук</option>
+                <option value="Головний убір">Головний убір</option>
+                <option value="Поло, Футболки">Поло, Футболки</option>
+                <option value="Взуття">Взуття</option>
+                <option value="Світшот">Світшот</option>
+                <option value="Шкарпетки">Шкарпетки</option>
             </select>
             </div>
             <div class="label-products-list">
@@ -62,8 +76,8 @@
                 <label for="product-color" class="label-text">Колір</label>
                 <select name="product-color" id="product-list-color" class="product-list" style="padding: 7px 20px 7px 12px; background-position-x: 98%;">
                     <option value=""></option>
-                    <option value="Помаранчевий">Помаранчевий</option>
-                    <option value="Синій">Синій</option>
+                    <option value="Оранжевый">Помаранчевий</option>
+                    <option value="Синий">Синій</option>
                 </select>
             </div>
             <div class="label-input">
@@ -75,55 +89,49 @@
             <div class="window-container-info">
                 <div class="label-input">
                     <label for="product-size" class="label-text">Розмір вироба, якщо точно його знаєте</label>
-                    <select name="product-size" id="product-list-size" class="input-quality-product" style="padding: 7px 130px; background-position-x: 97%;">
+                    <select name="product-size" id="product-list-size" class="input-quality-product" style="padding: 7px 130px; background-position-x: 97%;" placeholder="Якщо у продукта немає розміру, ставте '-' ">
                         <option value=""></option>
-                        <option value="Не знаємо">Не знаємо</option>
+                        <option value="Не знаем">Не знаємо</option>
                         <option value="42">42</option>
                     </select>
                 </div>
                 <div class="label-input">
                     <label for="chest-size" class="label-text">Якщо розмір не знаєте, обхват грудей/стегон, см</label>
-                    <input type="tel" placeholder="" class="input-quality-product" name="chest-size" id="chest-size" style="padding: 7px 80px; background: none; background-color: #fff;">
+                    <input type="tel" placeholder="Якщо у продукта немає ОГ/ОС, ставте '*' " class="input-quality-product" name="chest-size" id="chest-size" style="padding: 7px 80px; background: none; background-color: #fff;">
                 </div>
                 <div class="label-input">
                     <label for="quality-logo" class="label-text">Кількість вишивок логотипу на виробі</label>
-                    <input type="tel" placeholder="" class="input-quality-product" name="quality-logo" id="quality-logo" style="padding: 7px 80px; background: none; background-color: #fff;">
+                    <input type="tel" placeholder="Якщо у продукта немає вишивки, ставте '*' " class="input-quality-product" name="quality-logo" id="quality-logo" style="padding: 7px 80px; background: none; background-color: #fff;">
                 </div>
                 <div class="label-input">
                     <label for="quality-embroideries" class="label-text">Кількість вишивки імені на виробі</label>
-                    <input type="tel" placeholder="" class="input-quality-product" name="quality-embroideries" id="quality-embroideries" style="padding: 7px 80px; background: none; background-color: #fff;">
+                    <input type="tel" placeholder="Якщо у продукта немає вишивки, ставте '*' " class="input-quality-product" name="quality-embroideries" id="quality-embroideries" style="padding: 7px 80px; background: none; background-color: #fff;">
                 </div>
             </div>
         </div>
         <div class="button-save">
     <button onclick="handleSave()" class="button-save-form">Зберегти</button>
+    <!-- <button onclick="handleCancel()" class="button-cancel-form">Отмена</button> -->
     </div>
     </div>
     </div>
-    <div class="buttons-container">
-    <button onclick="toggleEdit(true)" class="button-all edit-button">Редагувати</button>
-    <!-- <button type="submit" class="button-send-form">Відправити</button> -->
+    <div class="buttons-container btn-container-fixed">
     <button id="addHumanButton" class="button-add-human">Додати людину</button>
-    <!-- <button onclick="addField()" class="button-all">Додати виріб</button> -->
+    <button type="submit" class="button-send-form">Відправити</button>
      </div>
 
-    <script src="./js/script.js"></script>
+     <div id="custom-message" class="custom-message">
+        <span class="message-span">✨ Дякуємо!</span>
+        Дані успішно надіслані ✅
+      </div>
+      <div id="custom-message-error" class="custom-message">
+        ❌ Немає інформації для надсилання 📤
+      </div>
+      <div id="custom-message-fields" class="custom-message" style="transform: translate(-50%, 200%);">
+        <span>🤖 Ой! Хтось щось забув</span>
+        Заповніть усі поля форми, будь ласка 📝
+      </div>
 
-    <!-- <div class="info-container">
-        <div class="info-block">
-            <p>Ім'я: <span class="info-name">${name}</span></p>
-            <p>Стать: <span class="info-gender">${gender}</span></p>
-            <p>Виріб: <span class="info-product">${product}</span></p>
-            <p>Назва виробу: <span class="info-productName">${productName}</span></p>
-            <p>Колір: <span class="info-color">${color}</span></p>
-            <p>Кількість: <span class="info-quantityItems">${quantityItems}</span></p>
-            <p>Розмір: <span class="info-productSize">${productSize}</span></p>
-            <p>ОГ/ОС: <span class="info-chestSize">${chestSize}</span></p>
-            <p>Кількість лого: <span class="info-qualityLogo">${qualityLogo}</span></p>
-            <p>Кількість вишивки: <span class="info-qualityEmbroideries">${qualityEmbroideries}</span></p>
-            <button class="edit-button">Редагувати</button>
-            <button class="delete-button">Видалити</button>
-        </div>
-    </div> -->
+    <script src="./js/script.js"></script>
 </body>
 </html>

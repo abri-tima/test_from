@@ -114,6 +114,8 @@ document.addEventListener("DOMContentLoaded", function () {
     const productArticleSelect = document.querySelector("#product-list-article");
     const productSizeSelect = document.querySelector("#product-list-size");
     const genderSelect = document.querySelector("#gender");
+    const startMessage = document.querySelector("#start-message");
+    let sizes = [];
 
     const productArticlesMap = {
     "Кітель": [
@@ -215,19 +217,24 @@ productArticleSelect.addEventListener("change", function () {
     };
 
     productSizeSelect.innerHTML = `<option value=""></option>`;
-    let sizes = [];
-    if (Array.isArray(sizesMap[selectedProduct])) {
-        sizes = sizesMap[selectedProduct];
-    } else if (sizesMap[selectedProduct] && typeof sizesMap[selectedProduct] === 'object') {
-        const productSizes = sizesMap[selectedProduct];
-        if (typeof productSizes[selectedArticle] === 'object') {
-            if (Array.isArray(productSizes[selectedArticle])) {
-                sizes = productSizes[selectedArticle];
-            } else if (productSizes[selectedArticle][gender]) {
-                sizes = productSizes[selectedArticle][gender];
-            }
-        }
+    sizes = [];
+
+if (Array.isArray(sizesMap[selectedProduct])) {
+    // Простий масив (Кітель, Брюки)
+    sizes = sizesMap[selectedProduct];
+} else if (typeof sizesMap[selectedProduct] === "object") {
+    const productSizes = sizesMap[selectedProduct];
+    const sizeEntry = productSizes[selectedArticle];
+
+    if (Array.isArray(sizeEntry)) {
+        // Прямий масив для конкретного артикула (наприклад, BOSTON)
+        sizes = sizeEntry;
+    } else if (typeof sizeEntry === "object" && sizeEntry[gender]) {
+        // Гендерно-розділені розміри (наприклад, Поло)
+        sizes = sizeEntry[gender];
     }
+}
+
 
     sizes.forEach(size => {
         const option = document.createElement("option");
@@ -432,15 +439,6 @@ sendButton.addEventListener("click", function () {
     const restaurantName = document.querySelector("#rest-name").value;
     const humanBlocks = document.querySelectorAll(".human-block");
 
-    if (humanBlocks.length === 0) {
-        const successMessage = document.querySelector("#custom-message-error");
-        successMessage.classList.add("show");
-            setTimeout(() => {
-                successMessage.classList.remove("show");
-            }, 3000);
-        return;
-    }
-
     humanBlocks.forEach(human => {
         const nameGender = human.querySelector(".info-container-first").textContent.split("_");
         const name = nameGender[0];
@@ -468,15 +466,21 @@ sendButton.addEventListener("click", function () {
         });
     });
 
-    const startMessage = document.querySelector("#start-message");
-
-    addHumanButton.addEventListener("click", function () {
-        startMessage.classList.add("hidden");
-    });
-    
-    sendButton.addEventListener("click", function () {
-        startMessage.classList.remove("hidden");
-    });
+    if (humanBlocks.length === 0) {
+        const successMessage = document.querySelector("#custom-message-error");
+        successMessage.classList.add("show");
+            setTimeout(() => {
+                successMessage.classList.remove("show");
+            }, 3000);
+        return;
+    } else if (humanBlocks.length >= 1) {
+        const successMessage = document.querySelector("#custom-message");
+        successMessage.classList.add("show");
+            setTimeout(() => {
+                successMessage.classList.remove("show");
+            }, 3000);
+        return;
+    }
 
     document.querySelectorAll(".human-block").forEach(block => block.remove());
     document.querySelector("#rest-name").value = "";
@@ -527,6 +531,10 @@ productArticle.addEventListener("change", function () {
             productColor.appendChild(option);
         });
     }
+});
+
+addHumanButton.addEventListener("click", function () {
+    startMessage.classList.add("hidden");
 });
 
 });

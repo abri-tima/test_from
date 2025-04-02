@@ -188,11 +188,7 @@ productArticleSelect.addEventListener("change", function () {
     const sizesMap = {
         "Кітель": ["42", "44", "46", "48", "50", "52", "54", "56", "58", "60", "62"],
         "Брюки": ["42", "44", "46", "48", "50", "52", "54", "56", "58", "60", "62"],
-        "Фартук": {
-            "BOSTON": ["M", "L"],
-            "DETROIT": ["M", "L"],
-            "SIENA": ["M", "L"]
-        },
+        "Фартук": ["M", "L"],
         "Головний убір": ["Немає"],
         "Поло, Футболки": {
             "Футболка NEVADA": ["XS", "S", "M", "L", "XL", "XXL"],
@@ -305,8 +301,14 @@ if (Array.isArray(sizesMap[selectedProduct])) {
         const qualityEmbroideries = document.querySelector("#quality-embroideries").value;
 
         if (!name || !gender || !product || !productName || !color || !quantityItems || !productSize || !chestSize || !qualityLogo || !qualityEmbroideries) {
-            alert("Будь ласка, заповніть всі поля!");
-            return null;
+            if (!name || !gender || !product || !productName || !color || !quantityItems || !productSize || !chestSize || !qualityLogo || !qualityEmbroideries) {
+                const message = document.querySelector("#custom-message-fields");
+                message.classList.add("show");
+                setTimeout(() => {
+                    message.classList.remove("show");
+                }, 2000);
+                return null;
+            }
         }
 
         return { name, gender, product, productName, color, quantityItems, productSize, chestSize, qualityLogo, qualityEmbroideries };
@@ -471,19 +473,22 @@ sendButton.addEventListener("click", function () {
         successMessage.classList.add("show");
             setTimeout(() => {
                 successMessage.classList.remove("show");
-            }, 3000);
+            }, 1000);
         return;
     } else if (humanBlocks.length >= 1) {
         const successMessage = document.querySelector("#custom-message");
         successMessage.classList.add("show");
             setTimeout(() => {
                 successMessage.classList.remove("show");
-            }, 3000);
-        return;
-    }
+            }, 1000);
 
     document.querySelectorAll(".human-block").forEach(block => block.remove());
     document.querySelector("#rest-name").value = "";
+    document.querySelector("#start-message").classList.remove("hidden");
+
+    return;
+
+    }
 });
 
 const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyMT3nVI4zY6N3eiszlKgallOxEI_3qDwXD0QWIIZ-qQZX0O3OmV0Z7iIwrxIx47AVT/exec";

@@ -314,6 +314,19 @@ if (Array.isArray(sizesMap[selectedProduct])) {
         return { name, gender, product, productName, color, quantityItems, productSize, chestSize, qualityLogo, qualityEmbroideries };
     }
 
+    document.querySelector("#cancel-button").addEventListener("click", () => {
+        const formContainer = document.querySelector("#form-container");
+        formContainer.classList.add("hidden");
+    
+        document.querySelectorAll(".human-block").forEach(h => h.classList.remove("hidden"));
+        document.querySelectorAll(".add-product").forEach(btn => btn.classList.remove("hidden"));
+    
+        resetForm(formContainer);
+        editTarget = null;
+    });
+    
+    
+
     function createHumanBlock(data) {
         const humanBlock = document.createElement("div");
         humanBlock.classList.add("human-block");

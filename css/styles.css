@@ -536,4 +536,12 @@ input, select {
     display: none;
 }
 
+@media (min-width: 1024px) {
+    .form-container {
+        margin: 0 520px ;
+    }
 
+    .name-restaurant {
+        margin-left: 520px;
+    }
+}

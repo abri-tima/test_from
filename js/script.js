@@ -314,16 +314,20 @@ if (Array.isArray(sizesMap[selectedProduct])) {
         return { name, gender, product, productName, color, quantityItems, productSize, chestSize, qualityLogo, qualityEmbroideries };
     }
 
-    document.querySelector("#cancel-button").addEventListener("click", () => {
+    const cancelButton = document.querySelector("#cancel-button");
+
+    cancelButton.addEventListener("click", () => {
         const formContainer = document.querySelector("#form-container");
         formContainer.classList.add("hidden");
     
+        // Показати всі блоки назад
         document.querySelectorAll(".human-block").forEach(h => h.classList.remove("hidden"));
         document.querySelectorAll(".add-product").forEach(btn => btn.classList.remove("hidden"));
     
         resetForm(formContainer);
         editTarget = null;
     });
+    
     
     
 
@@ -413,12 +417,19 @@ if (Array.isArray(sizesMap[selectedProduct])) {
             const humanBlock = productsContainer.closest(".human-block");
         
             block.remove();
-        
-            // Проверяем: остались ли ещё вироби?
+
             const remainingProducts = productsContainer.querySelectorAll(".info-block-product");
+        
             if (remainingProducts.length === 0) {
                 humanBlock.remove();
+            
+                // Перевірити: чи залишилось ще хоч щось?
+                const remainingHumans = document.querySelectorAll(".human-block");
+                if (remainingHumans.length === 0) {
+                    document.querySelector("#start-message").classList.remove("hidden");
+                }
             }
+            
         });
 
         return block;
@@ -486,14 +497,14 @@ sendButton.addEventListener("click", function () {
         successMessage.classList.add("show");
             setTimeout(() => {
                 successMessage.classList.remove("show");
-            }, 1000);
+            }, 2000);
         return;
     } else if (humanBlocks.length >= 1) {
         const successMessage = document.querySelector("#custom-message");
         successMessage.classList.add("show");
             setTimeout(() => {
                 successMessage.classList.remove("show");
-            }, 1000);
+            }, 2000);
 
     document.querySelectorAll(".human-block").forEach(block => block.remove());
     document.querySelector("#rest-name").value = "";

@@ -262,6 +262,20 @@ input, select {
     transition: background-color 250ms ease-in-out;
 }
 
+.button-login-form {
+    font-family: Montserrat, sans-serif;
+    font-size: 14px;
+    font-weight: 800;
+    background-color: #ee6700;
+    border-radius: 60px;
+    padding: 14px 17px;
+    margin: 14px 0;
+    color: #fff;
+    outline: none;
+    border: none;
+    transition: background-color 250ms ease-in-out;
+}
+
 
 
 
@@ -269,29 +283,35 @@ input, select {
 .button-save-form:hover,
 .button-add-human:hover,
 .button-send-form:hover,
-.button-all:hover {
+.button-all:hover,
+.button-login-form:hover {
     background-color: #BC5100;
 }
 
 .button-save-form:focus,
 .button-add-human:focus,
 .button-send-form:focus,
-.button-all:focus {
+.button-all:focus,
+.button-login-form:focus {
     background-color: #BC5100;
 }
 
 .button-save-form:active,
 .button-add-human:active,
 .button-send-form:active,
-.button-all:active {
+.button-all:active,
+.button-login-form:active {
     background-color: #EE6700;
     transition: none;   
 }
 
 .name-restaurant {
-    margin-left: 24px;
+    margin-left: 15px;
     margin-top: 13px;
     margin-bottom: 14px;
+    margin-right: 24px;
+    display: flex;
+    justify-content: space-between;
 }
 
 .rest-name-label {
@@ -300,7 +320,7 @@ input, select {
 }
 
 .rest-name-input-container {
-    width: 245px;
+    /* width: 245px; */
     margin-top: 7px;
     
 }
@@ -310,9 +330,9 @@ input, select {
     font-size: 12px;
     font-weight: 400;
     line-height: 1.5;
-    padding: 6px 13px;
+    padding: 6px 25px 6px 15px;
     color: #4D4D4D;
-    width: 100%;
+    /* width: 100%; */
     font-size: 12px;
     border: 4px solid rgb(217, 217, 217);
     border-radius: 23px;

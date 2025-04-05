@@ -106,6 +106,16 @@ document.addEventListener("DOMContentLoaded", function () {
         "Набір RACCON": ["Набір"]
     }
 };
+
+const loginButton = document.querySelector("button"); // або конкретніше: #login-button
+    loginButton.addEventListener("click", () => {
+        const login = document.querySelector("#rest-name").value.trim();
+        if (!login) return;
+
+        localStorage.setItem("userLogin", login);
+        fetchUserData(login);
+    });
+
     const addHumanButton = document.querySelector(".button-add-human");
     const formContainer = document.querySelector("#form-container");
     const saveButton = document.querySelector(".button-save-form");
@@ -275,6 +285,8 @@ if (Array.isArray(sizesMap[selectedProduct])) {
             createHumanBlock(formData);
 
         }
+
+        sendToGoogleSheet(formData);
     
         // Сховати форму
         formContainer.classList.add("hidden");
@@ -299,6 +311,11 @@ if (Array.isArray(sizesMap[selectedProduct])) {
         const chestSize = document.querySelector("#chest-size").value;
         const qualityLogo = document.querySelector("#quality-logo").value;
         const qualityEmbroideries = document.querySelector("#quality-embroideries").value;
+        let productId = editTarget instanceof Element ? editTarget.dataset.id : crypto.randomUUID();
+        if (editTarget && editTarget instanceof HTMLElement && editTarget.dataset?.id) {
+            productId = editTarget.dataset.id;
+        }
+        
 
         if (!name || !gender || !product || !productName || !color || !quantityItems || !productSize || !chestSize || !qualityLogo || !qualityEmbroideries) {
             if (!name || !gender || !product || !productName || !color || !quantityItems || !productSize || !chestSize || !qualityLogo || !qualityEmbroideries) {
@@ -311,7 +328,8 @@ if (Array.isArray(sizesMap[selectedProduct])) {
             }
         }
 
-        return { name, gender, product, productName, color, quantityItems, productSize, chestSize, qualityLogo, qualityEmbroideries };
+
+        return { name, gender, product, productName, color, quantityItems, productSize, chestSize, qualityLogo, qualityEmbroideries, id: productId };
     }
 
     const cancelButton = document.querySelector("#cancel-button");
@@ -397,6 +415,8 @@ if (Array.isArray(sizesMap[selectedProduct])) {
             </div>
         `;
 
+        block.dataset.id = data.id;
+
         const editButton = block.querySelector(".edit-button");
         const deleteButton = block.querySelector(".delete-button");
 
@@ -409,6 +429,8 @@ if (Array.isArray(sizesMap[selectedProduct])) {
         
             fillFormWithData(block);
             editTarget = block;
+
+
         });
         
 
@@ -453,6 +475,8 @@ if (Array.isArray(sizesMap[selectedProduct])) {
         document.querySelector("#chest-size").value = block.querySelector(".info-chestSize").textContent.replace(" см", "");
         document.querySelector("#quality-logo").value = block.querySelector(".info-qualityLogo").textContent;
         document.querySelector("#quality-embroideries").value = block.querySelector(".info-qualityEmbroideries").textContent;
+
+        editTarget = block;
     }
 
     function resetForm(container) {
@@ -515,7 +539,7 @@ sendButton.addEventListener("click", function () {
     }
 });
 
-const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyMT3nVI4zY6N3eiszlKgallOxEI_3qDwXD0QWIIZ-qQZX0O3OmV0Z7iIwrxIx47AVT/exec";
+const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbykbp99gu4ayWUiF14KETSUfA1LDe79NlDWo3iQN7Pu5TNgtf1UM9m9L-tA0ewE_Id74A/exec";
 
 function sendToGoogleSheet(data) {
     const formData = new FormData();
@@ -523,6 +547,9 @@ function sendToGoogleSheet(data) {
     for (const key in data) {
         formData.append(key, data[key]);
     }
+
+    console.log("Отправка в Google Sheets:", data);
+
 
     fetch(GOOGLE_SCRIPT_URL, {
         method: "POST",
@@ -565,5 +592,61 @@ productArticle.addEventListener("change", function () {
 addHumanButton.addEventListener("click", function () {
     startMessage.classList.add("hidden");
 });
+
+function sendToGoogleSheet(data) {
+    const login = localStorage.getItem("userLogin");
+    data.login = login;
+    if (!data.id) data.id = crypto.randomUUID(); // або Date.now().toString()
+
+    const formData = new FormData();
+    for (const key in data) {
+        formData.append(key, data[key]);
+    }
+
+    fetch(GOOGLE_SCRIPT_URL, {
+        method: "POST",
+        body: formData,
+        mode: "no-cors"
+    }).then(() => {
+        console.log("✅ Дані збережено:", data);
+    }).catch(err => {
+        console.error("❌ Помилка надсилання:", err);
+    });
+}
+
+function fetchUserData(login) {
+    fetch(`${GOOGLE_SCRIPT_URL}?login=${login}`)
+        .then(res => res.json())
+        .then(data => {
+            const humanMap = new Map();
+
+            data.forEach(row => {
+                const [login, name, gender, product, productName, color, quantityItems, productSize, chestSize, qualityLogo, qualityEmbroideries, id] = row;
+
+                const formData = { name, gender, product, productName, color, quantityItems, productSize, chestSize, qualityLogo, qualityEmbroideries, id };
+
+                const key = `${name}_${gender}`;
+                if (!humanMap.has(key)) humanMap.set(key, []);
+                humanMap.get(key).push(formData);
+            });
+
+            humanMap.forEach((items, key) => {
+                const [firstItem, ...restItems] = items;
+                createHumanBlock(firstItem);
+
+                const container = Array.from(document.querySelectorAll(".human-block")).find(b =>
+                    b.querySelector(".info-container-first").textContent === `${firstItem.name}_${firstItem.gender}`
+                ).querySelector(".products-container");
+
+                restItems.forEach(data => {
+                    container.appendChild(createProductBlock(data));
+                });
+            });
+
+            startMessage.classList.add("hidden");
+        })
+        .catch(err => console.error("❌ fetchUserData:", err));
+}
+
 
 });

@@ -106,6 +106,50 @@ document.addEventListener("DOMContentLoaded", function () {
         "Набір RACCON": ["Набір"]
     }
 };
+const existingProductIds = new Set(); // ← сюда будем сохранять ID уже загруженных блоков
+function restartLogoAnimation() {
+    const svg = document.getElementById("animated-logo");
+    const clonedSvg = svg.cloneNode(true);
+    svg.parentNode.replaceChild(clonedSvg, svg);
+}
+const loginButton = document.querySelector("button"); // або конкретніше: #login-button
+loginButton.addEventListener("click", () => {
+    const login = document.querySelector("#rest-name").value.trim();
+    if (!login) return;
+
+    // Показати завантаження
+    const loadingScreen = document.getElementById("loading-screen");
+    document.querySelectorAll(".cls-1").forEach(el => {
+        el.style.animation = "none";
+        el.offsetHeight; // force reflow
+        el.style.animation = null;
+      });
+      
+    loadingScreen.classList.remove("hidden-for-loading");
+    setTimeout(() => {
+        restartLogoAnimation();
+      }, 50);
+
+    setTimeout(() => {
+        // Сховати завантаження
+        loadingScreen.classList.add("hidden-for-loading");
+
+        // Приховати кнопку входу
+        loginButton.style.display = "none";
+
+        // Показати текст "Добро пожаловать"
+        const welcomeText = document.createElement("div");
+        welcomeText.classList.add("welcome-message");
+        welcomeText.textContent = `✨ Вітаємо у системі, ${login}!`;
+        loginButton.parentElement.appendChild(welcomeText);
+    }, 6000);
+        // Зберегти логін
+        localStorage.setItem("userLogin", login);
+
+        // Завантажити дані
+        fetchUserData(login);
+});
+
     const addHumanButton = document.querySelector(".button-add-human");
     const formContainer = document.querySelector("#form-container");
     const saveButton = document.querySelector(".button-save-form");
@@ -266,6 +310,8 @@ if (Array.isArray(sizesMap[selectedProduct])) {
         if (editTarget && editTarget instanceof Element) {
             // Редагування
             updateProductBlock(editTarget, formData);
+            existingProductIds.add(formData.id);
+            sendToGoogleSheet(formData);
         } else if (editTarget && editTarget.container) {
             // Додавання виробу
             const newProduct = createProductBlock(formData);
@@ -299,6 +345,11 @@ if (Array.isArray(sizesMap[selectedProduct])) {
         const chestSize = document.querySelector("#chest-size").value;
         const qualityLogo = document.querySelector("#quality-logo").value;
         const qualityEmbroideries = document.querySelector("#quality-embroideries").value;
+        let productId = editTarget instanceof Element ? editTarget.dataset.id : crypto.randomUUID();
+        if (editTarget && editTarget instanceof HTMLElement && editTarget.dataset?.id) {
+            productId = editTarget.dataset.id;
+        }
+        
 
         if (!name || !gender || !product || !productName || !color || !quantityItems || !productSize || !chestSize || !qualityLogo || !qualityEmbroideries) {
             if (!name || !gender || !product || !productName || !color || !quantityItems || !productSize || !chestSize || !qualityLogo || !qualityEmbroideries) {
@@ -311,7 +362,8 @@ if (Array.isArray(sizesMap[selectedProduct])) {
             }
         }
 
-        return { name, gender, product, productName, color, quantityItems, productSize, chestSize, qualityLogo, qualityEmbroideries };
+
+        return { name, gender, product, productName, color, quantityItems, productSize, chestSize, qualityLogo, qualityEmbroideries, id: productId };
     }
 
     const cancelButton = document.querySelector("#cancel-button");
@@ -397,6 +449,8 @@ if (Array.isArray(sizesMap[selectedProduct])) {
             </div>
         `;
 
+        block.dataset.id = data.id;
+
         const editButton = block.querySelector(".edit-button");
         const deleteButton = block.querySelector(".delete-button");
 
@@ -409,12 +463,17 @@ if (Array.isArray(sizesMap[selectedProduct])) {
         
             fillFormWithData(block);
             editTarget = block;
+
+
         });
         
 
         deleteButton.addEventListener("click", () => {
             const productsContainer = block.parentElement;
             const humanBlock = productsContainer.closest(".human-block");
+
+            const id = block.dataset.id;
+            deleteFromGoogleSheet(id);
         
             block.remove();
 
@@ -426,7 +485,11 @@ if (Array.isArray(sizesMap[selectedProduct])) {
                 // Перевірити: чи залишилось ще хоч щось?
                 const remainingHumans = document.querySelectorAll(".human-block");
                 if (remainingHumans.length === 0) {
-                    document.querySelector("#start-message").classList.remove("hidden");
+                    startMessage.classList.remove("hidden");
+                    startMessage.innerHTML = `
+                        <span class="message-span">👨‍🍳 Пора навести стиль на кухні! </span>
+                        Додай перший комплект, натиснувши <strong>«Додати людину» 👇</strong><br />
+                    `;
                 }
             }
             
@@ -453,6 +516,8 @@ if (Array.isArray(sizesMap[selectedProduct])) {
         document.querySelector("#chest-size").value = block.querySelector(".info-chestSize").textContent.replace(" см", "");
         document.querySelector("#quality-logo").value = block.querySelector(".info-qualityLogo").textContent;
         document.querySelector("#quality-embroideries").value = block.querySelector(".info-qualityEmbroideries").textContent;
+
+        editTarget = block;
     }
 
     function resetForm(container) {
@@ -473,6 +538,11 @@ sendButton.addEventListener("click", function () {
         const products = human.querySelectorAll(".info-block-product");
 
         products.forEach(product => {
+            const id = product.dataset.id;
+    
+            // Проверка: если уже есть такой ID, не отправляем
+            if (existingProductIds.has(id)) return;
+
             const data = {
                 restaurantName,
                 name,
@@ -504,22 +574,32 @@ sendButton.addEventListener("click", function () {
         successMessage.classList.add("show");
             setTimeout(() => {
                 successMessage.classList.remove("show");
-            }, 2000);
+            }, 8000);
+    }
 
     document.querySelectorAll(".human-block").forEach(block => block.remove());
-    document.querySelector("#rest-name").value = "";
-    document.querySelector("#start-message").classList.remove("hidden");
+    startMessage.classList.remove("hidden");
+    startMessage.innerHTML = `
+        <span class="message-span">👨‍🍳 Пора навести стиль на кухні! </span>
+        Додай перший комплект, натиснувши <strong>«Додати людину» 👇</strong><br />
+    `;
+    console.log("✅ Trying to show success message");
+
+    setTimeout(() => {
+        location.reload();
+    }, 8000);
 
     return;
-
-    }
 });
 
-const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyMT3nVI4zY6N3eiszlKgallOxEI_3qDwXD0QWIIZ-qQZX0O3OmV0Z7iIwrxIx47AVT/exec";
+const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbykbp99gu4ayWUiF14KETSUfA1LDe79NlDWo3iQN7Pu5TNgtf1UM9m9L-tA0ewE_Id74A/exec";
 
 function sendToGoogleSheet(data) {
-    const formData = new FormData();
+    const login = localStorage.getItem("userLogin");
+    data.login = login;
+    if (!data.id) data.id = crypto.randomUUID(); // або Date.now().toString()
 
+    const formData = new FormData();
     for (const key in data) {
         formData.append(key, data[key]);
     }
@@ -527,15 +607,14 @@ function sendToGoogleSheet(data) {
     fetch(GOOGLE_SCRIPT_URL, {
         method: "POST",
         body: formData,
-        mode: "no-cors" // <- ключова частина!
-    })
-    .then(() => {
-        console.log("✅ Дані надіслано (no-cors)");
-    })
-    .catch(error => {
-        console.error("❌ Помилка:", error);
+        mode: "no-cors"
+    }).then(() => {
+        console.log("✅ Дані збережено:", data);
+    }).catch(err => {
+        console.error("❌ Помилка надсилання:", err);
     });
 }
+
 
 const productList = document.querySelector("#product-list");
 const productArticle = document.querySelector("#product-list-article");
@@ -565,5 +644,104 @@ productArticle.addEventListener("change", function () {
 addHumanButton.addEventListener("click", function () {
     startMessage.classList.add("hidden");
 });
+
+function sendToGoogleSheet(data) {
+    const login = localStorage.getItem("userLogin");
+    data.login = login;
+    if (!data.id) data.id = crypto.randomUUID(); // або Date.now().toString()
+
+    const formData = new FormData();
+    for (const key in data) {
+        formData.append(key, data[key]);
+    }
+
+    fetch(GOOGLE_SCRIPT_URL, {
+        method: "POST",
+        body: formData,
+        mode: "no-cors"
+    }).then(() => {
+        console.log("✅ Дані збережено:", data);
+    }).catch(err => {
+        console.error("❌ Помилка надсилання:", err);
+    });
+}
+
+function fetchUserData(login) {
+    fetch(`${GOOGLE_SCRIPT_URL}?login=${login}`)
+        .then(res => res.json())
+        .then(data => {
+            const humanMap = new Map();
+
+            data.forEach(row => {
+                const [login, name, gender, product, productName, color, quantityItems, productSize, chestSize, qualityLogo, qualityEmbroideries, id] = row;
+
+                const formData = { name, gender, product, productName, color, quantityItems, productSize, chestSize, qualityLogo, qualityEmbroideries, id };
+                existingProductIds.add(id);
+
+
+                const key = `${name}_${gender}`;
+                if (!humanMap.has(key)) humanMap.set(key, []);
+                humanMap.get(key).push(formData);
+            });
+
+            humanMap.forEach((items, key) => {
+                const [firstItem, ...restItems] = items;
+                createHumanBlock(firstItem);
+
+                const container = Array.from(document.querySelectorAll(".human-block")).find(b =>
+                    b.querySelector(".info-container-first").textContent === `${firstItem.name}_${firstItem.gender}`
+                ).querySelector(".products-container");
+
+                restItems.forEach(data => {
+                    container.appendChild(createProductBlock(data));
+                });
+            });
+
+            const humanBlocks = document.querySelectorAll(".human-block");
+
+            if (humanBlocks.length === 0) {
+                // Показати стартове повідомлення з кнопкою
+                startMessage.classList.remove("hidden");
+                startMessage.innerHTML = `
+                    <span class="message-span">👨‍🍳 Пора навести стиль на кухні! </span>
+                    Додай перший комплект, натиснувши <strong>«Додати людину» 👇</strong><br />
+                `;
+                document.getElementById("addHumanBtnInline").addEventListener("click", () => {
+                    addHumanButton.click();
+                });
+            } else {
+                // Якщо вже є учасники — сховати повідомлення
+                startMessage.classList.add("hidden");
+            }
+            
+        })
+        .catch(err => console.error("❌ fetchUserData:", err));
+}
+
+function deleteFromGoogleSheet(id) {
+    const login = localStorage.getItem("userLogin");
+
+    const formData = new FormData();
+    
+    if (id) {
+        formData.append("id", id);
+    } else {
+        formData.append("login", login);
+    }
+
+    formData.append("action", "delete");
+
+    fetch(GOOGLE_SCRIPT_URL, {
+        method: "POST",
+        body: formData,
+        mode: "no-cors"
+    }).then(() => {
+        console.log("🗑️ Дані видалені з Google Sheets:", id || login);
+    }).catch(err => {
+        console.error("❌ Помилка при видаленні з Google Sheets:", err);
+    });
+}
+
+
 
 });

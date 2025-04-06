@@ -427,7 +427,7 @@ if (Array.isArray(sizesMap[selectedProduct])) {
         humanBlock.classList.add("human-block");
 
         const nameBlock = document.createElement("div");
-        nameBlock.classList.add("info-block-first");
+        nameBlock.classList.add("info-block-first", "open");
         nameBlock.innerHTML = `<p><span class="info-container-first">${data.name}_${data.gender}</span></p>`;
 
         const productsContainer = document.createElement("div");
@@ -861,6 +861,23 @@ function deleteFromGoogleSheet(id) {
     });
 }
 
+document.addEventListener("click", function (e) {
+    const block = e.target.closest(".info-block-first");
+    if (!block) return;
 
+    // toggle 'open'
+    block.classList.toggle("open");
+
+    const products = block.nextElementSibling;
+    if (products && products.classList.contains("products-container")) {
+      if (block.classList.contains("open")) {
+        products.style.maxHeight = products.scrollHeight + "px";
+        products.style.opacity = "1";
+      } else {
+        products.style.maxHeight = "0";
+        products.style.opacity = "0";
+      }
+    }
+  });
 
 });

@@ -487,13 +487,42 @@ input, select {
     text-align: center;
     border: 2px solid rgb(67, 65, 66);
     border-radius: 4px;
-    /* background: url(../Vectors/edit.svg), url(../Vectors/delete.svg);
-    background-position: right;  */
     background-color: rgb(232, 230, 231);
-    /* background-repeat: no-repeat;
-    background-position-x: 86%, 97%;
-    background-size: 24px; */
+    position: relative;
+    cursor: pointer;
 }
+
+.info-block-first::after {
+    content: "";
+    position: absolute;
+    right: 15px;
+    top: 30%;
+    transform: translateY(-30%) rotate(0deg);
+    width: 10px;
+    height: 10px;
+background: url(../Vectors/arrow.svg);
+    padding: 4px;
+    transform-origin: center;
+    transition: transform 0.3s ease;
+    /* rotate: 45deg; */
+}
+
+.info-block-first.open::after {
+    transform: translateX(30%) rotate(-180deg);
+}
+
+.products-container {
+    overflow: hidden;
+    max-height: 0;
+    opacity: 0;
+    transition: max-height 0.4s ease, opacity 0.4s ease;
+  }
+  
+  .info-block-first.open + .products-container {
+    max-height: 2000px; /* достатньо велике значення */
+    opacity: 1;
+  }
+  
 
 .info-block-second {
     padding: 8px 13px 6px 10px;
@@ -503,12 +532,6 @@ input, select {
     color: #414141;
     border: 3px solid rgb(67, 65, 66);
     border-radius: 13px;
-    /* background: url(../Vectors/edit.svg), url(../Vectors/delete.svg);
-    background-position: right; 
-    background-color: rgb(232, 230, 231);
-    background-repeat: no-repeat;
-    background-position-x: 86%, 97%;
-    background-size: 24px; */
 }
 
 .info-productSize-cont {

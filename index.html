@@ -27,8 +27,8 @@
     </div>
 
     <div id="start-message" class="start-message">
-       <span class="message-span">👋 🤖 Тут ще нікого немає...</span>
-        Додайте першого учасника за допомогою кнопки <strong>«Додати людину»</strong>
+       <span class="message-span">🔐 Щоб розпочати:</span>
+       Натисніть кнопку <strong>«Увійти»</strong> та введіть логін користувача, який вам надав менеджер.
       </div>
 
 
@@ -118,8 +118,10 @@
      </div>
 
      <div id="custom-message" class="custom-message">
-        <span class="message-span">✨ Дякуємо!</span>
-        Дані успішно надіслані ✅
+        <span class="message-span">🧑‍🍳 Готово! </span>
+        <span class="message-span">Ваші форми збережено й вони чекатимуть на вас під час наступного входу. <br /></span>
+        <span class="message-span">⏳ Дані зберігаються протягом 30 днів, після чого автоматично видаляються. <br /></span>
+        <span class="message-span">📦 При повторному вході вся інформація з’явиться тут автоматично. <br /></span>
       </div>
       <div id="custom-message-error" class="custom-message">
         ❌ Немає інформації для надсилання 📤
@@ -127,6 +129,16 @@
       <div id="custom-message-fields" class="custom-message" style="transform: translate(-50%, 200%);">
         <span>🤖 Ой! Хтось щось забув</span>
         Заповніть усі поля форми, будь ласка 📝
+      </div>
+      <div id="loading-screen" class="loading-screen hidden-for-loading">
+        <div class="logo-loader">
+            <svg id="animated-logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 82.79 76.29" width="200" height="200">
+                <circle id="circle" class="cls-1" cx="41.57" cy="26.69" r="26.69"/>
+                <rect id="rect1" class="cls-1" x="37.22" y="52.96" width="8.35" height="23.33"/>
+                <rect id="rect2" class="cls-1" x="1" y="67.36" width="80" height="8.92" rx="4.46" ry="4.46"/>
+              </svg>
+        </div>
+        <p>Завантаження...</p>
       </div>
 
     <script src="./js/script.js"></script>

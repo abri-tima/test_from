@@ -160,6 +160,9 @@ loginButton.addEventListener("click", () => {
     const genderSelect = document.querySelector("#gender");
     const startMessage = document.querySelector("#start-message");
     let sizes = [];
+    let oldName = "";
+    let oldGender = "";
+
 
     const productArticlesMap = {
     "Кітель": [
@@ -308,10 +311,46 @@ if (Array.isArray(sizesMap[selectedProduct])) {
         if (!formData) return;
     
         if (editTarget && editTarget instanceof Element) {
-            // Редагування
+            const oldName = editTarget.querySelector(".info-name")?.textContent;
+            const oldGender = editTarget.querySelector(".info-gender")?.textContent;
+            const nameChanged = oldName !== formData.name;
+            const genderChanged = oldGender !== formData.gender;
+        
+            document.querySelectorAll(".info-block-product").forEach(block => {
+                const currentName = block.querySelector(".info-name")?.textContent;
+                const currentGender = block.querySelector(".info-gender")?.textContent;
+        
+                if (currentName === oldName && currentGender === oldGender) {
+                    // Оновити дані в DOM
+                    block.querySelector(".info-name").textContent = formData.name;
+                    block.querySelector(".info-gender").textContent = formData.gender;
+        
+                    const container = block.closest(".human-block");
+                    if (container) {
+                        const nameHeader = container.querySelector(".info-container-first");
+                        if (nameHeader) nameHeader.textContent = `${formData.name}_${formData.gender}`;
+                    }
+                    const updateData = {
+                        product: block.querySelector(".info-product").textContent,
+                        productName: block.querySelector(".info-productName").textContent,
+                        color: block.querySelector(".info-color").textContent,
+                        quantityItems: block.querySelector(".info-quantityItems").textContent,
+                        productSize: block.querySelector(".info-productSize").textContent,
+                        chestSize: block.querySelector(".info-chestSize").textContent.replace(" см", ""),
+                        qualityLogo: block.querySelector(".info-qualityLogo").textContent,
+                        qualityEmbroideries: block.querySelector(".info-qualityEmbroideries").textContent,
+                        id: block.dataset.id,
+                        name: formData.name,
+                        gender: formData.gender,
+                        oldName,
+                        oldGender
+                    };
+                    sendToGoogleSheet(updateData);
+                }
+            });
+        
             updateProductBlock(editTarget, formData);
             existingProductIds.add(formData.id);
-            sendToGoogleSheet(formData);
         } else if (editTarget && editTarget.container) {
             // Додавання виробу
             const newProduct = createProductBlock(formData);
@@ -499,26 +538,121 @@ if (Array.isArray(sizesMap[selectedProduct])) {
     }
 
     function updateProductBlock(block, data) {
+        const humanBlock = block.closest(".human-block");
+    
+        if (humanBlock) {
+            const nameBlock = humanBlock.querySelector(".info-container-first");
+            if (nameBlock) {
+                nameBlock.textContent = `${data.name}_${data.gender}`;
+            }
+    
+            // Оновити приховані дані у всіх продуктах
+            humanBlock.querySelectorAll(".info-name").forEach(el => el.textContent = data.name);
+            humanBlock.querySelectorAll(".info-gender").forEach(el => el.textContent = data.gender);
+        }
+    
         const newBlock = createProductBlock(data);
-        block.replaceWith(newBlock); // ← теперь сработает, т.к. block — DOM-элемент
+        block.replaceWith(newBlock);
     }
     
     
-
+    
     function fillFormWithData(block) {
-        document.querySelector(".input-name-human").value = block.querySelector(".info-name").textContent;
-        document.querySelector("#gender").value = block.querySelector(".info-gender").textContent;
-        document.querySelector("#product-list").value = block.querySelector(".info-product").textContent;
-        document.querySelector("#product-list-article").value = block.querySelector(".info-productName").textContent;
-        document.querySelector("#product-list-color").value = block.querySelector(".info-color").textContent;
+        const name = block.querySelector(".info-name").textContent;
+        const gender = block.querySelector(".info-gender").textContent;
+        const product = block.querySelector(".info-product").textContent;
+        const productName = block.querySelector(".info-productName").textContent;
+        const color = block.querySelector(".info-color").textContent;
+        const size = block.querySelector(".info-productSize").textContent;
+    
+        document.querySelector(".input-name-human").value = name;
+        document.querySelector("#gender").value = gender;
+    
+        // Обновить список артикулів
+        productSelect.value = product;
+        const articleOptions = productArticlesMap[product] || [];
+        productArticleSelect.innerHTML = `<option value=""></option>`;
+        articleOptions.forEach(article => {
+            const option = document.createElement("option");
+            option.value = article;
+            option.textContent = article;
+            productArticleSelect.appendChild(option);
+        });
+        productArticleSelect.value = productName;
+    
+        // Обновить список кольорів
+        productColor.innerHTML = `<option value=""></option>`;
+        const colors = colorMapByProduct[product]?.[productName] || [];
+        colors.forEach(c => {
+            const option = document.createElement("option");
+            option.value = c;
+            option.textContent = c;
+            productColor.appendChild(option);
+        });
+        productColor.value = color;
+    
+        // Обновить список розмірів
+        productSizeSelect.innerHTML = `<option value=""></option>`;
+        let sizes = [];
+        const sizesMap = {
+            "Кітель": ["Не знаю", "42", "44", "46", "48", "50", "52", "54", "56", "58", "60", "62"],
+            "Брюки": ["Не знаю", "42", "44", "46", "48", "50", "52", "54", "56", "58", "60", "62"],
+            "Фартук": ["M", "L"],
+            "Головний убір": ["Немає"],
+            "Поло, Футболки": {
+                "Футболка NEVADA": ["XS", "S", "M", "L", "XL", "XXL"],
+                "Поло NEW-YORK": {
+                    "Чол": ["XS", "S", "M", "L", "XL", "XXL", "3XL"],
+                    "Жін": ["XS", "S", "M", "L", "XL", "XXL"]
+                },
+                "Поло DUBLIN": {
+                    "Чол": ["XS", "S", "M", "L", "XL", "XXL", "3XL"],
+                    "Жін": ["XS", "S", "M", "L", "XL", "XXL"]
+                }
+            },
+            "Взуття": {
+                "Сабо OSLO": ["39", "40", "41", "42", "43", "44", "45", "46"],
+                "Сабо TULSA": ["39", "40", "41", "42", "43", "44"],
+                "Сабо IRVINE": ["39", "40", "43", "44"]
+            },
+            "Світшот": {
+                "MICHIGAN": ["XS", "S", "M", "L", "XL", "XXL"]
+            },
+            "Шкарпетки": ["36-40", "41-45"]
+        };
+    
+        if (Array.isArray(sizesMap[product])) {
+            sizes = sizesMap[product];
+        } else if (typeof sizesMap[product] === "object") {
+            const sizeEntry = sizesMap[product][productName];
+            if (Array.isArray(sizeEntry)) {
+                sizes = sizeEntry;
+            } else if (typeof sizeEntry === "object" && sizeEntry[gender]) {
+                sizes = sizeEntry[gender];
+            }
+        }
+    
+        sizes.forEach(s => {
+            const option = document.createElement("option");
+            option.value = s;
+            option.textContent = s;
+            productSizeSelect.appendChild(option);
+        });
+        productSizeSelect.value = size;
+    
+        // Остальные поля
         document.querySelector("#quality-items").value = block.querySelector(".info-quantityItems").textContent;
-        document.querySelector("#product-list-size").value = block.querySelector(".info-productSize").textContent;
         document.querySelector("#chest-size").value = block.querySelector(".info-chestSize").textContent.replace(" см", "");
         document.querySelector("#quality-logo").value = block.querySelector(".info-qualityLogo").textContent;
         document.querySelector("#quality-embroideries").value = block.querySelector(".info-qualityEmbroideries").textContent;
+    
+        oldName = block.querySelector(".info-name").textContent;
+        oldGender = block.querySelector(".info-gender").textContent;
 
         editTarget = block;
     }
+    
+    
 
     function resetForm(container) {
         container.querySelectorAll("input, select").forEach(el => el.value = "");
@@ -599,6 +733,10 @@ function sendToGoogleSheet(data) {
     data.login = login;
     if (!data.id) data.id = crypto.randomUUID(); // або Date.now().toString()
 
+    data.oldName = oldName;
+    data.oldGender = oldGender;
+    data.action = "update";
+
     const formData = new FormData();
     for (const key in data) {
         formData.append(key, data[key]);
@@ -645,26 +783,7 @@ addHumanButton.addEventListener("click", function () {
     startMessage.classList.add("hidden");
 });
 
-function sendToGoogleSheet(data) {
-    const login = localStorage.getItem("userLogin");
-    data.login = login;
-    if (!data.id) data.id = crypto.randomUUID(); // або Date.now().toString()
 
-    const formData = new FormData();
-    for (const key in data) {
-        formData.append(key, data[key]);
-    }
-
-    fetch(GOOGLE_SCRIPT_URL, {
-        method: "POST",
-        body: formData,
-        mode: "no-cors"
-    }).then(() => {
-        console.log("✅ Дані збережено:", data);
-    }).catch(err => {
-        console.error("❌ Помилка надсилання:", err);
-    });
-}
 
 function fetchUserData(login) {
     fetch(`${GOOGLE_SCRIPT_URL}?login=${login}`)

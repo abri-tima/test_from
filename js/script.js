@@ -117,38 +117,16 @@ loginButton.addEventListener("click", () => {
     const login = document.querySelector("#rest-name").value.trim();
     if (!login) return;
 
-    // Показати завантаження
+    restartLogoAnimation(); 
+
+    // Покажемо завантаження
     const loadingScreen = document.getElementById("loading-screen");
-    document.querySelectorAll(".cls-1").forEach(el => {
-        el.style.animation = "none";
-        el.offsetHeight; // force reflow
-        el.style.animation = null;
-      });
-      
     loadingScreen.classList.remove("hidden-for-loading");
-    setTimeout(() => {
-        restartLogoAnimation();
-      }, 50);
 
-    setTimeout(() => {
-        // Сховати завантаження
-        loadingScreen.classList.add("hidden-for-loading");
-
-        // Приховати кнопку входу
-        loginButton.style.display = "none";
-
-        // Показати текст "Добро пожаловать"
-        const welcomeText = document.createElement("div");
-        welcomeText.classList.add("welcome-message");
-        welcomeText.textContent = `✨ Вітаємо у системі, ${login}!`;
-        loginButton.parentElement.appendChild(welcomeText);
-    }, 6000);
-        // Зберегти логін
-        localStorage.setItem("userLogin", login);
-
-        // Завантажити дані
-        fetchUserData(login);
+    // Спробуємо завантажити дані
+    fetchUserData(login);
 });
+
 
     const addHumanButton = document.querySelector(".button-add-human");
     const formContainer = document.querySelector("#form-container");
@@ -728,7 +706,7 @@ sendButton.addEventListener("click", function () {
     return;
 });
 
-const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzPAi7IAolY0c4AoggWMkYuU8PZY6UUsxk9wTymFUso1eU5b2XiyH6RW_d28UeS9QWS/exec";
+const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbykbp99gu4ayWUiF14KETSUfA1LDe79NlDWo3iQN7Pu5TNgtf1UM9m9L-tA0ewE_Id74A/exec";
 
 function sendToGoogleSheet(data) {
     const login = localStorage.getItem("userLogin");
@@ -785,25 +763,90 @@ addHumanButton.addEventListener("click", function () {
     startMessage.classList.add("hidden");
 });
 
+function sendToGoogleSheet(data) {
+    const login = localStorage.getItem("userLogin");
+    data.login = login;
+    if (!data.id) data.id = crypto.randomUUID(); // або Date.now().toString()
 
+    const formData = new FormData();
+    for (const key in data) {
+        formData.append(key, data[key]);
+    }
+
+    fetch(GOOGLE_SCRIPT_URL, {
+        method: "POST",
+        body: formData,
+        mode: "no-cors"
+    }).then(() => {
+        console.log("✅ Дані збережено:", data);
+    }).catch(err => {
+        console.error("❌ Помилка надсилання:", err);
+    });
+}
 
 function fetchUserData(login) {
     fetch(`${GOOGLE_SCRIPT_URL}?login=${login}`)
         .then(res => res.json())
         .then(data => {
+            if (!data || !Array.isArray(data) || data.length === 0) {
+                // ❌ Логін не знайдено
+                const errorMessage = document.querySelector("#custom-message-error");
+                errorMessage.classList.add("show");
+
+                setTimeout(() => {
+                    errorMessage.classList.remove("show");
+                }, 5000);
+
+                // Показати кнопку входу назад
+                const loginButton = document.querySelector("#login-button");
+                loginButton.style.display = "block";
+
+                // Сховати завантаження
+                const loadingScreen = document.getElementById("loading-screen");
+                loadingScreen.classList.add("hidden-for-loading");
+
+                return; // Зупинити виконання повністю
+            }
+
+            // ✅ Логін валідний — продовжуємо
+            localStorage.setItem("userLogin", login);
+
+            // Анімація логотипу
+            // setTimeout(() => {
+            //     restartLogoAnimation();
+            // }, 50);
+
+            // Після завантаження показати вітання
+            setTimeout(() => {
+                const loadingScreen = document.getElementById("loading-screen");
+                loadingScreen.classList.add("hidden-for-loading");
+
+                const loginButton = document.querySelector("#login-button");
+                loginButton.style.display = "none";
+
+                const welcomeText = document.createElement("div");
+                welcomeText.classList.add("welcome-message");
+                welcomeText.textContent = `✨ Вітаємо у системі, ${login}!`;
+                loginButton.parentElement.appendChild(welcomeText);
+            }, 2500);
+
+            // Створити дані
             const humanMap = new Map();
 
             data.forEach(row => {
                 const [login, name, gender, product, productName, color, quantityItems, productSize, chestSize, qualityLogo, qualityEmbroideries, id] = row;
-
+            
+                // Пропустити, якщо відсутні обовʼязкові поля (наприклад, імʼя, стать, виріб)
+                if (!name || !gender || !product || !productName) return;
+            
                 const formData = { name, gender, product, productName, color, quantityItems, productSize, chestSize, qualityLogo, qualityEmbroideries, id };
                 existingProductIds.add(id);
-
-
+            
                 const key = `${name}_${gender}`;
                 if (!humanMap.has(key)) humanMap.set(key, []);
                 humanMap.get(key).push(formData);
             });
+            
 
             humanMap.forEach((items, key) => {
                 const [firstItem, ...restItems] = items;
@@ -818,10 +861,11 @@ function fetchUserData(login) {
                 });
             });
 
+            // Показати або сховати стартове повідомлення
             const humanBlocks = document.querySelectorAll(".human-block");
+            const startMessage = document.querySelector("#start-message");
 
             if (humanBlocks.length === 0) {
-                // Показати стартове повідомлення з кнопкою
                 startMessage.classList.remove("hidden");
                 startMessage.innerHTML = `
                     <span class="message-span">👨‍🍳 Пора навести стиль на кухні! </span>
@@ -831,13 +875,12 @@ function fetchUserData(login) {
                     addHumanButton.click();
                 });
             } else {
-                // Якщо вже є учасники — сховати повідомлення
                 startMessage.classList.add("hidden");
             }
-            
         })
         .catch(err => console.error("❌ fetchUserData:", err));
 }
+
 
 function deleteFromGoogleSheet(id) {
     const login = localStorage.getItem("userLogin");

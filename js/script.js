@@ -137,6 +137,7 @@ loginButton.addEventListener("click", () => {
     const productSizeSelect = document.querySelector("#product-list-size");
     const genderSelect = document.querySelector("#gender");
     const startMessage = document.querySelector("#start-message");
+    let loginIsValid = false;
     let sizes = [];
     let oldName = "";
     let oldGender = "";
@@ -285,6 +286,12 @@ if (Array.isArray(sizesMap[selectedProduct])) {
     });
 
     saveButton.addEventListener("click", function () {
+        if (!loginIsValid) {
+            const errorMessage = document.querySelector("#custom-message-error");
+            errorMessage.classList.add("show");
+            setTimeout(() => errorMessage.classList.remove("show"), 3000);
+            return;
+        }
         const formData = getFormData();
         if (!formData) return;
     
@@ -711,6 +718,11 @@ const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxVLDLEEQtlBK
 
 function sendToGoogleSheet(data) {
     const login = localStorage.getItem("userLogin");
+    if (!loginIsValid) {
+        console.warn("🚫 Спроба збереження без валідного логіну!");
+        return;
+    }
+    
     data.login = login;
     if (!data.id) data.id = crypto.randomUUID(); // або Date.now().toString()
 
@@ -761,27 +773,53 @@ productArticle.addEventListener("change", function () {
 });
 
 addHumanButton.addEventListener("click", function () {
+    if (!loginIsValid) {
+        const errorMessage = document.querySelector("#custom-message-error");
+        errorMessage.classList.add("show");
+        setTimeout(() => errorMessage.classList.remove("show"), 3000);
+        return;
+    }
     startMessage.classList.add("hidden");
 });
 
 
 function fetchUserData(login) {
     fetch(`${GOOGLE_SCRIPT_URL}?login=${encodeURIComponent(login)}`)
-        .then(res => res.json())
-        .then(data => {
-            // навіть якщо data.length === 0 — просто нічого не показуємо, але і без помилки
+        .then(res => res.text())
+        .then(text => {
+            console.log("🔍 СЕРВЕР ВІДПОВІВ:", text);
+            let data;
+            try {
+              data = JSON.parse(text);
+            } catch (e) {
+              console.error("❌ JSON parsing error:", e);
+              return;
+            }
+
+            if (data?.error === "login_not_found") {
+                loginIsValid = false;
+
+                const errorMessage = document.querySelector("#custom-message-error");
+                errorMessage.classList.add("show");
+                setTimeout(() => errorMessage.classList.remove("show"), 4000);
+
+                document.getElementById("loading-screen").classList.add("hidden-for-loading");
+                return;
+            }
+
+            loginIsValid = true;
+            localStorage.setItem("userLogin", login);
+
+            // ⏳ Показати вітання
             setTimeout(() => {
                 document.getElementById("loading-screen").classList.add("hidden-for-loading");
                 document.getElementById("login-button").style.display = "none";
-            
+
                 const welcomeText = document.createElement("div");
                 welcomeText.classList.add("welcome-message");
                 welcomeText.textContent = `✨ Вітаємо у системі, ${login}!`;
                 document.getElementById("login-button").parentElement.appendChild(welcomeText);
-            }, 3000); // ← тут можеш ставити будь-яке число мілісекунд
-            
-
-            localStorage.setItem("userLogin", login);
+            }, 3000);
 
             const humanMap = new Map();
 
@@ -828,6 +866,7 @@ function fetchUserData(login) {
             }
         })
         .catch(err => {
+            loginIsValid = false;
             console.error("❌ fetchUserData error:", err);
         });
 }

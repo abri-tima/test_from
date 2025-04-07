@@ -341,6 +341,7 @@ if (Array.isArray(sizesMap[selectedProduct])) {
         }
     
         // Сховати форму
+        sendToGoogleSheet(formData);
         formContainer.classList.add("hidden");
         resetForm(formContainer);
     
@@ -640,73 +641,73 @@ if (Array.isArray(sizesMap[selectedProduct])) {
 
     const sendButton = document.querySelector(".button-send-form");
 
-sendButton.addEventListener("click", function () {
-    const restaurantName = document.querySelector("#rest-name").value;
-    const humanBlocks = document.querySelectorAll(".human-block");
+// sendButton.addEventListener("click", function () {
+//     const restaurantName = document.querySelector("#rest-name").value;
+//     const humanBlocks = document.querySelectorAll(".human-block");
 
-    humanBlocks.forEach(human => {
-        const nameGender = human.querySelector(".info-container-first").textContent.split("_");
-        const name = nameGender[0];
-        const gender = nameGender[1];
+//     humanBlocks.forEach(human => {
+//         const nameGender = human.querySelector(".info-container-first").textContent.split("_");
+//         const name = nameGender[0];
+//         const gender = nameGender[1];
 
-        const products = human.querySelectorAll(".info-block-product");
+//         const products = human.querySelectorAll(".info-block-product");
 
-        products.forEach(product => {
-            const id = product.dataset.id;
+//         products.forEach(product => {
+//             const id = product.dataset.id;
     
-            // Проверка: если уже есть такой ID, не отправляем
-            if (existingProductIds.has(id)) return;
+//             // Проверка: если уже есть такой ID, не отправляем
+//             if (existingProductIds.has(id)) return;
 
-            const data = {
-                restaurantName,
-                name,
-                gender,
-                product: product.querySelector(".info-product").textContent,
-                productName: product.querySelector(".info-productName").textContent,
-                color: product.querySelector(".info-color").textContent,
-                quantityItems: product.querySelector(".info-quantityItems").textContent,
-                productSize: product.querySelector(".info-productSize").textContent,
-                chestSize: product.querySelector(".info-chestSize").textContent.replace(" см", ""),
-                qualityLogo: product.querySelector(".info-qualityLogo").textContent,
-                qualityEmbroideries: product.querySelector(".info-qualityEmbroideries").textContent
-            };
+//             const data = {
+//                 restaurantName,
+//                 name,
+//                 gender,
+//                 product: product.querySelector(".info-product").textContent,
+//                 productName: product.querySelector(".info-productName").textContent,
+//                 color: product.querySelector(".info-color").textContent,
+//                 quantityItems: product.querySelector(".info-quantityItems").textContent,
+//                 productSize: product.querySelector(".info-productSize").textContent,
+//                 chestSize: product.querySelector(".info-chestSize").textContent.replace(" см", ""),
+//                 qualityLogo: product.querySelector(".info-qualityLogo").textContent,
+//                 qualityEmbroideries: product.querySelector(".info-qualityEmbroideries").textContent
+//             };
 
-            // Викликаємо функцію надсилання:
-            sendToGoogleSheet(data);
-        });
-    });
+//             // // Викликаємо функцію надсилання:
+//             // sendToGoogleSheet(data);
+//         });
+//     });
 
-    if (humanBlocks.length === 0) {
-        const successMessage = document.querySelector("#custom-message-error");
-        successMessage.classList.add("show");
-            setTimeout(() => {
-                successMessage.classList.remove("show");
-            }, 2000);
-        return;
-    } else if (humanBlocks.length >= 1) {
-        const successMessage = document.querySelector("#custom-message");
-        successMessage.classList.add("show");
-            setTimeout(() => {
-                successMessage.classList.remove("show");
-            }, 8000);
-    }
+//     if (humanBlocks.length === 0) {
+//         const successMessage = document.querySelector("#custom-message-error");
+//         successMessage.classList.add("show");
+//             setTimeout(() => {
+//                 successMessage.classList.remove("show");
+//             }, 2000);
+//         return;
+//     } else if (humanBlocks.length >= 1) {
+//         const successMessage = document.querySelector("#custom-message");
+//         successMessage.classList.add("show");
+//             setTimeout(() => {
+//                 successMessage.classList.remove("show");
+//             }, 8000);
+//     }
 
-    document.querySelectorAll(".human-block").forEach(block => block.remove());
-    startMessage.classList.remove("hidden");
-    startMessage.innerHTML = `
-        <span class="message-span">👨‍🍳 Пора навести стиль на кухні! </span>
-        Додай перший комплект, натиснувши <strong>«Додати людину» 👇</strong><br />
-    `;
-    console.log("✅ Trying to show success message");
+//     document.querySelectorAll(".human-block").forEach(block => block.remove());
+//     startMessage.classList.remove("hidden");
+//     startMessage.innerHTML = `
+//         <span class="message-span">👨‍🍳 Пора навести стиль на кухні! </span>
+//         Додай перший комплект, натиснувши <strong>«Додати людину» 👇</strong><br />
+//     `;
+//     console.log("✅ Trying to show success message");
 
-    setTimeout(() => {
-        location.reload();
-    }, 8000);
+//     setTimeout(() => {
+//         location.reload();
+//     }, 8000);
 
-    return;
-});
+//     return;
+// });
 
-const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbykbp99gu4ayWUiF14KETSUfA1LDe79NlDWo3iQN7Pu5TNgtf1UM9m9L-tA0ewE_Id74A/exec";
+const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxVLDLEEQtlBKBYOLv-jj5FEvJ5uVRgKAy0i0VsiLytZIXvV3kammuwKP62c2RvdmjR/exec";
 
 function sendToGoogleSheet(data) {
     const login = localStorage.getItem("userLogin");
@@ -763,90 +764,39 @@ addHumanButton.addEventListener("click", function () {
     startMessage.classList.add("hidden");
 });
 
-function sendToGoogleSheet(data) {
-    const login = localStorage.getItem("userLogin");
-    data.login = login;
-    if (!data.id) data.id = crypto.randomUUID(); // або Date.now().toString()
-
-    const formData = new FormData();
-    for (const key in data) {
-        formData.append(key, data[key]);
-    }
-
-    fetch(GOOGLE_SCRIPT_URL, {
-        method: "POST",
-        body: formData,
-        mode: "no-cors"
-    }).then(() => {
-        console.log("✅ Дані збережено:", data);
-    }).catch(err => {
-        console.error("❌ Помилка надсилання:", err);
-    });
-}
 
 function fetchUserData(login) {
-    fetch(`${GOOGLE_SCRIPT_URL}?login=${login}`)
+    fetch(`${GOOGLE_SCRIPT_URL}?login=${encodeURIComponent(login)}`)
         .then(res => res.json())
         .then(data => {
-            if (!data || !Array.isArray(data) || data.length === 0) {
-                // ❌ Логін не знайдено
-                const errorMessage = document.querySelector("#custom-message-error");
-                errorMessage.classList.add("show");
-
-                setTimeout(() => {
-                    errorMessage.classList.remove("show");
-                }, 5000);
-
-                // Показати кнопку входу назад
-                const loginButton = document.querySelector("#login-button");
-                loginButton.style.display = "block";
-
-                // Сховати завантаження
-                const loadingScreen = document.getElementById("loading-screen");
-                loadingScreen.classList.add("hidden-for-loading");
-
-                return; // Зупинити виконання повністю
-            }
-
-            // ✅ Логін валідний — продовжуємо
-            localStorage.setItem("userLogin", login);
-
-            // Анімація логотипу
-            // setTimeout(() => {
-            //     restartLogoAnimation();
-            // }, 50);
-
-            // Після завантаження показати вітання
+            // навіть якщо data.length === 0 — просто нічого не показуємо, але і без помилки
             setTimeout(() => {
-                const loadingScreen = document.getElementById("loading-screen");
-                loadingScreen.classList.add("hidden-for-loading");
-
-                const loginButton = document.querySelector("#login-button");
-                loginButton.style.display = "none";
-
+                document.getElementById("loading-screen").classList.add("hidden-for-loading");
+                document.getElementById("login-button").style.display = "none";
+            
                 const welcomeText = document.createElement("div");
                 welcomeText.classList.add("welcome-message");
                 welcomeText.textContent = `✨ Вітаємо у системі, ${login}!`;
-                loginButton.parentElement.appendChild(welcomeText);
-            }, 2500);
+                document.getElementById("login-button").parentElement.appendChild(welcomeText);
+            }, 3000); // ← тут можеш ставити будь-яке число мілісекунд
+            
 
-            // Створити дані
+            localStorage.setItem("userLogin", login);
+
             const humanMap = new Map();
 
             data.forEach(row => {
-                const [login, name, gender, product, productName, color, quantityItems, productSize, chestSize, qualityLogo, qualityEmbroideries, id] = row;
-            
-                // Пропустити, якщо відсутні обовʼязкові поля (наприклад, імʼя, стать, виріб)
+                const [ , name, gender, product, productName, color, quantityItems, productSize, chestSize, qualityLogo, qualityEmbroideries, id] = row;
+
                 if (!name || !gender || !product || !productName) return;
-            
+
                 const formData = { name, gender, product, productName, color, quantityItems, productSize, chestSize, qualityLogo, qualityEmbroideries, id };
                 existingProductIds.add(id);
-            
+
                 const key = `${name}_${gender}`;
                 if (!humanMap.has(key)) humanMap.set(key, []);
                 humanMap.get(key).push(formData);
             });
-            
 
             humanMap.forEach((items, key) => {
                 const [firstItem, ...restItems] = items;
@@ -861,7 +811,6 @@ function fetchUserData(login) {
                 });
             });
 
-            // Показати або сховати стартове повідомлення
             const humanBlocks = document.querySelectorAll(".human-block");
             const startMessage = document.querySelector("#start-message");
 
@@ -871,15 +820,19 @@ function fetchUserData(login) {
                     <span class="message-span">👨‍🍳 Пора навести стиль на кухні! </span>
                     Додай перший комплект, натиснувши <strong>«Додати людину» 👇</strong><br />
                 `;
-                document.getElementById("addHumanBtnInline").addEventListener("click", () => {
+                document.getElementById("addHumanBtnInline")?.addEventListener("click", () => {
                     addHumanButton.click();
                 });
             } else {
                 startMessage.classList.add("hidden");
             }
         })
-        .catch(err => console.error("❌ fetchUserData:", err));
+        .catch(err => {
+            console.error("❌ fetchUserData error:", err);
+        });
 }
+
+
 
 
 function deleteFromGoogleSheet(id) {

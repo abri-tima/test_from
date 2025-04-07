@@ -351,6 +351,7 @@ if (Array.isArray(sizesMap[selectedProduct])) {
         
             updateProductBlock(editTarget, formData);
             existingProductIds.add(formData.id);
+            sendToGoogleSheet(formData);
         } else if (editTarget && editTarget.container) {
             // Додавання виробу
             const newProduct = createProductBlock(formData);
@@ -642,6 +643,7 @@ if (Array.isArray(sizesMap[selectedProduct])) {
     
         // Остальные поля
         document.querySelector("#quality-items").value = block.querySelector(".info-quantityItems").textContent;
+        document.querySelector("#product-list-size").value = block.querySelector(".info-productSize").textContent;
         document.querySelector("#chest-size").value = block.querySelector(".info-chestSize").textContent.replace(" см", "");
         document.querySelector("#quality-logo").value = block.querySelector(".info-qualityLogo").textContent;
         document.querySelector("#quality-embroideries").value = block.querySelector(".info-qualityEmbroideries").textContent;
@@ -692,7 +694,7 @@ sendButton.addEventListener("click", function () {
             };
 
             // Викликаємо функцію надсилання:
-            // sendToGoogleSheet(data);
+            sendToGoogleSheet(data);
         });
     });
 

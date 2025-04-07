@@ -692,7 +692,7 @@ sendButton.addEventListener("click", function () {
             };
 
             // Викликаємо функцію надсилання:
-            sendToGoogleSheet(data);
+            // sendToGoogleSheet(data);
         });
     });
 

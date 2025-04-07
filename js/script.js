@@ -728,7 +728,7 @@ sendButton.addEventListener("click", function () {
     return;
 });
 
-const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbykbp99gu4ayWUiF14KETSUfA1LDe79NlDWo3iQN7Pu5TNgtf1UM9m9L-tA0ewE_Id74A/exec";
+const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzPAi7IAolY0c4AoggWMkYuU8PZY6UUsxk9wTymFUso1eU5b2XiyH6RW_d28UeS9QWS/exec";
 
 function sendToGoogleSheet(data) {
     const login = localStorage.getItem("userLogin");

@@ -427,7 +427,7 @@ if (Array.isArray(sizesMap[selectedProduct])) {
         humanBlock.classList.add("human-block");
 
         const nameBlock = document.createElement("div");
-        nameBlock.classList.add("info-block-first", "open");
+        nameBlock.classList.add("info-block-first");
         nameBlock.innerHTML = `<p><span class="info-container-first">${data.name}_${data.gender}</span></p>`;
 
         const productsContainer = document.createElement("div");

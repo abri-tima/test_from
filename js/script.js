@@ -521,6 +521,56 @@ if (Array.isArray(sizesMap[selectedProduct])) {
             
         });
 
+        const imgCont = document.createElement("div");
+        imgCont.classList.add("img-container");
+
+        const productImg = document.createElement("img");
+
+        const product = data.product;
+        const productName = normalize(data.productName);
+        const color = normalize(data.color);
+        const gender = normalizeGender(data.gender); // "male" / "female"
+        
+        // Мапа: тип виробу → папка
+        const productFolderMap = {
+            "Кітель": "kitel",
+            "Фартук": "fartuk",
+            "Взуття": "vzuttia",
+            "Поло, Футболки": "polo",
+            "Головний убір": "golovniy-ubir",
+            "Брюки": "bryuky",
+            "Світшот": "svitshot",
+            "Шкарпетки": "shkarpetky"
+        };
+        
+        const folder = productFolderMap[product] || "misc";
+        const genderSensitive = ["Кітель", "Поло, Футболки"];
+        
+        let imagePath;
+        
+        if (genderSensitive.includes(product)) {
+            imagePath = `./images/${folder}/${gender}/${productName}_${color}.jpg`;
+        } else {
+            imagePath = `./images/${folder}/${productName}_${color}.jpg`;
+        }
+
+        console.log("productName:", data.productName, "→", productName);
+        console.log("color:", data.color, "→", color);
+        console.log("gender:", data.gender, "→", gender);
+        console.log("path:", imagePath);
+        
+        
+        productImg.src = imagePath;
+        productImg.alt = `${data.productName} - ${data.color}`;
+        productImg.classList.add("product-image");
+        
+        productImg.onerror = function () {
+            this.src = './images/placeholder.jpg';
+        };
+        imgCont.appendChild(productImg);
+        block.querySelector(".info-block-second").appendChild(imgCont);
+        
+
         return block;
     }
 
@@ -819,7 +869,7 @@ function fetchUserData(login) {
                 welcomeText.classList.add("welcome-message");
                 welcomeText.textContent = `✨ Вітаємо у системі, ${login}!`;
                 document.getElementById("login-button").parentElement.appendChild(welcomeText);
-            }, 3000);
+            }, 2500);
 
             const humanMap = new Map();
 
@@ -916,5 +966,52 @@ document.addEventListener("click", function (e) {
       }
     }
   });
+
+  function normalize(str) {
+    return str
+        .toLowerCase()
+        .replaceAll(" ", "_")
+        .replace(/а/g, "a")
+        .replace(/б/g, "b")
+        .replace(/в/g, "v")
+        .replace(/г/g, "h")
+        .replace(/ґ/g, "g")
+        .replace(/д/g, "d")
+        .replace(/е/g, "e")
+        .replace(/є/g, "ie")
+        .replace(/ж/g, "zh")
+        .replace(/з/g, "z")
+        .replace(/и/g, "y")
+        .replace(/і/g, "i")
+        .replace(/ї/g, "i")
+        .replace(/й/g, "i")
+        .replace(/к/g, "k")
+        .replace(/л/g, "l")
+        .replace(/м/g, "m")
+        .replace(/н/g, "n")
+        .replace(/о/g, "o")
+        .replace(/п/g, "p")
+        .replace(/р/g, "r")
+        .replace(/с/g, "s")
+        .replace(/т/g, "t")
+        .replace(/у/g, "u")
+        .replace(/ф/g, "f")
+        .replace(/х/g, "kh")
+        .replace(/ц/g, "ts")
+        .replace(/ч/g, "ch")
+        .replace(/ш/g, "sh")
+        .replace(/щ/g, "shch")
+        .replace(/ю/g, "iu")
+        .replace(/я/g, "ia")
+        .replace(/ь/g, "")
+        .replace(/’/g, "")
+        .replace(/[^\w]/g, "");
+}
+
+
+function normalizeGender(gender) {
+    return gender === "Чол" ? "male" : gender === "Жін" ? "female" : "";
+}
+
 
 });

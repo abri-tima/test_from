@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", function () {
-    const colorMapByProduct = {
+const colorMapByProduct = {
       "Кітель": {
         "ALICANTE": ["Білий", "Чорний"],
         "CAPRI": ["Білий", "Чорний"],
@@ -796,8 +796,31 @@ productArticleSelect.addEventListener("change", function () {
     const sizesMap = {
         "Кітель": ["Не знаю", "42", "44", "46", "48", "50", "52", "54", "56", "58", "60", "62"],
         "Брюки": ["Не знаю", "42", "44", "46", "48", "50", "52", "54", "56", "58", "60", "62"],
-        "Фартук": ["M", "L"],
-        "Головний убір": ["Немає"],
+        "Фартук":{
+            "BOSTON": ["M", "L"],
+            "DETROIT": ["M", "L"],
+            "SIENA": ["M", "L"],
+            "COLORADO": ["0"],
+            "ASTANA": ["0"],
+            "LONDON": ["0"],
+            "MANILA": ["0"],
+            "VILNIUS": ["0"],
+            "COLOMBO": ["0"],
+            "OTTAWA": ["0"],
+            "MONACO": ["0"],
+            "ROME": ["0"],
+            "VIRGINIA": ["0"],
+            "TENERIFE": ["0"],
+            "SAVANNA": ["0"],
+            "SPARKS": ["0"],
+            "ALASKA": ["0"],
+            "BEND": ["0"],
+            "VANCOUVER": ["0"],
+            "OREGON": ["0"],
+            "MONTERREY": ["0"],
+            "COPENHAGEN": ["0"]
+        },
+        "Головний убір": ["0"],
         "Поло, Футболки": {
             "Футболка NEVADA": ["XS", "S", "M", "L", "XL", "XXL"],
             "Поло NEW-YORK": {
@@ -1497,7 +1520,7 @@ function fetchUserData(login) {
             data.forEach(row => {
                 const [ , name, gender, product, productName, color, quantityItems, productSize, chestSize, qualityLogo, qualityEmbroideries, id] = row;
 
-                if (!name || !gender || !product || !productName) return;
+                if (!name || gender === "" || !product || !productName) return;
 
                 const formData = { name, gender, product, productName, color, quantityItems, productSize, chestSize, qualityLogo, qualityEmbroideries, id };
                 existingProductIds.add(id);

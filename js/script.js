@@ -33,7 +33,7 @@ const colorMapByProduct = {
         "GENEVA": ["Чорний"],
         "KANZAS": ["Чорний"],
         "BREST": ["Чорний"],
-        "BAZEL": ["Чорний"],
+        "BASEL": ["Чорний"],
         "KENT": ["Чорний"],
         "CHICO": ["Клітка"],
         "LINCOLN": ["Клітка"],
@@ -733,7 +733,7 @@ loginButton.addEventListener("click", () => {
         "SANTORINI"
     ],
     "Брюки": [
-        "GENEVA", "KANZAS", "BREST", "CARY", "CHICO", "BALTIMOR", "BAZEL", "LINCOLN", "ARIZONA", "KENT",
+        "GENEVA", "KANZAS", "BREST", "CARY", "CHICO", "BALTIMOR", "BASEL", "LINCOLN", "ARIZONA", "KENT",
         "TURIN", "BOGOTA", "AMSTERDAM"
     ],
     "Фартук": [

@@ -1128,7 +1128,14 @@ if (Array.isArray(sizesMap[selectedProduct])) {
                 <p class="hidden">Колір: <span class="info-color">${data.color}</span></p>
                 <p class="hidden">Кількість: <span class="info-quantityItems">${data.quantityItems}</span></p>
                 <p class="info-productSize-cont">Розмір: <span class="info-productSize">${data.productSize}</span></p>
-                <p>ОГ/ОС: <span class="info-chestSize">${data.chestSize} см</span></p>
+                <p>
+                    ${data.product === "Кітель" 
+                    ? "ОГ" 
+                    : data.product === "Брюки" 
+                    ? "ОС" 
+                    : "Обхвата немає"}: 
+                    <span class="info-chestSize">${data.product === "Кітель" || data.product === "Брюки" ? data.chestSize + " см" : "0"}</span>
+                    </p>
                 <p>Вишивка лого - <span class="info-qualityLogo">${data.qualityLogo}</span></p>
                 <p>Вишивка імені - <span class="info-qualityEmbroideries">${data.qualityEmbroideries}</span></p>
                 <div class="button-container">

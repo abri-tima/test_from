@@ -469,7 +469,7 @@ const imageURLMap = {
     },
     "SAVANNA": {
         "Блакитний": "https://i.abrikos.com/6626-home_default_retina/fartuk-savannablue.webp",
-        "Світло-сірий": "https://i.abrikos.com/6627-home_default_retina/fartuk-savannagray.webp"
+        "Сірий": "https://i.abrikos.com/6627-home_default_retina/fartuk-savannagray.webp"
     },
     "SPARKS": {
         "Чорно-сірий": "https://i.abrikos.com/7542-home_default_retina/fartuk-sparksblack.webp",
@@ -781,6 +781,42 @@ productArticleSelect.addEventListener("change", function () {
     const selectedArticle = productArticleSelect.value;
     const gender = genderSelect.value;
 
+    const genderProductSelect = document.querySelector("#gender-product-list");
+
+genderProductSelect.innerHTML = `<option value=""></option>`; // Очистити
+
+if (selectedProduct === "Кітель") {
+    ["Чол", "Жін"].forEach(g => {
+        const opt = document.createElement("option");
+        opt.value = g;
+        opt.textContent = g;
+        genderProductSelect.appendChild(opt);
+    });
+} else if (selectedProduct === "Поло, Футболки") {
+    if (selectedArticle === "Футболка NEVADA") {
+        const opt = document.createElement("option");
+        opt.value = "Унісекс";
+        opt.textContent = "Унісекс";
+        genderProductSelect.appendChild(opt);
+    } else if (selectedArticle === "Поло NEW-YORK" || selectedArticle === "Поло DUBLIN") {
+        ["Чол", "Жін"].forEach(g => {
+            const opt = document.createElement("option");
+            opt.value = g;
+            opt.textContent = g;
+            genderProductSelect.appendChild(opt);
+        });
+    }
+} else if (
+    selectedProduct === "Фартук" ||
+    selectedProduct === "Брюки" ||
+    selectedProduct === "Головний убір"
+) {
+    const opt = document.createElement("option");
+    opt.value = "Унісекс";
+    opt.textContent = "Унісекс";
+    genderProductSelect.appendChild(opt);
+}
+
     // --- Колір ---
     productColor.innerHTML = `<option value=""></option>`;
     if (colorMapByProduct[selectedProduct] && colorMapByProduct[selectedProduct][selectedArticle]) {
@@ -800,27 +836,27 @@ productArticleSelect.addEventListener("change", function () {
             "BOSTON": ["M", "L"],
             "DETROIT": ["M", "L"],
             "SIENA": ["M", "L"],
-            "COLORADO": ["0"],
-            "ASTANA": ["0"],
-            "LONDON": ["0"],
-            "MANILA": ["0"],
-            "VILNIUS": ["0"],
-            "COLOMBO": ["0"],
-            "OTTAWA": ["0"],
-            "MONACO": ["0"],
-            "ROME": ["0"],
-            "VIRGINIA": ["0"],
-            "TENERIFE": ["0"],
-            "SAVANNA": ["0"],
-            "SPARKS": ["0"],
-            "ALASKA": ["0"],
-            "BEND": ["0"],
-            "VANCOUVER": ["0"],
-            "OREGON": ["0"],
-            "MONTERREY": ["0"],
-            "COPENHAGEN": ["0"]
+            "COLORADO": ["ONE SIZE"],
+            "ASTANA": ["ONE SIZE"],
+            "LONDON": ["ONE SIZE"],
+            "MANILA": ["ONE SIZE"],
+            "VILNIUS": ["ONE SIZE"],
+            "COLOMBO": ["ONE SIZE"],
+            "OTTAWA": ["ONE SIZE"],
+            "MONACO": ["ONE SIZE"],
+            "ROME": ["ONE SIZE"],
+            "VIRGINIA": ["ONE SIZE"],
+            "TENERIFE": ["ONE SIZE"],
+            "SAVANNA": ["ONE SIZE"],
+            "SPARKS": ["ONE SIZE"],
+            "ALASKA": ["ONE SIZE"],
+            "BEND": ["ONE SIZE"],
+            "VANCOUVER": ["ONE SIZE"],
+            "OREGON": ["ONE SIZE"],
+            "MONTERREY": ["ONE SIZE"],
+            "COPENHAGEN": ["ONE SIZE"]
         },
-        "Головний убір": ["0"],
+        "Головний убір": ["ONE SIZE"],
         "Поло, Футболки": {
             "Футболка NEVADA": ["XS", "S", "M", "L", "XL", "XXL"],
             "Поло NEW-YORK": {
@@ -891,6 +927,8 @@ if (Array.isArray(sizesMap[selectedProduct])) {
     });
 
     saveButton.addEventListener("click", function () {
+        let wasOpen = false;
+        let container = null;
         if (!loginIsValid) {
             const errorMessage = document.querySelector("#custom-message-error");
             errorMessage.classList.add("show");
@@ -903,8 +941,6 @@ if (Array.isArray(sizesMap[selectedProduct])) {
         if (editTarget && editTarget instanceof Element) {
             const oldName = editTarget.querySelector(".info-name")?.textContent;
             const oldGender = editTarget.querySelector(".info-gender")?.textContent;
-            const nameChanged = oldName !== formData.name;
-            const genderChanged = oldGender !== formData.gender;
         
             document.querySelectorAll(".info-block-product").forEach(block => {
                 const currentName = block.querySelector(".info-name")?.textContent;
@@ -935,17 +971,36 @@ if (Array.isArray(sizesMap[selectedProduct])) {
                         oldName,
                         oldGender
                     };
-                    sendToGoogleSheet(updateData);
                 }
             });
         
             updateProductBlock(editTarget, formData);
             existingProductIds.add(formData.id);
             sendToGoogleSheet(formData);
+            
+            if (editTarget && editTarget.container) {
+                container = editTarget.container;
+                const humanBlock = container.closest(".human-block");
+                const blockTitle = humanBlock?.querySelector(".info-block-first");
+                wasOpen = blockTitle?.classList.contains("open");
+            }
         } else if (editTarget && editTarget.container) {
             // Додавання виробу
             const newProduct = createProductBlock(formData);
-            editTarget.container.appendChild(newProduct);
+            const container = editTarget.container;
+
+            container.appendChild(newProduct);
+
+            const header = container.previousElementSibling;
+            if (header && !header.classList.contains("open")) {
+                header.classList.add("open");
+            }
+
+            // Оновити max-height, щоб блок одразу відкрився
+            setTimeout(() => {
+                container.style.maxHeight = container.scrollHeight + "px";
+                container.style.opacity = "1";
+            }, 50);
         } else {
             // Додавання нової людини
             createHumanBlock(formData);
@@ -968,6 +1023,7 @@ if (Array.isArray(sizesMap[selectedProduct])) {
     function getFormData() {
         const name = document.querySelector(".input-name-human").value;
         const gender = document.querySelector("#gender").value;
+        const genderProduct = document.querySelector("#gender-product-list").value;
         const product = document.querySelector("#product-list").value;
         const productName = document.querySelector("#product-list-article").value;
         const color = document.querySelector("#product-list-color").value;
@@ -994,7 +1050,7 @@ if (Array.isArray(sizesMap[selectedProduct])) {
         }
 
 
-        return { name, gender, product, productName, color, quantityItems, productSize, chestSize, qualityLogo, qualityEmbroideries, id: productId };
+        return { name, gender, genderProduct, product, productName, color, quantityItems, productSize, chestSize, qualityLogo, qualityEmbroideries, id: productId };
     }
 
     const cancelButton = document.querySelector("#cancel-button");
@@ -1065,12 +1121,20 @@ if (Array.isArray(sizesMap[selectedProduct])) {
                 <p><span class="info-container-last">${data.product} ${data.productName} - ${data.color} - ${data.quantityItems} шт</span></p>
                 <p class="hidden">Ім'я: <span class="info-name">${data.name}</span></p>
                 <p class="hidden">Стать: <span class="info-gender">${data.gender}</span></p>
+                <p class="hidden">Стать виробу: <span class="info-genderProduct">${data.genderProduct}</span></p>
                 <p class="hidden">Виріб: <span class="info-product">${data.product}</span></p>
                 <p class="hidden">Назва виробу: <span class="info-productName">${data.productName}</span></p>
                 <p class="hidden">Колір: <span class="info-color">${data.color}</span></p>
                 <p class="hidden">Кількість: <span class="info-quantityItems">${data.quantityItems}</span></p>
                 <p class="info-productSize-cont">Розмір: <span class="info-productSize">${data.productSize}</span></p>
-                <p>ОГ/ОС: <span class="info-chestSize">${data.chestSize} см</span></p>
+                <p>
+                    ${data.product === "Кітель" 
+                    ? "ОГ" 
+                    : data.product === "Брюки" 
+                    ? "ОС" 
+                    : "Обхвата немає"}: 
+                    <span class="info-chestSize">${data.product === "Кітель" || data.product === "Брюки" ? data.chestSize + " см" : "0"}</span>
+                    </p>
                 <p>Вишивка лого - <span class="info-qualityLogo">${data.qualityLogo}</span></p>
                 <p>Вишивка імені - <span class="info-qualityEmbroideries">${data.qualityEmbroideries}</span></p>
                 <div class="button-container">
@@ -1241,6 +1305,7 @@ if (Array.isArray(sizesMap[selectedProduct])) {
     function fillFormWithData(block) {
         const name = block.querySelector(".info-name").textContent;
         const gender = block.querySelector(".info-gender").textContent;
+        const genderProduct = block.querySelector(".info-genderProduct")?.textContent || "";
         const product = block.querySelector(".info-product").textContent;
         const productName = block.querySelector(".info-productName").textContent;
         const color = block.querySelector(".info-color").textContent;
@@ -1260,6 +1325,25 @@ if (Array.isArray(sizesMap[selectedProduct])) {
             productArticleSelect.appendChild(option);
         });
         productArticleSelect.value = productName;
+        productArticleSelect.dispatchEvent(new Event("change"));
+        
+        // 🕐 Дати час оновитись select-ам
+        setTimeout(() => {
+            // Стать виробу
+            document.querySelector("#gender-product-list").value = genderProduct;
+
+            // 🔁 Повторно тригеримо, щоб оновити розміри після вибору статі виробу
+            document.querySelector("#gender-product-list").dispatchEvent(new Event("change"));
+        
+            // Колір
+            productColor.value = color;
+        
+            setTimeout(() => {
+                productSizeSelect.value = size;
+            }, 50);
+        }, 100);
+        
+        
     
         // Обновить список кольорів
         productColor.innerHTML = `<option value=""></option>`;
@@ -1278,7 +1362,30 @@ if (Array.isArray(sizesMap[selectedProduct])) {
         const sizesMap = {
             "Кітель": ["Не знаю", "42", "44", "46", "48", "50", "52", "54", "56", "58", "60", "62"],
             "Брюки": ["Не знаю", "42", "44", "46", "48", "50", "52", "54", "56", "58", "60", "62"],
-            "Фартук": ["M", "L"],
+            "Фартук": {
+                "BOSTON": ["M", "L"],
+                "DETROIT": ["M", "L"],
+                "SIENA": ["M", "L"],
+                "COLORADO": ["ONE SIZE"],
+                "ASTANA": ["ONE SIZE"],
+                "LONDON": ["ONE SIZE"],
+                "MANILA": ["ONE SIZE"],
+                "VILNIUS": ["ONE SIZE"],
+                "COLOMBO": ["ONE SIZE"],
+                "OTTAWA": ["ONE SIZE"],
+                "MONACO": ["ONE SIZE"],
+                "ROME": ["ONE SIZE"],
+                "VIRGINIA": ["ONE SIZE"],
+                "TENERIFE": ["ONE SIZE"],
+                "SAVANNA": ["ONE SIZE"],
+                "SPARKS": ["ONE SIZE"],
+                "ALASKA": ["ONE SIZE"],
+                "BEND": ["ONE SIZE"],
+                "VANCOUVER": ["ONE SIZE"],
+                "OREGON": ["ONE SIZE"],
+                "MONTERREY": ["ONE SIZE"],
+                "COPENHAGEN": ["ONE SIZE"]
+                },
             "Головний убір": ["Немає"],
             "Поло, Футболки": {
                 "Футболка NEVADA": ["XS", "S", "M", "L", "XL", "XXL"],
@@ -1327,6 +1434,7 @@ if (Array.isArray(sizesMap[selectedProduct])) {
         document.querySelector("#chest-size").value = block.querySelector(".info-chestSize").textContent.replace(" см", "");
         document.querySelector("#quality-logo").value = block.querySelector(".info-qualityLogo").textContent;
         document.querySelector("#quality-embroideries").value = block.querySelector(".info-qualityEmbroideries").textContent;
+        document.querySelector("#gender-product-list").value = genderProduct;
     
         oldName = block.querySelector(".info-name").textContent;
         oldGender = block.querySelector(".info-gender").textContent;
@@ -1518,11 +1626,11 @@ function fetchUserData(login) {
             const humanMap = new Map();
 
             data.forEach(row => {
-                const [ , name, gender, product, productName, color, quantityItems, productSize, chestSize, qualityLogo, qualityEmbroideries, id] = row;
+                const [ , name, gender, genderProduct ,product, productName, color, quantityItems, productSize, chestSize, qualityLogo, qualityEmbroideries, id] = row;
 
                 if (!name || gender === "" || !product || !productName) return;
 
-                const formData = { name, gender, product, productName, color, quantityItems, productSize, chestSize, qualityLogo, qualityEmbroideries, id };
+                const formData = { name, gender, genderProduct, product, productName, color, quantityItems, productSize, chestSize, qualityLogo, qualityEmbroideries, id };
                 existingProductIds.add(id);
 
                 const key = `${name}_${gender}`;

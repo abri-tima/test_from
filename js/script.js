@@ -469,7 +469,7 @@ const imageURLMap = {
     },
     "SAVANNA": {
         "Блакитний": "https://i.abrikos.com/6626-home_default_retina/fartuk-savannablue.webp",
-        "Світло-сірий": "https://i.abrikos.com/6627-home_default_retina/fartuk-savannagray.webp"
+        "Сірий": "https://i.abrikos.com/6627-home_default_retina/fartuk-savannagray.webp"
     },
     "SPARKS": {
         "Чорно-сірий": "https://i.abrikos.com/7542-home_default_retina/fartuk-sparksblack.webp",
@@ -971,7 +971,6 @@ if (Array.isArray(sizesMap[selectedProduct])) {
                         oldName,
                         oldGender
                     };
-                    sendToGoogleSheet(updateData);
                 }
             });
         
@@ -1326,6 +1325,25 @@ if (Array.isArray(sizesMap[selectedProduct])) {
             productArticleSelect.appendChild(option);
         });
         productArticleSelect.value = productName;
+        productArticleSelect.dispatchEvent(new Event("change"));
+        
+        // 🕐 Дати час оновитись select-ам
+        setTimeout(() => {
+            // Стать виробу
+            document.querySelector("#gender-product-list").value = genderProduct;
+
+            // 🔁 Повторно тригеримо, щоб оновити розміри після вибору статі виробу
+            document.querySelector("#gender-product-list").dispatchEvent(new Event("change"));
+        
+            // Колір
+            productColor.value = color;
+        
+            setTimeout(() => {
+                productSizeSelect.value = size;
+            }, 50);
+        }, 100);
+        
+        
     
         // Обновить список кольорів
         productColor.innerHTML = `<option value=""></option>`;
@@ -1344,7 +1362,30 @@ if (Array.isArray(sizesMap[selectedProduct])) {
         const sizesMap = {
             "Кітель": ["Не знаю", "42", "44", "46", "48", "50", "52", "54", "56", "58", "60", "62"],
             "Брюки": ["Не знаю", "42", "44", "46", "48", "50", "52", "54", "56", "58", "60", "62"],
-            "Фартук": ["M", "L"],
+            "Фартук": {
+                "BOSTON": ["M", "L"],
+                "DETROIT": ["M", "L"],
+                "SIENA": ["M", "L"],
+                "COLORADO": ["ONE SIZE"],
+                "ASTANA": ["ONE SIZE"],
+                "LONDON": ["ONE SIZE"],
+                "MANILA": ["ONE SIZE"],
+                "VILNIUS": ["ONE SIZE"],
+                "COLOMBO": ["ONE SIZE"],
+                "OTTAWA": ["ONE SIZE"],
+                "MONACO": ["ONE SIZE"],
+                "ROME": ["ONE SIZE"],
+                "VIRGINIA": ["ONE SIZE"],
+                "TENERIFE": ["ONE SIZE"],
+                "SAVANNA": ["ONE SIZE"],
+                "SPARKS": ["ONE SIZE"],
+                "ALASKA": ["ONE SIZE"],
+                "BEND": ["ONE SIZE"],
+                "VANCOUVER": ["ONE SIZE"],
+                "OREGON": ["ONE SIZE"],
+                "MONTERREY": ["ONE SIZE"],
+                "COPENHAGEN": ["ONE SIZE"]
+                },
             "Головний убір": ["Немає"],
             "Поло, Футболки": {
                 "Футболка NEVADA": ["XS", "S", "M", "L", "XL", "XXL"],

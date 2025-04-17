@@ -765,15 +765,15 @@ productSelect.addEventListener("change", function () {
     const selectedProduct = this.value;
     const options = productArticlesMap[selectedProduct] || [];
 
-    productArticleSelect.innerHTML = ``;
+    productArticleSelect.innerHTML = `<option value=""></option>`;
     options.forEach(article => {
         const option = document.createElement("option");
         option.value = article;
         option.textContent = article;
         productArticleSelect.appendChild(option);
     });
-    productColor.innerHTML = ``;
-    productSizeSelect.innerHTML = ``;
+    productColor.innerHTML = `<option value=""></option>`;
+    productSizeSelect.innerHTML = `<option value=""></option>`;
 });
 
 productArticleSelect.addEventListener("change", function () {
@@ -783,7 +783,7 @@ productArticleSelect.addEventListener("change", function () {
 
     const genderProductSelect = document.querySelector("#gender-product-list");
 
-genderProductSelect.innerHTML = ``; // Очистити
+genderProductSelect.innerHTML = `<option value=""></option>`; // Очистити
 
 if (selectedProduct === "Кітель") {
     ["Чол", "Жін"].forEach(g => {
@@ -818,7 +818,7 @@ if (selectedProduct === "Кітель") {
 }
 
     // --- Колір ---
-    productColor.innerHTML = ``;
+    productColor.innerHTML = `<option value=""></option>`;
     if (colorMapByProduct[selectedProduct] && colorMapByProduct[selectedProduct][selectedArticle]) {
         colorMapByProduct[selectedProduct][selectedArticle].forEach(color => {
             const option = document.createElement("option");
@@ -879,7 +879,7 @@ if (selectedProduct === "Кітель") {
         "Шкарпетки": ["36-40", "41-45"]
     };
 
-    productSizeSelect.innerHTML = ``;
+    productSizeSelect.innerHTML = `<option value=""></option>`;
     sizes = [];
 
 if (Array.isArray(sizesMap[selectedProduct])) {
@@ -1317,7 +1317,7 @@ if (Array.isArray(sizesMap[selectedProduct])) {
         // Обновить список артикулів
         productSelect.value = product;
         const articleOptions = productArticlesMap[product] || [];
-        productArticleSelect.innerHTML = ``;
+        productArticleSelect.innerHTML = `<option value=""></option>`;
         articleOptions.forEach(article => {
             const option = document.createElement("option");
             option.value = article;
@@ -1346,7 +1346,7 @@ if (Array.isArray(sizesMap[selectedProduct])) {
         
     
         // Обновить список кольорів
-        productColor.innerHTML = ``;
+        productColor.innerHTML = `<option value=""></option>`;
         const colors = colorMapByProduct[product]?.[productName] || [];
         colors.forEach(c => {
             const option = document.createElement("option");
@@ -1357,7 +1357,7 @@ if (Array.isArray(sizesMap[selectedProduct])) {
         productColor.value = color;
     
         // Обновить список розмірів
-        productSizeSelect.innerHTML = `<`;
+        productSizeSelect.innerHTML = `<option value=""></option>`;
         let sizes = [];
         const sizesMap = {
             "Кітель": ["Не знаю", "42", "44", "46", "48", "50", "52", "54", "56", "58", "60", "62"],
@@ -1558,7 +1558,7 @@ productArticle.addEventListener("change", function () {
     const selectedProduct = productList.value;
     const selectedArticle = productArticle.value;
 
-    productColor.innerHTML = ``;
+    productColor.innerHTML = `<option value=""></option>`;
 
     if (
         colorMapByProduct[selectedProduct] &&

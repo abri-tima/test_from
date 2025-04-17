@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Guides" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 82.79 76.29">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #ec6707;
+      }
+    </style>
+  </defs>
+  <circle class="cls-1" cx="41.57" cy="26.69" r="26.69"/>
+  <rect class="cls-1" x="37.22" y="52.96" width="8.35" height="23.33"/>
+  <rect class="cls-1" x="0" y="67.36" width="82.79" height="8.92" rx="4.46" ry="4.46"/>
+</svg>

@@ -711,6 +711,7 @@ loginButton.addEventListener("click", () => {
 
 
     const addHumanButton = document.querySelector(".button-add-human");
+    addHumanButton.style.display = "none";
     const formContainer = document.querySelector("#form-container");
     const saveButton = document.querySelector(".button-save-form");
     // списки с продуктами(список с названиеми продуктов)
@@ -1622,6 +1623,7 @@ function fetchUserData(login) {
                 welcomeText.textContent = `✨ Вітаємо у системі, ${login}!`;
                 document.getElementById("login-button").parentElement.appendChild(welcomeText);
             }, 2500);
+            addHumanButton.style.display = "inline-block";
 
             const humanMap = new Map();
 

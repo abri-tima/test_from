@@ -286,7 +286,8 @@ input, select {
 .button-add-human:hover,
 .button-send-form:hover,
 .button-all:hover,
-.button-login-form:hover {
+.button-login-form:hover,
+.button-cancel-form:hover {
     background-color: #BC5100;
 }
 
@@ -294,7 +295,8 @@ input, select {
 .button-add-human:focus,
 .button-send-form:focus,
 .button-all:focus,
-.button-login-form:focus {
+.button-login-form:focus,
+.button-cancel-form:focus {
     background-color: #BC5100;
 }
 
@@ -302,7 +304,8 @@ input, select {
 .button-add-human:active,
 .button-send-form:active,
 .button-all:active,
-.button-login-form:active {
+.button-login-form:active,
+.button-cancel-form:active {
     background-color: #EE6700;
     transition: none;   
 }

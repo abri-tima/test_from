@@ -116,7 +116,7 @@ const imageURLMap = {
         "Синій": "https://i.abrikos.com/7177-home_default_retina/kitel-muzhskoj-clovis.jpg"
       },
       "Жін": {
-        "Білий": "https://i.abrikos.com/6737-home_default_retina/kitel-zhenskij-clovis.webpp",
+        "Білий": "https://i.abrikos.com/6737-home_default_retina/kitel-zhenskij-clovis.webp",
         "Чорний": "https://i.abrikos.com/7182-home_default_retina/kitel-zhenskij-clovis.jpg",
         "Сірий": "https://i.abrikos.com/7184-home_default_retina/kitel-zhenskij-clovis.jpg",
         "Синій": "https://i.abrikos.com/7186-home_default_retina/kitel-zhenskij-clovis.jpg"
@@ -711,6 +711,7 @@ loginButton.addEventListener("click", () => {
 
 
     const addHumanButton = document.querySelector(".button-add-human");
+    addHumanButton.style.display = "none";
     const formContainer = document.querySelector("#form-container");
     const saveButton = document.querySelector(".button-save-form");
     // списки с продуктами(список с названиеми продуктов)
@@ -765,15 +766,15 @@ productSelect.addEventListener("change", function () {
     const selectedProduct = this.value;
     const options = productArticlesMap[selectedProduct] || [];
 
-    productArticleSelect.innerHTML = `<option value=""></option>`;
+    productArticleSelect.innerHTML = `<option value="" disabled selected hidden></option>`;
     options.forEach(article => {
         const option = document.createElement("option");
         option.value = article;
         option.textContent = article;
         productArticleSelect.appendChild(option);
     });
-    productColor.innerHTML = `<option value=""></option>`;
-    productSizeSelect.innerHTML = `<option value=""></option>`;
+    productColor.innerHTML = `<option value="" disabled selected hidden></option>`;
+    productSizeSelect.innerHTML = `<option value="" disabled selected hidden></option>`;
 });
 
 productArticleSelect.addEventListener("change", function () {
@@ -783,7 +784,7 @@ productArticleSelect.addEventListener("change", function () {
 
     const genderProductSelect = document.querySelector("#gender-product-list");
 
-genderProductSelect.innerHTML = `<option value=""></option>`; // Очистити
+genderProductSelect.innerHTML = `<option value="" disabled selected hidden></option>`; // Очистити
 
 if (selectedProduct === "Кітель") {
     ["Чол", "Жін"].forEach(g => {
@@ -818,7 +819,7 @@ if (selectedProduct === "Кітель") {
 }
 
     // --- Колір ---
-    productColor.innerHTML = `<option value=""></option>`;
+    productColor.innerHTML = `<option value="" disabled selected hidden></option>`;
     if (colorMapByProduct[selectedProduct] && colorMapByProduct[selectedProduct][selectedArticle]) {
         colorMapByProduct[selectedProduct][selectedArticle].forEach(color => {
             const option = document.createElement("option");
@@ -879,7 +880,7 @@ if (selectedProduct === "Кітель") {
         "Шкарпетки": ["36-40", "41-45"]
     };
 
-    productSizeSelect.innerHTML = `<option value=""></option>`;
+    productSizeSelect.innerHTML = `<option value="" disabled selected hidden></option>`;
     sizes = [];
 
 if (Array.isArray(sizesMap[selectedProduct])) {
@@ -1317,7 +1318,7 @@ if (Array.isArray(sizesMap[selectedProduct])) {
         // Обновить список артикулів
         productSelect.value = product;
         const articleOptions = productArticlesMap[product] || [];
-        productArticleSelect.innerHTML = `<option value=""></option>`;
+        productArticleSelect.innerHTML = `<option value="" disabled selected hidden></option>`;
         articleOptions.forEach(article => {
             const option = document.createElement("option");
             option.value = article;
@@ -1346,7 +1347,7 @@ if (Array.isArray(sizesMap[selectedProduct])) {
         
     
         // Обновить список кольорів
-        productColor.innerHTML = `<option value=""></option>`;
+        productColor.innerHTML = `<option value="" disabled selected hidden></option>`;
         const colors = colorMapByProduct[product]?.[productName] || [];
         colors.forEach(c => {
             const option = document.createElement("option");
@@ -1357,7 +1358,7 @@ if (Array.isArray(sizesMap[selectedProduct])) {
         productColor.value = color;
     
         // Обновить список розмірів
-        productSizeSelect.innerHTML = `<option value=""></option>`;
+        productSizeSelect.innerHTML = `<option value="" disabled selected hidden></option>`;
         let sizes = [];
         const sizesMap = {
             "Кітель": ["Не знаю", "42", "44", "46", "48", "50", "52", "54", "56", "58", "60", "62"],
@@ -1558,7 +1559,7 @@ productArticle.addEventListener("change", function () {
     const selectedProduct = productList.value;
     const selectedArticle = productArticle.value;
 
-    productColor.innerHTML = `<option value=""></option>`;
+    productColor.innerHTML = `<option value="" disabled selected hidden></option>`;
 
     if (
         colorMapByProduct[selectedProduct] &&
@@ -1622,6 +1623,7 @@ function fetchUserData(login) {
                 welcomeText.textContent = `✨ Вітаємо у системі, ${login}!`;
                 document.getElementById("login-button").parentElement.appendChild(welcomeText);
             }, 2500);
+            addHumanButton.style.display = "inline-block";
 
             const humanMap = new Map();
 

@@ -365,9 +365,9 @@ input, select {
 
 .window-info {
     background-color: #DCDCDC;
-    padding: 10px 14px;
-    margin-left: 10px;
-    margin-right: 10px;
+    padding: 10px 3px;
+    margin-left: 1px;
+    margin-right: 1px;
     border: 2px solid rgb(67, 65, 66);
     border-radius: 23px;
 
@@ -671,6 +671,14 @@ background: url(../Vectors/arrow.svg);
     visibility: hidden;
     pointer-events: none;
     transition: opacity 0.5s ease, visibility 0.5s ease;
+}
+
+@media (min-width: 420px) {
+    .window-info {
+        margin-right: 10px;
+        margin-left: 10px;
+        padding: 10px 8px;
+    }
 }
 
 @media (min-width: 1024px) {

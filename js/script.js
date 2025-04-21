@@ -76,7 +76,7 @@ const colorMapByProduct = {
         "Кепка GRANADA": ["Хакі"],
         "Кепка PALERMO": ["Чорний", "Сірий"],
         "Кепка RIMINI": ["Білий", "Чорний", "Сірий", "Синій"],
-        "Панама HONG KONG": ["Темний-беж", "Сірий", "Помаранчевий"],
+        "Панама HONG KONG": ["Бежевий", "Сірий", "Помаранчевий"],
         "Таблетка KABUL": ["Чорний", "Білий"],
         "Гриб PARIS": ["Чорний", "Білий"]
     },
@@ -640,7 +640,7 @@ const imageURLMap = {
         "Синій": "https://i.abrikos.com/5876-home_default_retina/kepka-22050004.jpg"
     },
     "Панама HONG KONG": {
-        "Темний-беж": "https://i.abrikos.com/1137-home_default_retina/golovnoj-ubor-panama-hong-kongbeige.webp",
+        "Бежевий": "https://i.abrikos.com/1137-home_default_retina/golovnoj-ubor-panama-hong-kongbeige.webp",
         "Сірий": "https://i.abrikos.com/1138-home_default_retina/golovnoj-ubor-panama-hong-konggray.webp",
         "Помаранчевий": "https://i.abrikos.com/1139-home_default_retina/golovnoj-ubor-panama-hong-kongorange.webp"
     },

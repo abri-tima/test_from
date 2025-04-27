@@ -45,7 +45,7 @@
             <div class="label-input">
                 <label for="gender" class="label-text">Стать</label>
             <select name="gender" id="gender" class="select-info">
-                <option value=""></option>
+                <option value="" disabled selected hidden></option>
                 <option value="Чол">Чол</option>
                 <option value="Жін">Жін</option>
             </select>
@@ -92,16 +92,16 @@
             </div>
         </div>
         <div class="window-container-no-wrap">
-            <div class="window-container-info">
+            <div class="window-container-info info-container">
                 <div class="label-input">
                     <label for="product-size" class="label-text">Розмір вироба, якщо точно його знаєте</label>
-                    <select name="product-size" id="product-list-size" class="input-quality-product" style="padding: 7px 130px; background-position-x: 97%;">
+                    <select name="product-size" id="product-list-size" class="input-quality-product" style="padding: 7px 100px; background-position-x: 97%; width: 310px;">
                         <option value=""></option>
                     </select>
                 </div>
                 <div class="label-input">
                     <label for="chest-size" class="label-text">Якщо розмір не знаєте, обхват грудей/стегон, см</label>
-                    <input type="tel" placeholder="Якщо у продукта немає ОГ/ОС, ставте '0' " class="input-quality-product" name="chest-size" id="chest-size" style="padding: 7px 80px; background: none; background-color: #fff;">
+                    <input type="tel" placeholder="Якщо у продукта немає ОГ/ОС, ставте '0' " class="input-quality-product" name="chest-size" id="chest-size" style="padding: 7px 80px; background: none; background-color: #fff;" min="82">
                 </div>
                 <div class="label-input">
                     <label for="quality-logo" class="label-text">Кількість вишивок логотипу на виробі</label>

@@ -1022,6 +1022,14 @@ if (Array.isArray(sizesMap[selectedProduct])) {
     
 
     function getFormData() {
+        const chestSizeInput = document.querySelector("#chest-size");
+        const parseIntChestSize = parseInt(chestSizeInput.value, 10);
+    
+        if (!chestSizeInput.value || parseIntChestSize < 82) {
+            alert("Обхват грудей/стегон повинен бути не менше 82 см!");
+            chestSizeInput.focus();
+            return null; // ⬅️ остановим сохранение
+        }
         const name = document.querySelector(".input-name-human").value;
         const gender = document.querySelector("#gender").value;
         const genderProduct = document.querySelector("#gender-product-list").value;
@@ -1087,7 +1095,7 @@ if (Array.isArray(sizesMap[selectedProduct])) {
         const addProductBtn = document.createElement("button");
         addProductBtn.textContent = "Додати виріб";
         addProductBtn.classList.add("add-product", "info-block-button");
-        addProductBtn.style = "font-size: 20px; font-weight: 800; padding: 3px 30px;";
+        addProductBtn.style = "font-size: 20px; font-weight: 800; padding: 3px 30px; display: none;";
         addProductBtn.addEventListener("click", () => {
             resetForm(formContainer);
             formContainer.classList.remove("hidden");
@@ -1654,6 +1662,10 @@ function fetchUserData(login) {
             });
 
             const humanBlocks = document.querySelectorAll(".human-block");
+            document.querySelectorAll(".add-product").forEach(btn => {
+                btn.style.display = "none";
+            });
+
             const startMessage = document.querySelector("#start-message");
 
             if (humanBlocks.length === 0) {
@@ -1711,12 +1723,19 @@ document.addEventListener("click", function (e) {
 
     const products = block.nextElementSibling;
     if (products && products.classList.contains("products-container")) {
+        const addProductBtn = products.nextElementSibling;
       if (block.classList.contains("open")) {
         products.style.maxHeight = products.scrollHeight + "px";
         products.style.opacity = "1";
+        if (addProductBtn && addProductBtn.classList.contains("add-product")) {
+            addProductBtn.style.display = "inline-block"; // Показуємо кнопку
+        }
       } else {
         products.style.maxHeight = "0";
         products.style.opacity = "0";
+        if (addProductBtn && addProductBtn.classList.contains("add-product")) {
+            addProductBtn.style.display = "none"; // Ховаємо кнопку
+        }
       }
     }
   });

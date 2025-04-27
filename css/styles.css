@@ -42,6 +42,12 @@ input, select {
     margin: 0 auto;
 }
 
+select {
+    width: 100px;
+    max-width: 100%;
+    box-sizing: border-box;
+}
+
 .container {
     max-width: 320px;
     margin: 0 auto;
@@ -165,7 +171,7 @@ input, select {
     background-color: #fff;
     border: 1px solid rgb(67, 65, 66);
     border-radius: 55px;
-    padding: 6px 35px;
+    padding: 6px 25px;
 }
 
 
@@ -357,7 +363,7 @@ input, select {
     font-weight: 700;
     line-height: 1.7;
     color: #4D4D4D;
-    text-align: left;
+    text-align: center;
     padding: 6px 25px;
     border: 1px solid rgb(67, 65, 66);
     border-radius: 55px;
@@ -365,9 +371,9 @@ input, select {
 
 .window-info {
     background-color: #DCDCDC;
-    padding: 10px 3px;
-    margin-left: 1px;
-    margin-right: 1px;
+    padding: 10px 15px;
+    margin-left: 10px;
+    margin-right: 10px;
     border: 2px solid rgb(67, 65, 66);
     border-radius: 23px;
 
@@ -679,20 +685,22 @@ background: url(../Vectors/arrow.svg);
         margin-left: 10px;
         padding: 10px 8px;
     }
+    select {
+        width: 130px;
+    }
+    .input-name-human {
+        padding: 6px 35px;
+    }
 }
 
 @media (min-width: 1024px) {
     .form-container {
-        margin: 0 520px ;
+        margin: 0 450px ;
     }
 
     .human-block {
         margin: 0 420px;
         margin-top: 20px;
-    }
-
-    .info-container {
-        max-height: 520px;
     }
 
     .custom-message {
@@ -701,5 +709,17 @@ background: url(../Vectors/arrow.svg);
 
     .custom-message.show {
         font-size: 16px;
+    }
+    .input-group {
+        justify-content: center;
+    }
+    .info-container {
+        justify-content: center;
+    }
+    select {
+        width: 180px;
+    }
+    .input-name-human {
+        padding: 6px 35px;
     }
 }

@@ -27,7 +27,9 @@ const colorMapByProduct = {
         "WASHINGTON": ["Білий", "Чорний", "Синій"],
         "LAS VEGAS": ["Білий", "Чорний", "Синій", "Хакі", "Сірий"],
         "TEXAS": ["Білий", "Чорний", "Синій", "Хакі", "Сірий"],
-        "EUROPE": ["Сірий", "Блакитний"]
+        "EUROPE": ["Сірий", "Блакитний"],
+        "BONN": ["Чорний"],
+        "BERLIN": ["Чорний"]
     },
     "Брюки": {
         "GENEVA": ["Чорний"],
@@ -406,6 +408,22 @@ const imageURLMap = {
           "Білий": "https://i.abrikos.com/6775-home_default_retina/kitel-zhenskij-santorini.webp"
           }
       },
+      "BONN": {
+        "Чол": {
+            "Чорний": "https://i.abrikos.com/7770-home_default_retina/kitel-cholovichij-bonn.webp"
+        },
+        "Жін": {
+            "Чорний": "https://i.abrikos.com/7776-home_default_retina/kitel-zhinochij-bonn.webp"
+        }
+      },
+      "BERLIN": {
+        "Чол": {
+            "Чорний": "https://i.abrikos.com/7764-home_default_retina/kitel-cholovichij-berlin.webp"
+        },
+        "Жін": {
+            "Чорний": "https://i.abrikos.com/7775-home_default_retina/kitel-zhinochij-berlin.webp"
+        }
+      },
       // брюки
       "GENEVA": {
           "Чорний": "https://i.abrikos.com/7269-home_default_retina/bryuki-geneva.webp"
@@ -731,7 +749,7 @@ loginButton.addEventListener("click", () => {
         "CLOVIS", "WASHINGTON", "ALICANTE", "LAS VEGAS", "MURANO", "PORTLAND", "MILAN", "NORMAN", "RIVERSIDE",
         "FRANKFURT", "DENVER", "TEXAS", "VENEZUELA", "NAPOLI", "SEATTLE", "EUROPE", "CAPRI", "CONCORD",
         "SPARTA", "BRATISLAVA", "MEXICO", "MOROCCO", "TORONTO", "INDIANA", "SIDNEY", "LOS ANGELES", "NEBRASKA",
-        "SANTORINI"
+        "SANTORINI", "BONN", "BERLIN"
     ],
     "Брюки": [
         "GENEVA", "KANZAS", "BREST", "CARY", "CHICO", "BALTIMOR", "BASEL", "LINCOLN", "ARIZONA", "KENT",

@@ -27,7 +27,9 @@ const colorMapByProduct = {
         "WASHINGTON": ["Білий", "Чорний", "Синій"],
         "LAS VEGAS": ["Білий", "Чорний", "Синій", "Хакі", "Сірий"],
         "TEXAS": ["Білий", "Чорний", "Синій", "Хакі", "Сірий"],
-        "EUROPE": ["Сірий", "Блакитний"]
+        "EUROPE": ["Сірий", "Блакитний"],
+        "BONN": ["Чорний"],
+        "BERLIN": ["Чорний"]
     },
     "Брюки": {
         "GENEVA": ["Чорний"],
@@ -76,7 +78,7 @@ const colorMapByProduct = {
         "Кепка GRANADA": ["Хакі"],
         "Кепка PALERMO": ["Чорний", "Сірий"],
         "Кепка RIMINI": ["Білий", "Чорний", "Сірий", "Синій"],
-        "Панама HONG KONG": ["Темний-беж", "Сірий", "Помаранчевий"],
+        "Панама HONG KONG": ["Бежевий", "Сірий", "Помаранчевий"],
         "Таблетка KABUL": ["Чорний", "Білий"],
         "Гриб PARIS": ["Чорний", "Білий"]
     },
@@ -116,7 +118,7 @@ const imageURLMap = {
         "Синій": "https://i.abrikos.com/7177-home_default_retina/kitel-muzhskoj-clovis.jpg"
       },
       "Жін": {
-        "Білий": "https://i.abrikos.com/6737-home_default_retina/kitel-zhenskij-clovis.webpp",
+        "Білий": "https://i.abrikos.com/6737-home_default_retina/kitel-zhenskij-clovis.webp",
         "Чорний": "https://i.abrikos.com/7182-home_default_retina/kitel-zhenskij-clovis.jpg",
         "Сірий": "https://i.abrikos.com/7184-home_default_retina/kitel-zhenskij-clovis.jpg",
         "Синій": "https://i.abrikos.com/7186-home_default_retina/kitel-zhenskij-clovis.jpg"
@@ -406,6 +408,22 @@ const imageURLMap = {
           "Білий": "https://i.abrikos.com/6775-home_default_retina/kitel-zhenskij-santorini.webp"
           }
       },
+      "BONN": {
+        "Чол": {
+            "Чорний": "https://i.abrikos.com/7770-home_default_retina/kitel-cholovichij-bonn.webp"
+        },
+        "Жін": {
+            "Чорний": "https://i.abrikos.com/7776-home_default_retina/kitel-zhinochij-bonn.webp"
+        }
+      },
+      "BERLIN": {
+        "Чол": {
+            "Чорний": "https://i.abrikos.com/7764-home_default_retina/kitel-cholovichij-berlin.webp"
+        },
+        "Жін": {
+            "Чорний": "https://i.abrikos.com/7775-home_default_retina/kitel-zhinochij-berlin.webp"
+        }
+      },
       // брюки
       "GENEVA": {
           "Чорний": "https://i.abrikos.com/7269-home_default_retina/bryuki-geneva.webp"
@@ -640,7 +658,7 @@ const imageURLMap = {
         "Синій": "https://i.abrikos.com/5876-home_default_retina/kepka-22050004.jpg"
     },
     "Панама HONG KONG": {
-        "Темний-беж": "https://i.abrikos.com/1137-home_default_retina/golovnoj-ubor-panama-hong-kongbeige.webp",
+        "Бежевий": "https://i.abrikos.com/1137-home_default_retina/golovnoj-ubor-panama-hong-kongbeige.webp",
         "Сірий": "https://i.abrikos.com/1138-home_default_retina/golovnoj-ubor-panama-hong-konggray.webp",
         "Помаранчевий": "https://i.abrikos.com/1139-home_default_retina/golovnoj-ubor-panama-hong-kongorange.webp"
     },
@@ -711,6 +729,7 @@ loginButton.addEventListener("click", () => {
 
 
     const addHumanButton = document.querySelector(".button-add-human");
+    addHumanButton.style.display = "none";
     const formContainer = document.querySelector("#form-container");
     const saveButton = document.querySelector(".button-save-form");
     // списки с продуктами(список с названиеми продуктов)
@@ -730,7 +749,7 @@ loginButton.addEventListener("click", () => {
         "CLOVIS", "WASHINGTON", "ALICANTE", "LAS VEGAS", "MURANO", "PORTLAND", "MILAN", "NORMAN", "RIVERSIDE",
         "FRANKFURT", "DENVER", "TEXAS", "VENEZUELA", "NAPOLI", "SEATTLE", "EUROPE", "CAPRI", "CONCORD",
         "SPARTA", "BRATISLAVA", "MEXICO", "MOROCCO", "TORONTO", "INDIANA", "SIDNEY", "LOS ANGELES", "NEBRASKA",
-        "SANTORINI"
+        "SANTORINI", "BONN", "BERLIN"
     ],
     "Брюки": [
         "GENEVA", "KANZAS", "BREST", "CARY", "CHICO", "BALTIMOR", "BASEL", "LINCOLN", "ARIZONA", "KENT",
@@ -765,15 +784,15 @@ productSelect.addEventListener("change", function () {
     const selectedProduct = this.value;
     const options = productArticlesMap[selectedProduct] || [];
 
-    productArticleSelect.innerHTML = `<option value=""></option>`;
+    productArticleSelect.innerHTML = `<option value="" disabled selected hidden></option>`;
     options.forEach(article => {
         const option = document.createElement("option");
         option.value = article;
         option.textContent = article;
         productArticleSelect.appendChild(option);
     });
-    productColor.innerHTML = `<option value=""></option>`;
-    productSizeSelect.innerHTML = `<option value=""></option>`;
+    productColor.innerHTML = `<option value="" disabled selected hidden></option>`;
+    productSizeSelect.innerHTML = `<option value="" disabled selected hidden></option>`;
 });
 
 productArticleSelect.addEventListener("change", function () {
@@ -783,7 +802,7 @@ productArticleSelect.addEventListener("change", function () {
 
     const genderProductSelect = document.querySelector("#gender-product-list");
 
-genderProductSelect.innerHTML = `<option value=""></option>`; // Очистити
+genderProductSelect.innerHTML = `<option value="" disabled selected hidden></option>`; // Очистити
 
 if (selectedProduct === "Кітель") {
     ["Чол", "Жін"].forEach(g => {
@@ -818,7 +837,7 @@ if (selectedProduct === "Кітель") {
 }
 
     // --- Колір ---
-    productColor.innerHTML = `<option value=""></option>`;
+    productColor.innerHTML = `<option value="" disabled selected hidden></option>`;
     if (colorMapByProduct[selectedProduct] && colorMapByProduct[selectedProduct][selectedArticle]) {
         colorMapByProduct[selectedProduct][selectedArticle].forEach(color => {
             const option = document.createElement("option");
@@ -879,7 +898,7 @@ if (selectedProduct === "Кітель") {
         "Шкарпетки": ["36-40", "41-45"]
     };
 
-    productSizeSelect.innerHTML = `<option value=""></option>`;
+    productSizeSelect.innerHTML = `<option value="" disabled selected hidden></option>`;
     sizes = [];
 
 if (Array.isArray(sizesMap[selectedProduct])) {
@@ -1021,6 +1040,14 @@ if (Array.isArray(sizesMap[selectedProduct])) {
     
 
     function getFormData() {
+        const chestSizeInput = document.querySelector("#chest-size");
+        const parseIntChestSize = parseInt(chestSizeInput.value, 10);
+    
+        if (!chestSizeInput.value || parseIntChestSize < 82) {
+            alert("Обхват грудей/стегон повинен бути не менше 82 см!");
+            chestSizeInput.focus();
+            return null; // ⬅️ остановим сохранение
+        }
         const name = document.querySelector(".input-name-human").value;
         const gender = document.querySelector("#gender").value;
         const genderProduct = document.querySelector("#gender-product-list").value;
@@ -1086,7 +1113,7 @@ if (Array.isArray(sizesMap[selectedProduct])) {
         const addProductBtn = document.createElement("button");
         addProductBtn.textContent = "Додати виріб";
         addProductBtn.classList.add("add-product", "info-block-button");
-        addProductBtn.style = "font-size: 20px; font-weight: 800; padding: 3px 30px;";
+        addProductBtn.style = "font-size: 20px; font-weight: 800; padding: 3px 30px; display: none;";
         addProductBtn.addEventListener("click", () => {
             resetForm(formContainer);
             formContainer.classList.remove("hidden");
@@ -1317,7 +1344,7 @@ if (Array.isArray(sizesMap[selectedProduct])) {
         // Обновить список артикулів
         productSelect.value = product;
         const articleOptions = productArticlesMap[product] || [];
-        productArticleSelect.innerHTML = `<option value=""></option>`;
+        productArticleSelect.innerHTML = `<option value="" disabled selected hidden></option>`;
         articleOptions.forEach(article => {
             const option = document.createElement("option");
             option.value = article;
@@ -1346,7 +1373,7 @@ if (Array.isArray(sizesMap[selectedProduct])) {
         
     
         // Обновить список кольорів
-        productColor.innerHTML = `<option value=""></option>`;
+        productColor.innerHTML = `<option value="" disabled selected hidden></option>`;
         const colors = colorMapByProduct[product]?.[productName] || [];
         colors.forEach(c => {
             const option = document.createElement("option");
@@ -1357,7 +1384,7 @@ if (Array.isArray(sizesMap[selectedProduct])) {
         productColor.value = color;
     
         // Обновить список розмірів
-        productSizeSelect.innerHTML = `<option value=""></option>`;
+        productSizeSelect.innerHTML = `<option value="" disabled selected hidden></option>`;
         let sizes = [];
         const sizesMap = {
             "Кітель": ["Не знаю", "42", "44", "46", "48", "50", "52", "54", "56", "58", "60", "62"],
@@ -1558,7 +1585,7 @@ productArticle.addEventListener("change", function () {
     const selectedProduct = productList.value;
     const selectedArticle = productArticle.value;
 
-    productColor.innerHTML = `<option value=""></option>`;
+    productColor.innerHTML = `<option value="" disabled selected hidden></option>`;
 
     if (
         colorMapByProduct[selectedProduct] &&
@@ -1622,6 +1649,7 @@ function fetchUserData(login) {
                 welcomeText.textContent = `✨ Вітаємо у системі, ${login}!`;
                 document.getElementById("login-button").parentElement.appendChild(welcomeText);
             }, 2500);
+            addHumanButton.style.display = "inline-block";
 
             const humanMap = new Map();
 
@@ -1652,6 +1680,10 @@ function fetchUserData(login) {
             });
 
             const humanBlocks = document.querySelectorAll(".human-block");
+            document.querySelectorAll(".add-product").forEach(btn => {
+                btn.style.display = "none";
+            });
+
             const startMessage = document.querySelector("#start-message");
 
             if (humanBlocks.length === 0) {
@@ -1709,12 +1741,19 @@ document.addEventListener("click", function (e) {
 
     const products = block.nextElementSibling;
     if (products && products.classList.contains("products-container")) {
+        const addProductBtn = products.nextElementSibling;
       if (block.classList.contains("open")) {
         products.style.maxHeight = products.scrollHeight + "px";
         products.style.opacity = "1";
+        if (addProductBtn && addProductBtn.classList.contains("add-product")) {
+            addProductBtn.style.display = "inline-block"; // Показуємо кнопку
+        }
       } else {
         products.style.maxHeight = "0";
         products.style.opacity = "0";
+        if (addProductBtn && addProductBtn.classList.contains("add-product")) {
+            addProductBtn.style.display = "none"; // Ховаємо кнопку
+        }
       }
     }
   });

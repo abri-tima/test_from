@@ -42,6 +42,12 @@ input, select {
     margin: 0 auto;
 }
 
+select {
+    width: 100px;
+    max-width: 100%;
+    box-sizing: border-box;
+}
+
 .container {
     max-width: 320px;
     margin: 0 auto;
@@ -137,7 +143,7 @@ input, select {
     gap: 10px;
     align-items: center;
     margin-bottom: 10px;
-    margin-left: 24px;
+    margin-left: 12px;
 }
 /* button {
     padding: 5px 10px;
@@ -165,7 +171,7 @@ input, select {
     background-color: #fff;
     border: 1px solid rgb(67, 65, 66);
     border-radius: 55px;
-    padding: 6px 35px;
+    padding: 6px 25px;
 }
 
 
@@ -286,7 +292,8 @@ input, select {
 .button-add-human:hover,
 .button-send-form:hover,
 .button-all:hover,
-.button-login-form:hover {
+.button-login-form:hover,
+.button-cancel-form:hover {
     background-color: #BC5100;
 }
 
@@ -294,7 +301,8 @@ input, select {
 .button-add-human:focus,
 .button-send-form:focus,
 .button-all:focus,
-.button-login-form:focus {
+.button-login-form:focus,
+.button-cancel-form:focus {
     background-color: #BC5100;
 }
 
@@ -302,7 +310,8 @@ input, select {
 .button-add-human:active,
 .button-send-form:active,
 .button-all:active,
-.button-login-form:active {
+.button-login-form:active,
+.button-cancel-form:active {
     background-color: #EE6700;
     transition: none;   
 }
@@ -354,7 +363,7 @@ input, select {
     font-weight: 700;
     line-height: 1.7;
     color: #4D4D4D;
-    text-align: left;
+    text-align: center;
     padding: 6px 25px;
     border: 1px solid rgb(67, 65, 66);
     border-radius: 55px;
@@ -362,7 +371,7 @@ input, select {
 
 .window-info {
     background-color: #DCDCDC;
-    padding: 10px 14px;
+    padding: 10px 15px;
     margin-left: 10px;
     margin-right: 10px;
     border: 2px solid rgb(67, 65, 66);
@@ -670,18 +679,28 @@ background: url(../Vectors/arrow.svg);
     transition: opacity 0.5s ease, visibility 0.5s ease;
 }
 
+@media (min-width: 420px) {
+    .window-info {
+        margin-right: 10px;
+        margin-left: 10px;
+        padding: 10px 8px;
+    }
+    select {
+        width: 130px;
+    }
+    .input-name-human {
+        padding: 6px 35px;
+    }
+}
+
 @media (min-width: 1024px) {
     .form-container {
-        margin: 0 520px ;
+        margin: 0 450px ;
     }
 
     .human-block {
         margin: 0 420px;
         margin-top: 20px;
-    }
-
-    .info-container {
-        max-height: 520px;
     }
 
     .custom-message {
@@ -690,5 +709,17 @@ background: url(../Vectors/arrow.svg);
 
     .custom-message.show {
         font-size: 16px;
+    }
+    .input-group {
+        justify-content: center;
+    }
+    .info-container {
+        justify-content: center;
+    }
+    select {
+        width: 180px;
+    }
+    .input-name-human {
+        padding: 6px 35px;
     }
 }
